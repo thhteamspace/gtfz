@@ -8,24 +8,40 @@
   /* Dark Navy Blue */
 
   /* Accents */
-  --color-heritage-bronze: #A67C52;
+  --color-heritage-bronze: #C5A059;
   --color-cashmere-gold: #D4AF37;
 
-  --color-alabaster-silk: #F5F5F7;
+  --color-alabaster-silk: #EAE3D9;
   --color-text-secondary: #8E949E;
 
   /* Typography */
   --font-heading: 'Manrope', sans-serif;
-  /* Aeonik Pro proxy */
+  /* Proxy for Aeonik Pro */
   --font-body: 'IBM Plex Serif', serif;
-  /* Extended copy */
+  /* Secondary for narrative depth */
 
-  /* Spacing System - Responsive */
-  --space-xs: clamp(0.25rem, 1vw, 0.5rem);
-  --space-sm: clamp(0.5rem, 1.5vw, 1rem);
-  --space-md: clamp(1rem, 3vw, 2rem);
-  --space-lg: clamp(2rem, 6vw, 5rem);
-  --space-xl: clamp(4rem, 10vw, 10rem);
+  /* Precision Spacing System (Strict Grid) */
+  --grid-unit: 8px;
+  --space-xs: 0.5rem;
+  /* 8px */
+  --space-sm: 1rem;
+  /* 16px */
+  --space-md: 2rem;
+  /* 32px */
+  --space-lg: 4rem;
+  /* 64px */
+  --space-xl: 8rem;
+  /* 128px */
+
+  /* Brand Geometry (Engineered Precision) */
+  --brand-radius-lg: 45px;
+  /* From logo guide: 45px radius */
+  --brand-radius-md: 20px;
+  /* From logo guide: 20px radius */
+  --brand-radius-sm: 15px;
+  /* From logo guide: 15px radius */
+  --brand-border: 1px solid rgba(197, 160, 89, 0.2);
+  /* Heritage Bronze Border */
 
   /* Layout */
   --container-max: 1400px;
@@ -39,16 +55,53 @@
 
 body {
   margin: 0;
-  background-color: var(--color-obsidian-slate);
+  background-color: var(--color-strategic-navy);
   color: var(--color-alabaster-silk);
   font-family: var(--font-heading);
+  font-weight: 300;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
   cursor: none;
   /* Custom cursor takes over */
   overflow-x: hidden;
+  /* Theme transition */
+  transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out;
 }
+
+/* Theme States */
+body[data-theme="dark"] {
+  background-color: var(--color-strategic-navy);
+  color: var(--color-alabaster-silk);
+}
+
+body[data-theme="light"] {
+  background-color: var(--color-alabaster-silk);
+  color: var(--color-obsidian-slate);
+}
+
+/* Light theme text adjustments */
+body[data-theme="light"] h1,
+body[data-theme="light"] h2,
+body[data-theme="light"] h3,
+body[data-theme="light"] h4,
+body[data-theme="light"] h5,
+body[data-theme="light"] h6 {
+  color: var(--color-obsidian-slate);
+  transition: color 0.6s ease-in-out;
+}
+
+body[data-theme="light"] p,
+body[data-theme="light"] li {
+  color: var(--color-strategic-navy);
+  transition: color 0.6s ease-in-out;
+}
+
+/* Light theme section backgrounds */
+body[data-theme="light"] .section {
+  transition: background-color 0.6s ease-in-out;
+}
+
 
 /* GLOW FRAME - More Subtle & Integrated */
 body::before {
@@ -128,6 +181,8 @@ img {
 .section-title {
   font-size: clamp(2rem, 8vw, 4rem);
   margin-bottom: var(--space-sm);
+  line-height: 1.2;
+  overflow: visible;
 }
 
 .section-subtitle {
@@ -150,6 +205,7 @@ img {
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
   border: 1px solid transparent;
+  border-radius: var(--brand-radius-md);
 }
 
 .btn-primary {

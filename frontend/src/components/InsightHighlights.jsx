@@ -25,7 +25,7 @@ const InsightHighlights = () => {
     ];
 
     return (
-        <section className="section">
+        <section className="section" data-theme-trigger="light">
             <div className="container">
                 <div style={{
                     display: 'flex',
@@ -48,9 +48,10 @@ const InsightHighlights = () => {
                             whileHover={{ y: -10 }}
                             style={{
                                 padding: '0',
-                                border: '1px solid rgba(255,255,255,0.1)',
-                                background: 'var(--color-strategic-navy)',
-                                borderRadius: '8px',
+                                border: '1px solid rgba(0,0,0,0.08)',
+                                background: '#F2EFE9',
+                                boxShadow: '0 15px 35px -5px rgba(0,0,0,0.1)',
+                                borderRadius: 'var(--brand-radius-md)',
                                 display: 'flex',
                                 flexDirection: 'column',
                                 overflow: 'hidden',
@@ -91,7 +92,7 @@ const InsightHighlights = () => {
                             </div>
 
                             <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'space-between' }}>
-                                <h3 style={{ fontSize: '1.5rem', lineHeight: 1.3, marginBottom: '1rem' }}>
+                                <h3 style={{ fontSize: '1.5rem', lineHeight: 1.3, marginBottom: '1rem', color: '#1a1a1a' }}>
                                     <RevealText delay={0.1 * index}>
                                         {item.title}
                                     </RevealText>
@@ -99,9 +100,9 @@ const InsightHighlights = () => {
                                 <div style={{
                                     display: 'flex',
                                     justifyContent: 'space-between',
-                                    borderTop: '1px solid rgba(255,255,255,0.1)',
+                                    borderTop: '1px solid rgba(0,0,0,0.1)',
                                     paddingTop: '1rem',
-                                    color: 'var(--color-text-secondary)',
+                                    color: '#555',
                                     fontSize: '0.85rem'
                                 }}>
                                     <span>{item.date}</span>

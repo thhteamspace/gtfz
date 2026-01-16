@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import RevealText from './motion/RevealText';
 import Parallax from './motion/Parallax';
+import InteractiveMapCanvas from './InteractiveMapCanvas';
 
 const Hero = () => {
+    const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
+
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            setMousePosition({ x, y });
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
+
     // Animation Variants
     const container = {
         hidden: { opacity: 0 },
@@ -25,7 +39,8 @@ const Hero = () => {
             alignItems: 'center',
             position: 'relative',
             overflow: 'hidden',
-            paddingTop: 'var(--header-height)'
+            marginTop: 'calc(-1 * var(--header-height))',
+            paddingTop: 'calc(var(--header-height) * 2)'
         }}>
             {/* SVG Distortion Filter Definition */}
             <svg style={{ position: 'absolute', width: 0, height: 0 }}>
@@ -37,16 +52,23 @@ const Hero = () => {
 
             {/* HERO BACKGROUND SYSTEM */}
             <div className="hero-background-container">
-                <div className="hero-bg-image" style={{ backgroundImage: `url('/assets/images/hero-bg.png')` }} />
+                <div className="hero-bg-image" style={{ backgroundImage: `url('/assets/images/gtfz-brand-bg.png')` }} />
                 <div className="hero-bg-overlay" />
+
+
+                {/* Interactive Proximity-Based Dot Glow */}
+                <InteractiveMapCanvas />
+
+
+                {/* Ambient Breathing Glow */}
                 <div className="hero-bg-distortion">
                     <motion.div
-                        animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.3, 0.1] }}
+                        animate={{ scale: [1, 1.1, 1], opacity: [0.05, 0.15, 0.05] }}
                         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
                         style={{
                             width: '120%',
                             height: '120%',
-                            background: `radial-gradient(circle at 50% 50%, rgba(166, 124, 82, 0.1) 0%, transparent 70%)`,
+                            background: `radial-gradient(circle at 50% 50%, rgba(197, 160, 89, 0.1) 0%, transparent 70%)`,
                             filter: 'url(#displacementFilter)'
                         }}
                     />
@@ -73,15 +95,21 @@ const Hero = () => {
                         </h1>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', marginTop: 'var(--space-md)' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 'var(--space-md)', marginTop: 'var(--space-md)' }}>
                         <motion.div
                             variants={item}
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: false }}
                         >
-                            <p style={{ fontSize: 'clamp(1rem, 1.5vw, 1.25rem)', lineHeight: 1.4, color: 'var(--color-text-secondary)', maxWidth: '500px' }}>
-                                We navigate complexity to unlock value. A boutique consultancy defining the standard of excellence for global leaders.
+                            <p style={{
+                                fontSize: 'clamp(1rem, 1.5vw, 1.25rem)',
+                                lineHeight: 1.6,
+                                color: 'var(--color-text-secondary)',
+                                maxWidth: '600px',
+                                fontFamily: 'var(--font-body)'
+                            }}>
+                                Global Thread exists to optimize the space between creative vision & commercial reality. Operational Design Standards for 2025.
                             </p>
                         </motion.div>
 

@@ -82,7 +82,7 @@ const Header = () => {
                     left: 0,
                     width: '100%',
                     height: 'var(--header-height)',
-                    zIndex: 1000,
+                    zIndex: 9999,
                     display: 'flex',
                     alignItems: 'center',
                     padding: '0 var(--space-md)',
@@ -98,8 +98,26 @@ const Header = () => {
                     width: '100%'
                 }}>
                     {/* LOGO */}
-                    <Link to="/" onClick={() => setMobileMenuOpen(false)} style={{ fontWeight: 800, fontSize: '1.5rem', letterSpacing: '-0.03em', textDecoration: 'none', zIndex: 1001 }}>
-                        GTFZ
+                    <Link to="/" onClick={() => setMobileMenuOpen(false)} style={{
+                        textDecoration: 'none',
+                        zIndex: 1001,
+                        display: 'flex',
+                        alignItems: 'center'
+                    }}>
+                        <motion.img
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            whileHover={{ scale: 1.05 }}
+                            transition={{ duration: 1.2, ease: "easeOut" }}
+                            src="/assets/images/gtfz-logo.png"
+                            alt="GTFZ Logo"
+                            style={{
+                                height: 'clamp(24px, 4vw, 36px)',
+                                width: 'auto',
+                                mixBlendMode: 'screen',
+                                filter: 'contrast(1.5) brightness(1.1)'
+                            }}
+                        />
                     </Link>
 
                     {/* DESKTOP NAVIGATION */}
@@ -151,18 +169,19 @@ const Header = () => {
                         }} />
                     </div>
                 </div>
-            </motion.header>
+            </motion.header >
 
             {/* MOBILE MENU OVERLAY */}
-            <motion.div
-                initial={{ opacity: 0, x: '100%' }}
+            < motion.div
+                initial={{ opacity: 0, x: '100%' }
+                }
                 animate={{ opacity: mobileMenuOpen ? 1 : 0, x: mobileMenuOpen ? 0 : '100%' }}
                 transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                 style={{
                     position: 'fixed',
                     inset: 0,
                     background: 'var(--color-obsidian-slate)',
-                    zIndex: 999,
+                    zIndex: 9998,
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',
@@ -203,7 +222,7 @@ const Header = () => {
                         </Link>
                     </motion.div>
                 </div>
-            </motion.div>
+            </motion.div >
         </>
     );
 };

@@ -15,9 +15,9 @@ const AnimatedInput = ({ type, placeholder, rows }) => {
                         width: '100%',
                         background: 'transparent',
                         border: 'none',
-                        borderBottom: '1px solid rgba(255,255,255,0.2)',
+                        borderBottom: '1px solid rgba(0,0,0,0.4)',
                         padding: '1.5rem 0',
-                        color: 'white',
+                        color: '#333',
                         fontSize: '1.5rem',
                         fontFamily: 'inherit',
                         resize: 'none',
@@ -35,9 +35,9 @@ const AnimatedInput = ({ type, placeholder, rows }) => {
                         width: '100%',
                         background: 'transparent',
                         border: 'none',
-                        borderBottom: '1px solid rgba(255,255,255,0.2)',
+                        borderBottom: '1px solid rgba(0,0,0,0.4)',
                         padding: '1.5rem 0',
-                        color: 'white',
+                        color: '#333',
                         fontSize: '1.5rem',
                         fontFamily: 'inherit',
                         outline: 'none',
@@ -61,7 +61,7 @@ const AnimatedInput = ({ type, placeholder, rows }) => {
                     left: 0,
                     pointerEvents: 'none',
                     fontSize: '1.5rem',
-                    color: 'white'
+                    color: '#333'
                 }}
             >
                 {placeholder}
@@ -76,7 +76,7 @@ const AnimatedInput = ({ type, placeholder, rows }) => {
                     left: 0,
                     width: '100%',
                     height: '2px',
-                    background: 'var(--color-heritage-bronze)',
+                    background: '#B8860B',
                     originX: 0
                 }}
             />
@@ -86,7 +86,9 @@ const AnimatedInput = ({ type, placeholder, rows }) => {
 
 const Contact = () => {
     return (
-        <footer style={{ background: '#050505', position: 'relative', overflow: 'hidden', paddingTop: '10vh' }}>
+        <footer data-theme-trigger="light" style={{ background: 'transparent', position: 'relative', overflow: 'hidden', paddingTop: '10vh' }}>
+
+
 
             {/* Massive CTA Section */}
             <div className="container" style={{ marginBottom: '10vh' }}>
@@ -119,22 +121,23 @@ const Contact = () => {
                     {/* Info Side */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', justifyContent: 'space-between', height: '100%', textAlign: window.innerWidth < 768 ? 'center' : 'left' }}>
                         <div>
-                            <h4 style={{ color: 'var(--color-text-secondary)', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Contact</h4>
-                            <a href="mailto:hello@gtfz.com" style={{ fontSize: window.innerWidth < 768 ? '1.25rem' : '2rem', display: 'block', color: 'white', textDecoration: 'none', marginBottom: '0.5rem' }}>hello@gtfz.com</a>
-                            <a href="tel:+15550000000" style={{ fontSize: window.innerWidth < 768 ? '1.25rem' : '2rem', display: 'block', color: 'white', textDecoration: 'none' }}>+1 (555) 000-0000</a>
+                            <h4 style={{ color: '#666', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Contact</h4>
+                            <a href="mailto:hello@gtfz.com" style={{ fontSize: window.innerWidth < 768 ? '1.25rem' : '2rem', display: 'block', color: '#333', textDecoration: 'none', marginBottom: '0.5rem' }}>hello@gtfz.com</a>
+                            <a href="tel:+15550000000" style={{ fontSize: window.innerWidth < 768 ? '1.25rem' : '2rem', display: 'block', color: '#333', textDecoration: 'none' }}>+1 (555) 000-0000</a>
                         </div>
 
                         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: window.innerWidth < 768 ? 'center' : 'flex-start', marginTop: window.innerWidth < 768 ? '1rem' : '4rem' }}>
                             {['LinkedIn', 'Twitter', 'Instagram'].map(social => (
                                 <a key={social} href="#" style={{
-                                    color: 'white',
+                                    color: '#1a1a1a',
                                     textDecoration: 'none',
-                                    border: '1px solid rgba(255,255,255,0.2)',
+                                    border: '2px solid #1a1a1a',
                                     padding: window.innerWidth < 768 ? '0.5rem 1rem' : '1rem 2rem',
                                     borderRadius: '50px',
                                     textTransform: 'uppercase',
                                     fontSize: '0.7rem',
-                                    letterSpacing: '0.1em'
+                                    letterSpacing: '0.1em',
+                                    fontWeight: 600
                                 }}>
                                     {social}
                                 </a>
@@ -146,10 +149,10 @@ const Contact = () => {
 
             {/* Bottom Bar */}
             <div style={{
-                borderTop: '1px solid rgba(255,255,255,0.1)',
+                borderTop: '1px solid rgba(0,0,0,0.15)',
                 padding: '2rem 0',
                 textAlign: 'center',
-                color: 'rgba(255,255,255,0.3)',
+                color: '#333',
                 fontSize: '0.9rem',
                 display: 'flex',
                 justifyContent: 'space-between',

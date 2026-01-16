@@ -156,10 +156,10 @@ const ServiceItem = ({ title, subtitle, img, index, total, scrollYProgress }) =>
                         height: '100%',
                         borderRadius: '50%',
                         overflow: 'hidden',
-                        border: '4px solid rgba(255,255,255,0.05)',
+                        border: '1px solid rgba(255,255,255,0.05)',
                         position: 'relative',
                         boxShadow: '0 0 30px rgba(0,0,0,0.5)',
-                        backgroundColor: '#111' // Keep image bg dark just in case
+                        backgroundColor: '#111'
                     }}>
                         <img
                             src={img}
@@ -187,7 +187,9 @@ const ServiceItem = ({ title, subtitle, img, index, total, scrollYProgress }) =>
                             fontSize: '1.25rem',
                             color: 'var(--color-text-secondary)',
                             maxWidth: '300px',
-                            lineHeight: 1.6
+                            lineHeight: 1.6,
+                            fontFamily: 'var(--font-body)',
+                            fontStyle: 'italic'
                         }}>
                             {subtitle}
                         </p>
