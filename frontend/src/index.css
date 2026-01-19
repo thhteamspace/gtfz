@@ -1,47 +1,49 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300;400;500;600&family=Manrope:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Brand Colors - GTFZ Original */
-  --color-obsidian-slate: #0C0E11;
-  /* Deep Charcoal/Black */
-  --color-strategic-navy: #151B25;
-  /* Dark Navy Blue */
+  /* Monochrome Fashion Palette */
+  --color-optical-white: #FEFFFF;
+  /* Light background */
+  --color-dark-charcoal: #111111;
+  /* Dark background */
 
-  /* Accents */
+  /* Brand Accent Colors (Subtle Use Only) */
   --color-heritage-bronze: #C5A059;
   --color-cashmere-gold: #D4AF37;
 
-  --color-alabaster-silk: #EAE3D9;
-  --color-text-secondary: #8E949E;
+  /* Derived Grays from Dark Charcoal */
+  --color-text-primary: #111111;
+  --color-text-secondary: rgba(17, 17, 17, 0.6);
+  --color-border-light: rgba(17, 17, 17, 0.1);
+  --color-border-medium: rgba(17, 17, 17, 0.2);
 
-  /* Typography */
-  --font-heading: 'Manrope', sans-serif;
-  /* Proxy for Aeonik Pro */
-  --font-body: 'IBM Plex Serif', serif;
-  /* Secondary for narrative depth */
+  /* Typography - Modern Editorial */
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
 
-  /* Precision Spacing System (Strict Grid) */
+  /* Editorial Spacing System */
   --grid-unit: 8px;
   --space-xs: 0.5rem;
-  /* 8px */
   --space-sm: 1rem;
-  /* 16px */
   --space-md: 2rem;
-  /* 32px */
   --space-lg: 4rem;
-  /* 64px */
   --space-xl: 8rem;
-  /* 128px */
+  --space-xxl: 12rem;
 
-  /* Brand Geometry (Engineered Precision) */
-  --brand-radius-lg: 45px;
-  /* From logo guide: 45px radius */
-  --brand-radius-md: 20px;
-  /* From logo guide: 20px radius */
-  --brand-radius-sm: 15px;
-  /* From logo guide: 15px radius */
-  --brand-border: 1px solid rgba(197, 160, 89, 0.2);
-  /* Heritage Bronze Border */
+  /* Refined Geometry */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --brand-border: 1px solid rgba(197, 160, 89, 0.15);
+
+  /* Fabric-Like Motion (Smooth, Weighted) */
+  --ease-fabric: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in-fabric: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out-fabric: cubic-bezier(0, 0, 0.2, 1);
+  --duration-fast: 0.2s;
+  --duration-normal: 0.4s;
+  --duration-slow: 0.6s;
 
   /* Layout */
   --container-max: 1400px;
@@ -53,53 +55,63 @@
   box-sizing: border-box;
 }
 
+/* GPU Acceleration for smooth animations */
+img,
+video,
+.motion-div {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
 body {
   margin: 0;
-  background-color: var(--color-strategic-navy);
-  color: var(--color-alabaster-silk);
-  font-family: var(--font-heading);
-  font-weight: 300;
+  background-color: var(--color-optical-white);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  line-height: 1.5;
+  line-height: 1.6;
   cursor: none;
   /* Custom cursor takes over */
   overflow-x: hidden;
-  /* Theme transition */
-  transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out;
+  /* Smooth transitions */
+  transition: background-color var(--duration-slow) var(--ease-fabric),
+    color var(--duration-slow) var(--ease-fabric);
 }
 
-/* Theme States */
+/* Theme States - Monochrome System */
 body[data-theme="dark"] {
-  background-color: var(--color-strategic-navy);
-  color: var(--color-alabaster-silk);
+  background-color: var(--color-dark-charcoal);
+  color: var(--color-optical-white);
 }
 
 body[data-theme="light"] {
-  background-color: var(--color-alabaster-silk);
-  color: var(--color-obsidian-slate);
+  background-color: var(--color-optical-white);
+  color: var(--color-text-primary);
 }
 
-/* Light theme text adjustments */
-body[data-theme="light"] h1,
-body[data-theme="light"] h2,
-body[data-theme="light"] h3,
-body[data-theme="light"] h4,
-body[data-theme="light"] h5,
-body[data-theme="light"] h6 {
-  color: var(--color-obsidian-slate);
-  transition: color 0.6s ease-in-out;
+/* Dark theme adjustments */
+body[data-theme="dark"] h1,
+body[data-theme="dark"] h2,
+body[data-theme="dark"] h3,
+body[data-theme="dark"] h4,
+body[data-theme="dark"] h5,
+body[data-theme="dark"] h6 {
+  color: var(--color-optical-white);
+  transition: color var(--duration-slow) var(--ease-fabric);
 }
 
-body[data-theme="light"] p,
-body[data-theme="light"] li {
-  color: var(--color-strategic-navy);
-  transition: color 0.6s ease-in-out;
+body[data-theme="dark"] p,
+body[data-theme="dark"] li {
+  color: rgba(254, 255, 255, 0.7);
+  transition: color var(--duration-slow) var(--ease-fabric);
 }
 
-/* Light theme section backgrounds */
-body[data-theme="light"] .section {
-  transition: background-color 0.6s ease-in-out;
+/* Section theme transitions */
+.section {
+  transition: background-color var(--duration-slow) var(--ease-fabric);
 }
 
 
@@ -138,22 +150,39 @@ h4,
 h5,
 h6 {
   margin: 0;
-  font-weight: 600;
+  font-family: var(--font-heading);
+  font-weight: 500;
   line-height: 1.1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-weight: 600;
+}
+
+h2 {
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 500;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 500;
 }
 
 p,
 li {
   color: var(--color-text-secondary);
   font-family: var(--font-body);
-  font-weight: 300;
+  font-weight: 400;
+  line-height: 1.7;
 }
 
 a {
   text-decoration: none;
   color: inherit;
-  transition: all 0.3s ease;
+  transition: all var(--duration-normal) var(--ease-fabric);
 }
 
 ul {
@@ -196,39 +225,39 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.875rem 2rem;
-  font-family: var(--font-heading);
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 0.875rem;
-  letter-spacing: 0.05em;
+  padding: 1rem 2.5rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: all var(--duration-normal) var(--ease-fabric);
   border: 1px solid transparent;
-  border-radius: var(--brand-radius-md);
+  border-radius: var(--radius-lg);
 }
 
 .btn-primary {
-  background-color: var(--color-heritage-bronze);
-  color: white;
+  background-color: var(--color-dark-charcoal);
+  color: var(--color-optical-white);
+  border: 1px solid var(--color-dark-charcoal);
 }
 
 .btn-primary:hover {
-  background-color: white;
-  color: var(--color-obsidian-slate);
-  transform: translateY(-2px);
+  background-color: transparent;
+  color: var(--color-dark-charcoal);
+  transform: scale(1.02);
 }
 
 .btn-outline {
   background-color: transparent;
-  border-color: var(--color-cashmere-gold);
-  color: var(--color-cashmere-gold);
+  border-color: var(--color-heritage-bronze);
+  color: var(--color-heritage-bronze);
 }
 
 .btn-outline:hover {
-  background-color: var(--color-cashmere-gold);
-  color: var(--color-obsidian-slate);
-  transform: translateY(-2px);
+  background-color: var(--color-heritage-bronze);
+  color: var(--color-optical-white);
+  transform: scale(1.02);
 }
 
 /* HERO BACKGROUND SYSTEM */

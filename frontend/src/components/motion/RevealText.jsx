@@ -3,7 +3,7 @@ import { motion, useInView } from 'framer-motion';
 
 const RevealText = ({ children, width = "fit-content", delay = 0.2 }) => {
     const ref = useRef(null);
-    const isInView = useInView(ref, { once: false, margin: "-10% 0px" });
+    const isInView = useInView(ref, { once: false, margin: "0px 0px -20% 0px", amount: 0.5 });
 
     return (
         <div ref={ref} style={{ position: "relative", width, overflow: "hidden", paddingBottom: "0.15em" }}>

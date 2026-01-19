@@ -1,132 +1,194 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import RevealText from './motion/RevealText';
-import Parallax from './motion/Parallax';
-import InteractiveMapCanvas from './InteractiveMapCanvas';
+import React, { useRef, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const Hero = () => {
-    const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
+    const containerRef = useRef(null);
+    const videoRef = useRef(null);
+    const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] });
 
+    // Slow motion effect
     useEffect(() => {
-        const handleMouseMove = (e) => {
-            const x = (e.clientX / window.innerWidth) * 100;
-            const y = (e.clientY / window.innerHeight) * 100;
-            setMousePosition({ x, y });
-        };
-
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
+        if (videoRef.current) {
+            videoRef.current.playbackRate = 0.7; // 70% speed
+        }
     }, []);
 
-    // Animation Variants
-    const container = {
-        hidden: { opacity: 0 },
-        show: {
-            opacity: 1,
-            transition: { staggerChildren: 0.1, delayChildren: 0.3 }
-        }
-    };
+    const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+    const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.96]);
+    const y = useTransform(scrollYProgress, [0, 0.5], [0, -60]);
 
-    const item = {
-        hidden: { y: 100, opacity: 0 },
-        show: { y: 0, opacity: 1, transition: { ease: [0.25, 1, 0.5, 1], duration: 1.2 } }
-    };
+    // Background parallax - more subtle
+    const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '15%']);
+    const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
 
     return (
-        <section id="home" className="section" style={{
+        <section ref={containerRef} style={{
             minHeight: '100vh',
             display: 'flex',
             alignItems: 'center',
             position: 'relative',
             overflow: 'hidden',
             marginTop: 'calc(-1 * var(--header-height))',
-            paddingTop: 'calc(var(--header-height) * 2)'
+            paddingTop: 'calc(var(--header-height) + 4rem)',
+            background: '#0a0a0a'
         }}>
-            {/* SVG Distortion Filter Definition */}
-            <svg style={{ position: 'absolute', width: 0, height: 0 }}>
-                <filter id="displacementFilter">
-                    <feTurbulence type="turbulence" baseFrequency="0.01 0.02" numOctaves="3" result="noise" />
-                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="30" />
-                </filter>
-            </svg>
+            {/* Cinematic Background Video */}
+            <motion.video
+                ref={videoRef}
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{
+                    position: 'absolute',
+                    top: '-10%',
+                    left: 0,
+                    width: '100%',
+                    height: '120%',
+                    y: bgY,
+                    objectFit: 'cover',
+                    filter: 'brightness(0.6) contrast(1.15) saturate(1.2) blur(2px)',
+                    zIndex: 0
+                }}
+            >
+                <source src="/videos/hero.mp4" type="video/mp4" />
+            </motion.video>
 
-            {/* HERO BACKGROUND SYSTEM */}
-            <div className="hero-background-container">
-                <div className="hero-bg-image" style={{ backgroundImage: `url('/assets/images/gtfz-brand-bg.png')` }} />
-                <div className="hero-bg-overlay" />
 
 
-                {/* Interactive Proximity-Based Dot Glow */}
-                <InteractiveMapCanvas />
+            {/* Grain Overlay - Fashion Depth */}
+            <div style={{
+                position: 'absolute',
+                inset: 0,
+                backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")',
+                opacity: 0.04,
+                pointerEvents: 'none',
+                zIndex: 2,
+                mixBlendMode: 'overlay'
+            }} />
 
-
-                {/* Ambient Breathing Glow */}
-                <div className="hero-bg-distortion">
+            <motion.div
+                className="container"
+                style={{
+                    position: 'relative',
+                    zIndex: 3,
+                    width: '100%',
+                    opacity,
+                    scale,
+                    y
+                }}
+            >
+                {/* Asymmetric Editorial Layout */}
+                <div style={{ maxWidth: '1200px' }}>
+                    {/* Small Badge - Top */}
                     <motion.div
-                        animate={{ scale: [1, 1.1, 1], opacity: [0.05, 0.15, 0.05] }}
-                        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+                        initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
                         style={{
-                            width: '120%',
-                            height: '120%',
-                            background: `radial-gradient(circle at 50% 50%, rgba(197, 160, 89, 0.1) 0%, transparent 70%)`,
-                            filter: 'url(#displacementFilter)'
+                            display: 'inline-flex',
+                            padding: '0.5rem 1.5rem',
+                            background: 'rgba(255, 255, 255, 0.05)',
+                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                            borderRadius: '2rem',
+                            marginBottom: '2rem'
                         }}
-                    />
-                </div>
-            </div>
+                    >
+                        <span style={{
+                            fontSize: '0.75rem',
+                            color: '#FEFFFF',
+                            fontFamily: 'monospace',
+                            letterSpacing: '0.15em',
+                            textTransform: 'uppercase'
+                        }}>Fashion Supply-Chain Expertise</span>
+                    </motion.div>
 
-            <div className="container" style={{ position: 'relative', zIndex: 1, width: '100%' }}>
-                <div style={{ maxWidth: '1100px' }}>
-
-                    {/* Main Title - Massive & Tight using RevealText */}
-                    <div style={{ marginBottom: '1rem' }}>
-                        <h1 style={{
-                            fontSize: 'clamp(4rem, 9vw, 9rem)',
-                            lineHeight: 0.9,
-                            fontWeight: 800,
-                            letterSpacing: '-0.04em',
-                            color: 'white',
-                            marginBottom: 0
-                        }}>
-                            <RevealText>Strategic</RevealText>
-                            <RevealText delay={0.4}>
-                                <span style={{ color: 'var(--color-heritage-bronze)', opacity: 0.9 }}>Precision.</span>
-                            </RevealText>
-                        </h1>
+                    {/* Large Editorial Headline - Staggered with movement */}
+                    <div style={{ marginBottom: '3rem' }}>
+                        <motion.h1
+                            initial={{ opacity: 0, x: -40, scale: 0.97 }}
+                            animate={{ opacity: 1, x: 0, scale: 1 }}
+                            transition={{ duration: 0.9, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
+                            style={{
+                                fontSize: 'clamp(4rem, 11vw, 12rem)',
+                                lineHeight: 0.9,
+                                fontWeight: 500,
+                                letterSpacing: '-0.03em',
+                                color: '#FEFFFF',
+                                marginBottom: '1rem',
+                                fontFamily: 'Outfit, sans-serif'
+                            }}
+                        >
+                            Strategic
+                        </motion.h1>
+                        <motion.h1
+                            initial={{ opacity: 0, x: 40, scale: 0.97 }}
+                            animate={{ opacity: 1, x: 0, scale: 1 }}
+                            transition={{ duration: 0.9, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+                            style={{
+                                fontSize: 'clamp(4rem, 11vw, 12rem)',
+                                lineHeight: 0.9,
+                                fontWeight: 500,
+                                letterSpacing: '-0.03em',
+                                color: '#C5A059',
+                                marginLeft: '15%',
+                                fontFamily: 'Outfit, sans-serif'
+                            }}
+                        >
+                            Precision.
+                        </motion.h1>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 'var(--space-md)', marginTop: 'var(--space-md)' }}>
+                    {/* Editorial Two-Column Layout */}
+                    <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: typeof window !== 'undefined' && window.innerWidth < 768 ? '1fr' : '1fr 1fr',
+                        gap: '4rem',
+                        maxWidth: '1000px'
+                    }}>
                         <motion.div
-                            variants={item}
-                            initial="hidden"
-                            whileInView="show"
-                            viewport={{ once: false }}
+                            initial={{ opacity: 0, y: 30, scale: 0.97 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            transition={{ duration: 0.8, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
                         >
                             <p style={{
-                                fontSize: 'clamp(1rem, 1.5vw, 1.25rem)',
-                                lineHeight: 1.6,
-                                color: 'var(--color-text-secondary)',
-                                maxWidth: '600px',
-                                fontFamily: 'var(--font-body)'
+                                fontSize: '1.1rem',
+                                lineHeight: 1.7,
+                                color: 'rgba(255, 255, 255, 0.8)',
+                                fontFamily: 'Inter, sans-serif',
+                                fontWeight: 300
                             }}>
-                                Global Thread exists to optimize the space between creative vision & commercial reality. Operational Design Standards for 2025.
+                                Transforming vision into execution. We optimize the critical space between creative excellence and commercial reality in fashion supply chains.
                             </p>
                         </motion.div>
 
                         <motion.div
-                            variants={item}
-                            initial="hidden"
-                            whileInView="show"
-                            viewport={{ once: false }}
-                            style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}
+                            initial={{ opacity: 0, y: 30, scale: 0.97 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            transition={{ duration: 0.8, delay: 0.65, ease: [0.25, 0.1, 0.25, 1] }}
+                            style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }}
                         >
-                            <a href="#services" className="btn btn-primary" style={{ borderRadius: '50px', padding: '1rem 2.5rem' }}>
-                                Explore Work
+                            <a href="#services" className="btn btn-primary" style={{
+                                borderRadius: '2rem',
+                                padding: '1rem 2.5rem',
+                                background: '#FEFFFF',
+                                color: '#111111',
+                                border: '1px solid #FEFFFF'
+                            }}>
+                                Understand Our Services
                             </a>
+                            <div style={{
+                                fontSize: '0.85rem',
+                                color: 'rgba(255, 255, 255, 0.5)',
+                                fontFamily: 'monospace',
+                                letterSpacing: '0.05em'
+                            }}>
+                                Operational Design Standards / 2026
+                            </div>
                         </motion.div>
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </section>
     );
 };

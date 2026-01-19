@@ -1,142 +1,362 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 
 const StrategicSplit = () => {
-    const [hoveredLeft, setHoveredLeft] = useState(false);
-    const [hoveredRight, setHoveredRight] = useState(false);
+    const containerRef = useRef(null);
+    const [activeSection, setActiveSection] = useState(0);
+
+    // Images corresponding to sections
+    const sectionImages = [
+        "https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&q=80&w=1200", // Solutions (Factory)
+        "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1200"  // Impact (Shipping/Global Scale - Containers/Port)
+    ];
+
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start start", "end end"]
+    });
+
+    // Nivora-style scroll-linked micro-transforms for sticky image
+    // const imageScale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [1, 1.05, 1.05, 1]); // Removed
+    // const imageRotate = useTransform(scrollYProgress, [0, 0.5, 1], [0, -1.5, 0]); // Removed
+    // const imageX = useTransform(scrollYProgress, [0, 0.2], [-40, 0]); // Removed
+
+    // Progress indicator
+    const progressHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+    const grainOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.02, 0.06, 0.06, 0.02]);
+
+    // Content sections data
+    const contentSections = [
+        {
+            badge: "OUR APPROACH",
+            headline: <>Where Strategy<br />Meets <span style={{ color: '#C5A059' }}>Execution</span></>,
+            paragraphs: [
+                "We don't just consult—we execute. Our team operates on factory floors, negotiates with suppliers, and ensures every detail meets specifications.",
+                "From material selection to final shipment, we're embedded in your supply chain, ensuring seamless execution at every step."
+            ],
+            cta: { text: "View All Solutions →", href: "/solutions" }
+        },
+        {
+            badge: "THE RESULT",
+            headline: <>Precision at<br /><span style={{ color: '#C5A059' }}>Scale</span></>,
+            paragraphs: [
+                "Our on-ground presence means faster decision-making, real-time quality control, and supply chains that move at the speed of fashion.",
+                "26+ partner factories. 98% on-time delivery. Zero compromises on quality."
+            ],
+            stats: [
+                { value: "15+", label: "Years Experience" },
+                { value: "50M+", label: "Units Delivered" }
+            ],
+            cta: { text: "See Our Impact →", href: "/impact" }
+        }
+    ];
 
     return (
-        <section className="section strategic-split-container" style={{ padding: 0, minHeight: '80vh', display: 'flex', overflow: 'hidden' }}>
-            {/* Left Panel: Pain Points */}
-            <motion.div
-                onHoverStart={() => setHoveredLeft(true)}
-                onHoverEnd={() => setHoveredLeft(false)}
-                animate={{
-                    flex: window.innerWidth < 768 ? 'none' : (hoveredLeft ? 2 : 1),
-                    height: window.innerWidth < 768 ? (hoveredLeft ? '60vh' : '40vh') : 'auto'
-                }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: 'var(--space-md)',
-                    borderRight: window.innerWidth < 768 ? 'none' : '1px solid rgba(255,255,255,0.1)',
-                    borderBottom: window.innerWidth < 768 ? '1px solid rgba(255,255,255,0.1)' : 'none',
-                    position: 'relative',
-                    cursor: 'crosshair',
-                    overflow: 'hidden',
-                    width: window.innerWidth < 768 ? '100%' : 'auto'
-                }}
-            >
-                {/* Background Image with Overlay */}
-                <motion.div
-                    animate={{ scale: hoveredLeft ? 1.05 : 1 }}
-                    transition={{ duration: 0.8 }}
-                    style={{
-                        position: 'absolute',
-                        inset: 0,
-                        backgroundImage: 'url(/assets/images/challenge-split.png)',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        filter: 'grayscale(100%) contrast(1.2) brightness(0.3)',
-                        zIndex: 0
-                    }}
-                />
-
-                {/* Dark Overlay */}
+        <section ref={containerRef} style={{
+            minHeight: '150vh',
+            background: '#FEFFFF',
+            position: 'relative',
+            paddingTop: '6rem', // Added initial breathing room
+            paddingBottom: '12rem' // Added padding to prevent bottom sticking
+        }}>
+            <div style={{ width: '92%', maxWidth: '1800px', margin: '0 auto', height: '100%' }}>
                 <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(135deg, rgba(12, 14, 17, 0.8), rgba(12, 14, 17, 0.4))',
-                    zIndex: 1
-                }} />
-                <div style={{ maxWidth: '400px', zIndex: 1, textAlign: window.innerWidth < 768 ? 'center' : 'left' }}>
-                    <h3 style={{ color: 'var(--color-text-secondary)', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontSize: '0.8rem' }}>The Challenge</h3>
-                    <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 3rem)', lineHeight: 1.1, marginBottom: '2rem' }}>
-                        Navigating uncertainty in a fragmented world.
-                    </h2>
-                    {(hoveredLeft || window.innerWidth < 768) && (
-                        <motion.ul initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} style={{ listStyle: 'none', padding: 0, display: 'inline-block', textAlign: 'left' }}>
-                            <li style={{ marginBottom: '0.5rem', color: 'var(--color-text-secondary)', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                <span style={{ width: '6px', height: '6px', background: 'var(--color-text-secondary)', borderRadius: '50%' }} /> Supply Chain Volatility
-                            </li>
-                            <li style={{ marginBottom: '0.5rem', color: 'var(--color-text-secondary)', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                <span style={{ width: '6px', height: '6px', background: 'var(--color-text-secondary)', borderRadius: '50%' }} /> Talent Shortages
-                            </li>
-                            <li style={{ marginBottom: '0.5rem', color: 'var(--color-text-secondary)', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                <span style={{ width: '6px', height: '6px', background: 'var(--color-text-secondary)', borderRadius: '50%' }} /> Digital Disruption
-                            </li>
-                        </motion.ul>
-                    )}
+                    display: 'grid',
+                    gridTemplateColumns: typeof window !== 'undefined' && window.innerWidth < 768 ? '1fr' : '1.2fr 0.8fr',
+                    gap: '6rem',
+                    position: 'relative'
+                }}>
+                    {/* LEFT: Sticky Visual */}
+                    <div style={{
+                        position: 'sticky',
+                        top: '100px', // Simplified top offset
+                        height: 'fit-content', // Don't force full height, let it wrap content
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        // paddingRemoved
+                    }}>
+                        <div style={{ position: 'relative', width: '100%', height: '100%' }}> {/* Added height 100% for absolute images */}
+                            <motion.div
+                                style={{
+                                    // scale: imageScale, // Removed
+                                    // rotate: imageRotate, // Removed
+                                    // x: imageX, // Removed
+                                    position: 'relative',
+                                    overflow: 'hidden',
+                                    height: '500px', // Fixed height container for stability
+                                    borderRadius: '4px'
+                                }}
+                            >
+                                {/* Dynamic Images with Crossfade */}
+                                {sectionImages.map((src, idx) => (
+                                    <motion.img
+                                        key={idx}
+                                        src={src}
+                                        alt={`Visual ${idx}`}
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: activeSection === idx ? 1 : 0 }}
+                                        transition={{ duration: 0.6 }}
+                                        style={{
+                                            position: 'absolute',
+                                            top: 0,
+                                            left: 0,
+                                            width: '100%',
+                                            height: '100%',
+                                            objectFit: 'cover',
+                                            filter: 'brightness(0.9) saturate(1.2)',
+                                            display: 'block'
+                                        }}
+                                    />
+                                ))}
+
+                                {/* Grain Overlay */}
+                                <motion.div
+                                    style={{
+                                        position: 'absolute',
+                                        inset: 0,
+                                        backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")',
+                                        opacity: grainOpacity,
+                                        pointerEvents: 'none',
+                                        mixBlendMode: 'overlay',
+                                        zIndex: 2
+                                    }}
+                                />
+
+                                {/* Bronze Accent Border */}
+                                <div style={{
+                                    position: 'absolute',
+                                    bottom: 0,
+                                    left: 0,
+                                    width: '100%',
+                                    height: '2px',
+                                    background: '#C5A059',
+                                    zIndex: 3
+                                }} />
+                            </motion.div>
+
+                            {/* Progress Indicator */}
+                            <motion.div
+                                style={{
+                                    position: 'absolute',
+                                    right: '-2rem',
+                                    top: 0,
+                                    width: '2px',
+                                    height: '80%', // Reduced from 100% to stop at metrics
+                                    background: 'rgba(17, 17, 17, 0.1)'
+                                }}
+                            >
+                                <motion.div
+                                    style={{
+                                        width: '100%',
+                                        height: progressHeight,
+                                        background: 'var(--color-heritage-bronze)',
+                                        transformOrigin: 'top'
+                                    }}
+                                />
+                            </motion.div>
+
+                            {/* Small Metrics */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                                style={{
+                                    marginTop: '2rem',
+                                    display: 'flex',
+                                    gap: '3rem'
+                                }}
+                            >
+                                <div>
+                                    <div style={{
+                                        fontSize: '3rem',
+                                        fontWeight: 500,
+                                        color: '#111111',
+                                        fontFamily: 'Outfit, sans-serif',
+                                        lineHeight: 1
+                                    }}>26+</div>
+                                    <div style={{
+                                        fontSize: '0.75rem',
+                                        color: 'rgba(17, 17, 17, 0.5)',
+                                        fontFamily: 'monospace',
+                                        letterSpacing: '0.1em',
+                                        marginTop: '0.5rem',
+                                        textTransform: 'uppercase'
+                                    }}>Partner Factories</div>
+                                </div>
+                                <div>
+                                    <div style={{
+                                        fontSize: '3rem',
+                                        fontWeight: 500,
+                                        color: '#C5A059',
+                                        fontFamily: 'Outfit, sans-serif',
+                                        lineHeight: 1
+                                    }}>98%</div>
+                                    <div style={{
+                                        fontSize: '0.75rem',
+                                        color: 'rgba(17, 17, 17, 0.5)',
+                                        fontFamily: 'monospace',
+                                        letterSpacing: '0.1em',
+                                        marginTop: '0.5rem',
+                                        textTransform: 'uppercase'
+                                    }}>On-Time Delivery</div>
+                                </div>
+                            </motion.div>
+                        </div>
+                    </div>
+
+                    {/* RIGHT: Scrolling Content */}
+                    <div style={{
+                        padding: 'var(--space-xl) 0',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '25vh',
+                        justifyContent: 'flex-start',
+                        paddingTop: '15vh'
+                    }}>
+                        {contentSections.map((section, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 60, scale: 0.96 }}
+                                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                                viewport={{ once: false, margin: "-20% 0px" }} // Trigger when 20% from center
+                                onViewportEnter={() => setActiveSection(index)}
+                                transition={{
+                                    duration: 0.9,
+                                    delay: 0.1,
+                                    ease: [0.25, 0.1, 0.25, 1]
+                                }}
+                            >
+                                {/* Badge */}
+                                <div style={{
+                                    display: 'inline-flex',
+                                    padding: '0.5rem 1.5rem',
+                                    background: 'rgba(17, 17, 17, 0.05)',
+                                    border: '1px solid rgba(17, 17, 17, 0.1)',
+                                    borderRadius: '2rem',
+                                    marginBottom: '2rem'
+                                }}>
+                                    <span style={{
+                                        fontSize: '0.75rem',
+                                        color: '#111111',
+                                        fontFamily: 'monospace',
+                                        letterSpacing: '0.15em',
+                                        textTransform: 'uppercase'
+                                    }}>{section.badge}</span>
+                                </div>
+
+                                {/* Large Editorial Headline */}
+                                <h2 style={{
+                                    fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+                                    fontWeight: 500,
+                                    lineHeight: 1.1,
+                                    color: '#111111',
+                                    marginBottom: '2rem',
+                                    fontFamily: 'Outfit, sans-serif',
+                                    letterSpacing: '-0.03em'
+                                }}>
+                                    {section.headline}
+                                </h2>
+
+                                {/* Body Copy */}
+                                <div style={{
+                                    display: 'grid',
+                                    gridTemplateColumns: typeof window !== 'undefined' && window.innerWidth < 768 ? '1fr' : '1fr 1fr',
+                                    gap: '2rem',
+                                    marginBottom: section.cta ? '3rem' : '0'
+                                }}>
+                                    {section.paragraphs.map((para, pIndex) => (
+                                        <motion.p
+                                            key={pIndex}
+                                            initial={{ opacity: 0, y: 30 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: false, margin: "-10% 0px" }}
+                                            transition={{
+                                                duration: 0.7,
+                                                delay: 0.2 + (pIndex * 0.1),
+                                                ease: [0.25, 0.1, 0.25, 1]
+                                            }}
+                                            style={{
+                                                fontSize: '1rem',
+                                                lineHeight: 1.8,
+                                                color: 'rgba(17, 17, 17, 0.7)',
+                                                fontFamily: 'Inter, sans-serif',
+                                                fontWeight: 400
+                                            }}
+                                        >
+                                            {para}
+                                        </motion.p>
+                                    ))}
+                                </div>
+
+                                {/* Stats Grid */}
+                                {section.stats && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: false }}
+                                        transition={{ duration: 0.6, delay: 0.3 }}
+                                        style={{
+                                            display: 'flex',
+                                            gap: '3rem',
+                                            marginBottom: '2rem',
+                                            paddingTop: '1rem',
+                                            borderTop: '1px solid rgba(17, 17, 17, 0.1)'
+                                        }}
+                                    >
+                                        {section.stats.map((stat, sIndex) => (
+                                            <div key={sIndex}>
+                                                <div style={{
+                                                    fontSize: '2.5rem',
+                                                    fontWeight: 500,
+                                                    color: sIndex % 2 === 0 ? '#111111' : '#C5A059',
+                                                    fontFamily: 'Outfit, sans-serif',
+                                                    lineHeight: 1
+                                                }}>{stat.value}</div>
+                                                <div style={{
+                                                    fontSize: '0.75rem',
+                                                    color: 'rgba(17, 17, 17, 0.5)',
+                                                    fontFamily: 'monospace',
+                                                    letterSpacing: '0.1em',
+                                                    marginTop: '0.5rem',
+                                                    textTransform: 'uppercase'
+                                                }}>{stat.label}</div>
+                                            </div>
+                                        ))}
+                                    </motion.div>
+                                )}
+
+                                {/* CTA */}
+                                {section.cta && (
+                                    <motion.a
+                                        href={section.cta.href}
+                                        initial={{ opacity: 0, x: -20 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        viewport={{ once: false }}
+                                        transition={{ duration: 0.6, delay: 0.4 }}
+                                        style={{
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            gap: '0.5rem',
+                                            fontSize: '0.9rem',
+                                            color: '#C5A059',
+                                            fontFamily: 'Inter, sans-serif',
+                                            fontWeight: 500,
+                                            textDecoration: 'none',
+                                            borderBottom: '1px solid #C5A059',
+                                            paddingBottom: '0.25rem',
+                                            transition: 'all var(--duration-normal) var(--ease-fabric)'
+                                        }}
+                                    >
+                                        {section.cta.text}
+                                    </motion.a>
+                                )}
+                            </motion.div>
+                        ))}
+                    </div>
                 </div>
-            </motion.div>
-
-            {/* Right Panel: Solution */}
-            <motion.div
-                onHoverStart={() => setHoveredRight(true)}
-                onHoverEnd={() => setHoveredRight(false)}
-                animate={{
-                    flex: window.innerWidth < 768 ? 'none' : (hoveredRight ? 2 : 1),
-                    height: window.innerWidth < 768 ? (hoveredRight ? '60vh' : '40vh') : 'auto'
-                }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-                style={{
-                    position: 'relative',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: 'var(--space-md)',
-                    cursor: 'default',
-                    overflow: 'hidden',
-                    width: window.innerWidth < 768 ? '100%' : 'auto'
-                }}
-            >
-                {/* Background Image with Overlay */}
-                <motion.div
-                    animate={{ scale: hoveredRight ? 1.05 : 1 }}
-                    transition={{ duration: 0.8 }}
-                    style={{
-                        position: 'absolute',
-                        inset: 0,
-                        backgroundImage: 'url(/assets/images/solution-split.png)',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        filter: 'grayscale(60%) brightness(0.4)',
-                        zIndex: 0
-                    }}
-                />
-
-                {/* Gold Gradient Overlay */}
-                <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(45deg, rgba(166, 124, 82, 0.3), rgba(15, 18, 22, 0.7))',
-                    zIndex: 1,
-                    mixBlendMode: 'overlay'
-                }} />
-
-                <div style={{ maxWidth: '400px', zIndex: 2, textAlign: window.innerWidth < 768 ? 'center' : 'left' }}>
-                    <h3 style={{ color: 'var(--color-cashmere-gold)', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontSize: '0.8rem' }}>The Solution</h3>
-                    <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 3rem)', lineHeight: 1.1, marginBottom: '2rem' }}>
-                        Clarity, precision, and actionable strategy.
-                    </h2>
-                    {(hoveredRight || window.innerWidth < 768) && (
-                        <motion.ul initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} style={{ listStyle: 'none', padding: 0, display: 'inline-block', textAlign: 'left' }}>
-                            <li style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                <span style={{ width: '6px', height: '6px', background: 'var(--color-cashmere-gold)', borderRadius: '50%' }} /> Data-Driven Insights
-                            </li>
-                            <li style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                <span style={{ width: '6px', height: '6px', background: 'var(--color-cashmere-gold)', borderRadius: '50%' }} /> Resilient Frameworks
-                            </li>
-                            <li style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                <span style={{ width: '6px', height: '6px', background: 'var(--color-cashmere-gold)', borderRadius: '50%' }} /> Future-Proof Growth
-                            </li>
-                        </motion.ul>
-                    )}
-                </div>
-            </motion.div>
-        </section>
+            </div>
+        </section >
     );
 };
 

@@ -7,22 +7,15 @@ const HorizontalScroll = () => {
         target: targetRef,
     });
 
-    // Scroll Logic:
-    // We have a 400vh scroll container.
-    // The cards track needs to move left.
-    // Initial Position: Starts offset to the right (so first card is visible correctly).
-    // Final Position: Moves left enough to show the VERY LAST card at the right edge, then stops.
-    // Text Animation: Moves from center-left (top 50%, left 5vw) to top-center (top 15%, left 50%, x -50%)
-    // Adjusted translation to -225vw as per user request to perfect the end alignment.
     const x = useTransform(scrollYProgress, [0, 1], ["0%", "-225vw"]);
 
     const cards = [
-        { title: "Strategy", id: "01", img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800" }, // Building
-        { title: "Innovation", id: "02", img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800" }, // Tech
-        { title: "Growth", id: "03", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" }, // Data
-        { title: "Analytics", id: "04", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" }, // Charts
-        { title: "Future", id: "05", img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800" }, // Globe
-        { title: "Global", id: "06", img: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=800" }, // Abstract
+        { title: "Fashion Consultant", id: "01", img: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=800" },
+        { title: "Material Sourcing", id: "02", img: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=800" },
+        { title: "Quality Assurance", id: "03", img: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=800" },
+        { title: "Supply Chain", id: "04", img: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&q=80&w=800" },
+        { title: "Compliance", id: "05", img: "https://images.unsplash.com/photo-1467043237213-65f2da53396f?auto=format&fit=crop&q=80&w=800" },
+        { title: "Global Network", id: "06", img: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=800" },
     ];
 
     return (
@@ -37,7 +30,7 @@ const HorizontalScroll = () => {
                 alignItems: "flex-end",
                 paddingBottom: "10vh"
             }}>
-                {/* 1. STICKY HEADLINE (Static Top Center) */}
+                {/* STICKY HEADLINE with viewport reveal animation */}
                 <div style={{
                     position: 'absolute',
                     top: '20%',
@@ -48,16 +41,29 @@ const HorizontalScroll = () => {
                     textAlign: 'center',
                     pointerEvents: 'none'
                 }}>
-                    <h2 style={{
-                        fontSize: "clamp(3rem, 6vw, 6rem)",
-                        lineHeight: 1,
-                        fontWeight: 800,
-                        color: 'white',
-                        margin: 0
-                    }}>
+                    {/* Headline with down-to-up reveal */}
+                    <motion.h2
+                        initial={{ opacity: 0, y: 50, scale: 0.97 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                        viewport={{ once: true, margin: "-10% 0px" }}
+                        transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+                        style={{
+                            fontSize: "clamp(3rem, 6vw, 6rem)",
+                            lineHeight: 1,
+                            fontWeight: 800,
+                            color: 'white',
+                            margin: 0
+                        }}
+                    >
                         Global <span style={{ color: 'var(--color-heritage-bronze)' }}>Capabilities.</span>
-                    </h2>
-                    <p
+                    </motion.h2>
+
+                    {/* Subtext with staggered down-to-up reveal */}
+                    <motion.p
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-10% 0px" }}
+                        transition={{ duration: 0.7, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
                         style={{
                             marginTop: '2rem',
                             fontSize: '1.2rem',
@@ -67,34 +73,57 @@ const HorizontalScroll = () => {
                         }}
                     >
                         Delivering impact across borders and industries.
-                    </p>
+                    </motion.p>
                 </div>
 
-                {/* 2. MOVING TRACK (Right Side) */}
+                {/* MOVING TRACK */}
                 <motion.div style={{
                     x,
                     display: "flex",
                     gap: "2rem",
-                    paddingLeft: "100vw", // Start way off screen to let title animate first
+                    paddingLeft: "100vw",
                     height: "50vh",
                     alignItems: "center"
                 }}>
-                    {cards.map((card) => (
-                        <div key={card.id} style={{
-                            minWidth: "35vw",
-                            height: "100%",
-                            position: 'relative',
-                            overflow: 'hidden',
-                            borderRadius: '12px',
-                            border: '1px solid rgba(255,255,255,0.1)',
-                            background: '#111'
-                        }}>
+                    {cards.map((card, index) => (
+                        <motion.div
+                            key={card.id}
+                            initial={{
+                                opacity: 0,
+                                y: index % 2 === 0 ? 60 : -60, // Alternating Y direction
+                                x: index % 2 === 0 ? -30 : 30, // Alternating X direction
+                                scale: 0.92,
+                                rotate: index % 2 === 0 ? 1.5 : -1.5
+                            }}
+                            whileInView={{
+                                opacity: 1,
+                                y: 0,
+                                x: 0,
+                                scale: 1,
+                                rotate: 0
+                            }}
+                            viewport={{ once: true, margin: "-5% 0px" }}
+                            transition={{
+                                duration: 0.8,
+                                delay: index * 0.08,
+                                ease: [0.25, 0.1, 0.25, 1]
+                            }}
+                            style={{
+                                minWidth: "35vw",
+                                height: "100%",
+                                position: 'relative',
+                                overflow: 'hidden',
+                                borderRadius: '12px',
+                                border: '1px solid rgba(255,255,255,0.1)',
+                                background: '#111'
+                            }}
+                        >
                             <motion.img
                                 whileHover={{ scale: 1.1 }}
                                 transition={{ duration: 0.6 }}
                                 src={card.img}
                                 alt={card.title}
-                                style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(100%) brightness(0.8)' }}
+                                style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.85) saturate(1.1)' }}
                             />
                             <div style={{ position: 'absolute', bottom: '2rem', left: '2rem', pointerEvents: 'none' }}>
                                 <h3 style={{ fontSize: '2.5rem', color: 'white', marginBottom: '0.5rem' }}>{card.title}</h3>
@@ -112,7 +141,7 @@ const HorizontalScroll = () => {
                             }}>
                                 {card.id}
                             </span>
-                        </div>
+                        </motion.div>
                     ))}
                 </motion.div>
             </div>

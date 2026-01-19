@@ -122,7 +122,7 @@ const Contact = () => {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', justifyContent: 'space-between', height: '100%', textAlign: window.innerWidth < 768 ? 'center' : 'left' }}>
                         <div>
                             <h4 style={{ color: '#666', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Contact</h4>
-                            <a href="mailto:hello@gtfz.com" style={{ fontSize: window.innerWidth < 768 ? '1.25rem' : '2rem', display: 'block', color: '#333', textDecoration: 'none', marginBottom: '0.5rem' }}>hello@gtfz.com</a>
+                            <a href="mailto:partnerships@gtfz.com" style={{ fontSize: window.innerWidth < 768 ? '1.25rem' : '2rem', display: 'block', color: '#333', textDecoration: 'none', marginBottom: '0.5rem' }}>partnerships@gtfz.com</a>
                             <a href="tel:+15550000000" style={{ fontSize: window.innerWidth < 768 ? '1.25rem' : '2rem', display: 'block', color: '#333', textDecoration: 'none' }}>+1 (555) 000-0000</a>
                         </div>
 

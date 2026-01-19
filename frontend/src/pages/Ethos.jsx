@@ -246,7 +246,7 @@ const GTTriad = () => {
                 position: 'absolute', inset: 0,
                 backgroundImage: `url(${IMAGES.triadGrid})`,
                 backgroundSize: 'cover', backgroundPosition: 'center',
-                opacity: 0.1, mixBlendMode: 'screen', filter: 'grayscale(100%)'
+                opacity: 0.05, mixBlendMode: 'screen', filter: 'grayscale(100%)'
             }} />
 
             <div style={{ position: 'sticky', top: 0, height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10 }}>
@@ -264,10 +264,10 @@ const GTTriad = () => {
                     {/* Turbine Blocking Background (Hides Spine) */}
                     <div style={{ position: 'absolute', width: '200px', height: '200px', background: '#080808', borderRadius: '50%', boxShadow: '0 0 50px #000' }} />
 
-                    {/* Turbine Core Rings */}
-                    <div style={{ position: 'absolute', width: '200px', height: '200px', border: '2px dashed #444', borderRadius: '50%' }} />
-                    <div style={{ position: 'absolute', width: '350px', height: '350px', border: '1px solid var(--color-heritage-bronze)', borderRadius: '50%', opacity: 0.3 }} />
-                    <div style={{ position: 'absolute', width: '600px', height: '600px', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '50%' }} />
+                    {/* Turbine Core Rings - Refined */}
+                    <div style={{ position: 'absolute', width: '200px', height: '200px', border: '1px solid rgba(254, 255, 255, 0.2)', borderRadius: '50%' }} />
+                    <div style={{ position: 'absolute', width: '350px', height: '350px', border: '1px solid #C5A059', borderRadius: '50%', opacity: 0.2 }} />
+                    <div style={{ position: 'absolute', width: '600px', height: '600px', border: '1px solid rgba(254,255,255,0.03)', borderRadius: '50%' }} />
 
                     {/* Nodes - Integrated Fly-out Logic */}
                     <TriadNode
@@ -374,9 +374,9 @@ const TriadNode = ({ item, expansion, progress, activeRange, turbineRotate }) =>
                     display: 'flex', flexDirection: 'column', alignItems: 'center',
                     // Clean text only, no card background
                 }}>
-                    <h3 style={{ color: '#fff', fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem' }}>{item.label}</h3>
-                    <span style={{ color: 'var(--color-heritage-bronze)', fontFamily: 'monospace', display: 'block', marginBottom: '1rem' }}>{item.sub}</span>
-                    <p style={{ color: '#aaa', fontSize: '0.9rem', lineHeight: 1.6 }}>{item.description}</p>
+                    <h3 style={{ color: '#FEFFFF', fontSize: '1.5rem', fontWeight: 500, marginBottom: '0.5rem', fontFamily: 'Outfit, sans-serif' }}>{item.label}</h3>
+                    <span style={{ color: '#C5A059', fontFamily: 'monospace', display: 'block', marginBottom: '1rem', fontSize: '0.85rem', letterSpacing: '0.05em' }}>{item.sub}</span>
+                    <p style={{ color: 'rgba(254, 255, 255, 0.6)', fontSize: '0.9rem', lineHeight: 1.6, fontFamily: 'Inter, sans-serif' }}>{item.description}</p>
                 </motion.div>
 
             </motion.div>
@@ -384,82 +384,304 @@ const TriadNode = ({ item, expansion, progress, activeRange, turbineRotate }) =>
     );
 };
 
-// --- 3.0 Values: "The Z-Axis Tunnel" ---
-const ValueTunnel = () => {
+// --- 3.0 Core Values: "Scroll-Driven Hero Reveal" ---
+const PREMIUM_VALUES = [
+    {
+        id: '01',
+        title: 'Transparency',
+        subtitle: '30% emissions',
+        description: 'The clean industrial revolution starts with transforming how we track everything in the supply chain—from raw materials to final delivery.',
+        image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2670',
+        smallImages: [
+            'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=400',
+            'https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&q=80&w=400',
+            'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&q=80&w=400'
+        ]
+    },
+    {
+        id: '02',
+        title: 'Precision',
+        subtitle: '26% efficiency',
+        description: 'The world must build 21st century supply chains while delivering operational excellence—efficient, reliable, and accountable systems for everyone.',
+        image: 'https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&q=80&w=2671',
+        smallImages: [
+            'https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&q=80&w=400',
+            'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=400',
+            'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=400'
+        ]
+    },
+    {
+        id: '03',
+        title: 'Accountability',
+        subtitle: '100% verified',
+        description: 'Every decision backed by evidence. Every result measured against targets. The foundation of trust is built on verifiable impact.',
+        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2426',
+        smallImages: [
+            'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=400',
+            'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=400',
+            'https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&q=80&w=400'
+        ]
+    }
+];
+
+const ScrollDrivenValueCard = ({ value, index }) => {
     const containerRef = useRef(null);
-    const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start end", "end start"]
+    });
+
+    // Only first value (index 0) gets scattered animation
+    const isFirstValue = index === 0;
+
+    // Phase 1: Small images scattered (0-0.2)
+    // Phase 2: Images zoom and move toward center (0.2-0.4)
+    // Phase 3: Main image grows, others fade (0.4-0.6)
+    // Phase 4: Title appears (0.6-0.75)
+    // Phase 5: Full content visible (0.75-1)
+
+    // Small images opacity and scale (only for first value)
+    const smallImagesOpacity = useTransform(scrollYProgress, [0.1, 0.3, 0.5], [1, 1, 0]);
+    const smallImagesScale = useTransform(scrollYProgress, [0.1, 0.3, 0.5], [0.8, 1.2, 1.5]);
+
+    // Main image scale and opacity
+    const mainImageScale = isFirstValue
+        ? useTransform(scrollYProgress, [0.3, 0.5, 0.7], [0.6, 1, 1.1])
+        : useTransform(scrollYProgress, [0.2, 0.5], [1.05, 1]);
+
+    const mainImageOpacity = isFirstValue
+        ? useTransform(scrollYProgress, [0.3, 0.4, 0.7], [0, 1, 1])
+        : useTransform(scrollYProgress, [0.2, 0.4], [0, 1]);
+
+    // Title opacity and scale
+    const titleOpacity = isFirstValue
+        ? useTransform(scrollYProgress, [0.5, 0.65, 0.8], [0, 0.3, 1])
+        : useTransform(scrollYProgress, [0.3, 0.5], [0, 1]);
+
+    const titleScale = useTransform(scrollYProgress, [0.5, 0.7], [0.9, 1]);
+
+    // Content opacity
+    const contentOpacity = isFirstValue
+        ? useTransform(scrollYProgress, [0.65, 0.8], [0, 1])
+        : useTransform(scrollYProgress, [0.4, 0.6], [0, 1]);
+
+    const contentY = useTransform(scrollYProgress, [0.65, 0.8], [40, 0]);
+
+    // Background overlay darkness
+    const overlayOpacity = useTransform(scrollYProgress, [0.5, 0.75], [0.3, 0.7]);
 
     return (
-        <section ref={containerRef} style={{ height: '400vh', background: '#000', position: 'relative' }}>
-            <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10 }}>
+        <section
+            ref={containerRef}
+            style={{
+                height: isFirstValue ? '300vh' : '200vh', // First value longer scroll
+                position: 'relative',
+                background: '#000'
+            }}
+        >
+            <div style={{
+                position: 'sticky',
+                top: 0,
+                height: '100vh',
+                overflow: 'hidden',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 5 // Higher than GlobalSpine (zIndex: 1)
+            }}>
+                {/* Scattered Small Images - ONLY for first value */}
+                {isFirstValue && (
+                    <motion.div
+                        style={{
+                            opacity: smallImagesOpacity,
+                            position: 'absolute',
+                            inset: 0,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-around',
+                            padding: '10%',
+                            pointerEvents: 'none'
+                        }}
+                    >
+                        {value.smallImages.map((img, i) => (
+                            <motion.div
+                                key={i}
+                                style={{
+                                    scale: smallImagesScale,
+                                    position: 'absolute',
+                                    left: `${20 + i * 25}%`,
+                                    top: `${15 + i * 30}%`,
+                                    width: '200px',
+                                    height: '150px',
+                                    borderRadius: '4px',
+                                    overflow: 'hidden'
+                                }}
+                            >
+                                <img
+                                    src={img}
+                                    alt=""
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        objectFit: 'cover',
+                                        filter: 'grayscale(30%) brightness(0.8)'
+                                    }}
+                                />
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                )}
 
-                {/* Moving Grid Background */}
-                <motion.div style={{
-                    position: 'absolute', inset: -100,
-                    backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
-                    backgroundSize: '100px 100px',
-                    scale: useTransform(scrollYProgress, [0, 1], [1, 3]),
-                    opacity: 0.3
-                }} />
+                {/* Full-Bleed Background Image */}
+                <motion.div
+                    style={{
+                        opacity: mainImageOpacity,
+                        scale: mainImageScale,
+                        position: 'absolute',
+                        inset: 0,
+                        willChange: 'transform, opacity'
+                    }}
+                >
+                    <div
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            backgroundImage: `url(${value.image})`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            filter: 'grayscale(20%) brightness(0.7) contrast(1.1)'
+                        }}
+                    />
+                    {/* Dark overlay */}
+                    <motion.div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.7) 100%)',
+                        opacity: overlayOpacity
+                    }} />
+                </motion.div>
 
-                <TunnelStage progress={scrollYProgress} range={[0, 0.35]} title="TRANSPARENCY" sub="ABSOLUTE VISIBILITY" img={IMAGES.tunnel1} />
-                <TunnelStage progress={scrollYProgress} range={[0.35, 0.7]} title="AGILITY" sub="HIGH-SPEED ADAPTATION" img={IMAGES.tunnel2} />
-                <TunnelStage progress={scrollYProgress} range={[0.7, 1]} title="COMPLIANCE" sub="ENGINEERED SAFETY" img={IMAGES.tunnel3} />
+                {/* Content Overlay */}
+                <motion.div
+                    style={{
+                        position: 'relative',
+                        zIndex: 10,
+                        maxWidth: '1400px',
+                        width: '100%',
+                        padding: '0 4rem',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                        height: '85%'
+                    }}
+                >
+                    {/* Badge - Top Left */}
+                    <motion.div
+                        style={{
+                            opacity: contentOpacity,
+                            y: contentY,
+                            display: 'inline-flex',
+                            alignSelf: 'flex-start',
+                            padding: '0.5rem 1.5rem',
+                            background: 'rgba(255, 255, 255, 0.15)',
+                            border: '1px solid rgba(255, 255, 255, 0.3)',
+                            borderRadius: '2rem',
+                            backdropFilter: 'blur(10px)'
+                        }}
+                    >
+                        <span style={{
+                            fontSize: '0.85rem',
+                            color: '#FFFFFF',
+                            fontFamily: 'monospace',
+                            letterSpacing: '0.1em'
+                        }}>
+                            {value.subtitle}
+                        </span>
+                    </motion.div>
 
+                    {/* Large YELLOW Title - Center */}
+                    <motion.h2
+                        style={{
+                            opacity: titleOpacity,
+                            scale: titleScale,
+                            fontSize: 'clamp(4rem, 12vw, 10rem)',
+                            fontWeight: 700,
+                            color: '#D4E157', // Bright yellow/neon like reference
+                            margin: 0,
+                            lineHeight: 0.95,
+                            letterSpacing: '-0.02em',
+                            textShadow: '0 4px 30px rgba(0,0,0,0.8)',
+                            textAlign: 'left',
+                            alignSelf: 'flex-start'
+                        }}
+                    >
+                        {value.title}
+                    </motion.h2>
 
+                    {/* Description + Button - Bottom */}
+                    <motion.div
+                        style={{
+                            opacity: contentOpacity,
+                            y: contentY,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '2rem',
+                            alignSelf: 'flex-start'
+                        }}
+                    >
+                        <p
+                            style={{
+                                fontSize: '1.1rem',
+                                color: '#E8E8E8',
+                                lineHeight: 1.7,
+                                maxWidth: '500px',
+                                textShadow: '0 2px 10px rgba(0,0,0,0.5)',
+                                margin: 0
+                            }}
+                        >
+                            {value.description}
+                        </p>
 
+                        {/* Yellow CTA Button */}
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            style={{
+                                alignSelf: 'flex-start',
+                                padding: '0.75rem 2rem',
+                                background: '#D4E157',
+                                color: '#000',
+                                border: 'none',
+                                borderRadius: '2rem',
+                                fontSize: '0.9rem',
+                                fontWeight: 600,
+                                cursor: 'pointer',
+                                boxShadow: '0 4px 15px rgba(212, 225, 87, 0.4)'
+                            }}
+                        >
+                            29 {value.title} Companies
+                        </motion.button>
+                    </motion.div>
+                </motion.div>
             </div>
         </section>
     );
 };
 
-const TunnelStage = ({ progress, range, title, sub, img }) => {
-    // New Animation: "Holographic 3D Flip"
-    const opacity = useTransform(progress, [range[0], range[0] + 0.1, range[1] - 0.1, range[1]], [0, 1, 1, 0]);
-    const scale = useTransform(progress, [range[0], range[1]], [0.9, 1.05]); // Subtle breathe
-    const rotateX = useTransform(progress, [range[0], range[1]], [25, 0]); // Reduced tilt for visibility
-    const y = useTransform(progress, [range[0], range[1]], [100, -50]);
-
-    // Scanline motion
-    const scanTop = useTransform(progress, [range[0], range[1]], ['0%', '100%']);
-
+const PremiumValueTunnel = () => {
     return (
-        <motion.div style={{
-            opacity, scale, rotateX, y,
-            transformPerspective: 1200,
-            position: 'absolute', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-            width: '100%', height: '100%'
+        <section style={{
+            background: '#000',
+            position: 'relative'
         }}>
-            {/* Holographic Frame - Upscaled & Premium */}
-            <div style={{
-                width: '80vw', height: '65vh',  // SIGNIFICANTLY LARGER
-                maxWidth: '1400px', maxHeight: '900px',
-                overflow: 'hidden', borderRadius: '4px', marginBottom: '3rem', position: 'relative',
-                background: '#050505',
-                border: '1px solid rgba(197, 160, 89, 0.2)', // Thinner, elegant border
-                boxShadow: '0 20px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(197, 160, 89, 0.1)' // Deep shadow + subtle ring
-            }}>
-                {/* Tech Corner Markers */}
-                <div style={{ position: 'absolute', top: 0, left: 0, width: '10px', height: '10px', borderTop: '2px solid var(--color-heritage-bronze)', borderLeft: '2px solid var(--color-heritage-bronze)', zIndex: 2 }}></div>
-                <div style={{ position: 'absolute', bottom: 0, right: 0, width: '10px', height: '10px', borderBottom: '2px solid var(--color-heritage-bronze)', borderRight: '2px solid var(--color-heritage-bronze)', zIndex: 2 }}></div>
-
-                <img src={img} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9, filter: 'contrast(1.2)' }} />
-
-                {/* The Scanline */}
-                <motion.div style={{
-                    position: 'absolute', top: scanTop, left: 0, right: 0, height: '2px',
-                    background: 'rgba(255,255,255,0.8)',
-                    boxShadow: '0 0 10px rgba(255,255,255,1)',
-                    zIndex: 3
-                }} />
-
-                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '50%', background: 'linear-gradient(to top, black, transparent)' }} />
-            </div>
-
-            <h2 style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', fontWeight: 800, color: '#fff', lineHeight: 0.9, textShadow: '0 0 20px #000, 0 0 10px #000' }}>{title}</h2>
-            <span style={{ color: 'var(--color-heritage-bronze)', fontFamily: 'monospace', letterSpacing: '0.2em', textShadow: '0 0 10px #000' }}>{sub}</span>
-        </motion.div>
-    )
+            {PREMIUM_VALUES.map((value, i) => (
+                <ScrollDrivenValueCard
+                    key={value.id}
+                    value={value}
+                    index={i}
+                />
+            ))}
+        </section>
+    );
 };
 
 
@@ -521,7 +743,65 @@ const Ethos = () => {
             <GlobalSpine />
             <EthosHero />
             <GTTriad />
-            <ValueTunnel />
+
+            {/* Editorial Break - Fashion Mood Moment */}
+            <section style={{
+                height: '100vh',
+                position: 'relative',
+                overflow: 'hidden'
+            }}>
+                <motion.div
+                    style={{
+                        position: 'absolute',
+                        inset: '-10%',
+                        backgroundImage: 'url(https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&q=80&w=2670)',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        filter: 'brightness(0.7) saturate(1.1)'
+                    }}
+                    initial={{ scale: 1.1 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.5, ease: [0.25, 0.1, 0.25, 1] }}
+                />
+                {/* Grain Overlay */}
+                <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")',
+                    opacity: 0.05,
+                    pointerEvents: 'none',
+                    mixBlendMode: 'overlay',
+                    zIndex: 2
+                }} />
+                {/* Minimal Caption */}
+                <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.9, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                    style={{
+                        position: 'absolute',
+                        bottom: '15%',
+                        left: '5%',
+                        zIndex: 3
+                    }}
+                >
+                    <p style={{
+                        fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
+                        color: '#fff',
+                        fontFamily: 'Outfit, sans-serif',
+                        fontWeight: 300,
+                        letterSpacing: '-0.02em',
+                        lineHeight: 1.3,
+                        maxWidth: '500px'
+                    }}>
+                        Where craft<br />meets conviction.
+                    </p>
+                </motion.div>
+            </section>
+
+            <PremiumValueTunnel />
             <FounderUnknown />
         </main>
     );

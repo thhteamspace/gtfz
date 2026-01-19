@@ -4,7 +4,14 @@ import { motion } from 'framer-motion';
 const CustomCursor = () => {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [hoveredElement, setHoveredElement] = useState(null);
+    const [isTouchDevice, setIsTouchDevice] = useState(false);
     const rafRef = useRef(null);
+
+    // Detect touch device on mount
+    useEffect(() => {
+        const checkTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        setIsTouchDevice(checkTouch);
+    }, []);
 
     useEffect(() => {
         const mouseMove = (e) => {
@@ -96,6 +103,9 @@ const CustomCursor = () => {
         }
         return '12px';
     };
+
+    // Don't render cursor on touch devices
+    if (isTouchDevice) return null;
 
     return (
         <>

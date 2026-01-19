@@ -1,213 +1,178 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
-const ServiceItem = ({ title, subtitle, img, index, total, scrollYProgress }) => {
-    // We split the scroll progress into slots for each card
-    const step = 0.9 / total; // Use 90% of scroll for cards
-    const start = index * step;
-    const end = start + step;
+const ServiceCard = ({ title, description, image, hoverImage, index, totalCards }) => {
+    const videoRef = useRef(null);
+    const cardRef = useRef(null);
+    const [isHovering, setIsHovering] = useState(false);
 
-    // Internal Stagger Logic within this card's [start, end] window
-    // 1. Card Entrace (Slide Up): 0% - 20% of range
-    // 2. Image Reveal (Center): 20% - 40%
-    // 3. Subtitle Reveal (Right): 40% - 70%
-    // 4. Left Title Reveal (Left): 70% - 100%
+    const { scrollYProgress } = useScroll({
+        target: cardRef,
+        offset: ["start end", "end start"]
+    });
 
-    // Mapping 0-1 range within the card's slot
-    const cardEntranceEnd = start + (step * 0.2);
-    const imageRevealEnd = start + (step * 0.4);
-    const subtitleRevealEnd = start + (step * 0.7);
-    const titleRevealEnd = end;
+    // Alternating direction: even indices from left, odd from right
+    const xDirection = index % 2 === 0 ? -80 : 80;
+    const staggerDelay = index * 0.12; // Staggered entrance delay
 
-    // 1. Card Slide Up (Entrance)
-    const y = useTransform(
-        scrollYProgress,
-        [start, cardEntranceEnd],
-        index === 0 ? ["0%", "0%"] : ["100%", "0%"]
-    );
-
-    // 2. Center Image: Scale Up & Fade In
-    const imageScale = useTransform(scrollYProgress, [cardEntranceEnd, imageRevealEnd], [0.5, 1.1]);
-    const imageOpacity = useTransform(scrollYProgress, [cardEntranceEnd, imageRevealEnd], [0, 1]);
-
-    // 3. Left Title: Slide Up & Fade In
-    // Start from 100vh (way below) to create a distinct "travelling up" effect.
-    const titleY = useTransform(scrollYProgress, [imageRevealEnd, subtitleRevealEnd], ["100vh", "0px"]);
-
-    // Sync opacity with movement: Fade in over first 50% of the movement range.
-    const titleFadeEnd = imageRevealEnd + (subtitleRevealEnd - imageRevealEnd) * 0.5;
-    const titleOpacity = useTransform(scrollYProgress, [imageRevealEnd, titleFadeEnd], [0, 1]);
-
-
-    // 4. Right Subtitle: Slide Up & Fade In
-    const subY = useTransform(scrollYProgress, [subtitleRevealEnd, titleRevealEnd], ["100vh", "0px"]);
-    // Fade in over first 50% of slide
-    const subFadeEnd = subtitleRevealEnd + (titleRevealEnd - subtitleRevealEnd) * 0.5;
-    const subOpacity = useTransform(scrollYProgress, [subtitleRevealEnd, subFadeEnd], [0, 1]);
-
-
-
-    // Scale Down for Stacking effect as next cards come
-    // Happens when NEXT card starts entering
-    const nextCardStart = end;
-    const scale = useTransform(
-        scrollYProgress,
-        [nextCardStart, 1],
-        [1, 1 - (total - index) * 0.05]
-    );
-
-    // Opacity for Card 0 (fade in initially)
-    const cardOpacity = index === 0
-        ? useTransform(scrollYProgress, [0, 0.05], [0, 1])
-        : 1;
-
-    // Text Exit Logic: Fade out text as the next card arrives so only images stack
-    // We want text to be visible during its own slot [start, end], then fade out.
-    // Actually, let's fade it out as the next one starts sliding up.
-    const textExitOpacity = useTransform(scrollYProgress, [end, end + 0.05], [1, 0]);
-
-    // Stack Lift Logic:
-    // As the card moves into the "stack" (past 'end'), we want it to move UP slightly
-    // to create a visible "bundle" offset behind the new card.
-    // Calculate how "deep" in the stack we are.
-    const stackLift = useTransform(
-        scrollYProgress,
-        [end, 1],
-        ["0vh", "-10vh"] // Move up by 10vh as it goes deeper into stack
-    );
-
-    // Combine Y for entrance with stack lift
-    // For Card 0, valid from 0. For others, valid from start.
-    // We can just add the stackLift to the base Y for the image container?
-    // Actually, let's apply the lift to the main motion.div y or a separate transform.
-
-    // Simplification:
-    // Main Y handles [100% -> 0%].
-    // We need a secondary Y for the "Stack" phase.
-    // Let's composite them? Or just use a separate motion div for the content?
-    // Easier: Apply stackLift to the inner container or image container.
+    // Enhanced scroll-linked transforms with directional movement + scale
+    const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0.85]);
+    const y = useTransform(scrollYProgress, [0, 0.2], [60, 0]);
+    const x = useTransform(scrollYProgress, [0, 0.2], [xDirection, 0]);
+    const scale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.92, 1, 1, 0.97]);
+    const rotate = useTransform(scrollYProgress, [0, 0.2], [index % 2 === 0 ? 1.5 : -1.5, 0]); // Alternate rotation
 
     return (
         <motion.div
+            ref={cardRef}
             style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                y: index === 0 ? 0 : y,
+                opacity,
+                y,
+                x,
                 scale,
-                opacity: cardOpacity,
-                zIndex: index
+                rotate
             }}
         >
-            <motion.div style={{
-                // backgroundColor: 'var(--color-obsidian-slate)', // REMOVED for transparent stacking
-                width: '100vw',
-                height: '100%',
-                display: 'flex',
-                alignItems: 'flex-end',
-                padding: window.innerWidth < 768 ? '0 2rem 5vh 2rem' : '0 4rem 15vh 4rem',
-                flexDirection: window.innerWidth < 768 ? 'column' : 'row',
-                justifyContent: 'center',
-                alignItems: window.innerWidth < 768 ? 'center' : 'flex-end',
-                position: 'relative',
-                overflow: 'hidden',
-                y: stackLift // Apply lift here for the stack effect
-            }}>
-                {/* 1. Left: Title (Sequence: 3) */}
-                <motion.div style={{
-                    flex: window.innerWidth < 768 ? 'none' : 1,
-                    textAlign: window.innerWidth < 768 ? 'center' : 'left',
-                    zIndex: 2,
-                    y: titleY,
-                    opacity: titleOpacity,
-                    marginBottom: window.innerWidth < 768 ? '2rem' : '20vh',
-                    willChange: 'transform, opacity'
+            <motion.div
+                whileHover={{ y: -10 }}
+                transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+                style={{
+                    background: index % 2 === 0 ? '#FEFFFF' : '#111111',
+                    border: `1px solid ${index % 2 === 0 ? 'rgba(17,17,17,0.1)' : 'rgba(254,255,255,0.1)'}`,
+                    borderRadius: '0',
+                    overflow: 'hidden',
+                    cursor: 'pointer',
+                    position: 'relative'
+                }}
+            >
+                {/* Fashion Video with Image Fallback */}
+                <div style={{
+                    height: '300px',
+                    overflow: 'hidden',
+                    position: 'relative'
                 }}>
-                    {/* Note: Combining opacities. titleOpacity handles Entrance. textExitOpacity handles Exit. */}
-                    <motion.div style={{ opacity: textExitOpacity }}>
-                        <h3 style={{
-                            fontSize: 'clamp(1.5rem, 5vw, 4rem)',
-                            fontWeight: 700,
-                            lineHeight: 1.1,
-                            color: 'white'
-                        }}>
-                            {title}
-                        </h3>
-                    </motion.div>
-                </motion.div>
+                    {/* Static Image - Shows when not hovering */}
+                    <motion.img
+                        src={image}
+                        alt={title}
+                        animate={{
+                            opacity: isHovering ? 0 : 1,
+                            scale: isHovering ? 1.05 : 1
+                        }}
+                        transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                        style={{
+                            position: 'absolute',
+                            inset: 0,
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            filter: 'brightness(0.9) saturate(1.1)',
+                            zIndex: 1
+                        }}
+                    />
 
-                {/* 2. Center: Circular Image (Sequence: 2) */}
-                <motion.div style={{
-                    flex: window.innerWidth < 768 ? 'none' : '0 0 400px',
-                    width: window.innerWidth < 768 ? '260px' : '400px',
-                    height: window.innerWidth < 768 ? '260px' : '400px',
-                    margin: window.innerWidth < 768 ? '1rem 0' : '0 2rem',
-                    position: 'relative',
-                    scale: imageScale,
-                    opacity: imageOpacity
-                }}>
-                    <div style={{
-                        width: '100%',
-                        height: '100%',
-                        borderRadius: '50%',
-                        overflow: 'hidden',
-                        border: '1px solid rgba(255,255,255,0.05)',
-                        position: 'relative',
-                        boxShadow: '0 0 30px rgba(0,0,0,0.5)',
-                        backgroundColor: '#111'
-                    }}>
-                        <img
-                            src={img}
-                            alt={title}
-                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        />
-                    </div>
-                </motion.div>
+                    {/* Video - Plays on hover */}
+                    <motion.video
+                        src={hoverImage}
+                        muted
+                        loop
+                        playsInline
+                        onMouseEnter={(e) => e.target.play()}
+                        onMouseLeave={(e) => { e.target.pause(); e.target.currentTime = 0; }}
+                        animate={{
+                            opacity: isHovering ? 1 : 0,
+                            scale: isHovering ? 1.05 : 1
+                        }}
+                        transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                        style={{
+                            position: 'absolute',
+                            inset: 0,
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            filter: 'brightness(0.9) saturate(1.1)',
+                            zIndex: 2
+                        }}
+                    />
 
-                {/* 3. Right: Subtitle (Sequence: 4) */}
-                <motion.div style={{
-                    flex: 1,
-                    textAlign: 'right',
+                    {/* Grain overlay on hover */}
+                    <motion.div
+                        animate={{ opacity: isHovering ? 0.06 : 0 }}
+                        transition={{ duration: 0.4 }}
+                        style={{
+                            position: 'absolute',
+                            inset: 0,
+                            backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")',
+                            pointerEvents: 'none',
+                            zIndex: 3,
+                            mixBlendMode: 'overlay'
+                        }}
+                    />
+                </div>
+
+                {/* Content */}
+                <div style={{
+                    padding: '2.5rem',
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'flex-end',
-                    zIndex: 2,
-                    y: subY,
-                    opacity: subOpacity,
-                    marginBottom: '20vh',
-                    willChange: 'transform, opacity'
+                    gap: '1.5rem'
                 }}>
-                    <motion.div style={{ opacity: textExitOpacity, display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                        <p style={{
-                            fontSize: '1.25rem',
-                            color: 'var(--color-text-secondary)',
-                            maxWidth: '300px',
-                            lineHeight: 1.6,
-                            fontFamily: 'var(--font-body)',
-                            fontStyle: 'italic'
-                        }}>
-                            {subtitle}
-                        </p>
+                    {/* Small Index Badge */}
+                    <div style={{
+                        display: 'inline-flex',
+                        alignSelf: 'flex-start',
+                        padding: '0.35rem 1rem',
+                        background: index % 2 === 0 ? 'rgba(17,17,17,0.05)' : 'rgba(254,255,255,0.05)',
+                        border: `1px solid ${index % 2 === 0 ? 'rgba(17,17,17,0.1)' : 'rgba(254,255,255,0.1)'}`,
+                        borderRadius: '2rem'
+                    }}>
                         <span style={{
-                            marginTop: '2rem',
-                            fontSize: '0.9rem',
-                            color: 'var(--color-heritage-bronze)',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.2em',
-                            borderBottom: '1px solid var(--color-heritage-bronze)',
-                            paddingBottom: '0.5rem'
+                            fontSize: '0.7rem',
+                            fontFamily: 'monospace',
+                            letterSpacing: '0.15em',
+                            color: index % 2 === 0 ? '#111111' : '#FEFFFF'
                         }}>
-                            Explore
+                            0{index + 1}
                         </span>
-                    </motion.div>
-                </motion.div>
+                    </div>
+
+                    <h3 style={{
+                        fontSize: 'clamp(1.8rem, 3vw, 2.5rem)',
+                        fontWeight: 500,
+                        lineHeight: 1.2,
+                        color: index % 2 === 0 ? '#111111' : '#FEFFFF',
+                        fontFamily: 'Outfit, sans-serif',
+                        marginBottom: '0.5rem'
+                    }}>
+                        {title}
+                    </h3>
+
+                    <p style={{
+                        fontSize: '1rem',
+                        lineHeight: 1.7,
+                        color: index % 2 === 0 ? 'rgba(17,17,17,0.6)' : 'rgba(254,255,255,0.7)',
+                        fontFamily: 'Inter, sans-serif',
+                        fontWeight: 400
+                    }}>
+                        {description}
+                    </p>
+
+                    {/* Bronze Accent Line */}
+                    <motion.div
+                        initial={{ width: '40px' }}
+                        whileHover={{ width: '80px' }}
+                        transition={{ duration: 0.4 }}
+                        style={{
+                            height: '1px',
+                            background: '#C5A059',
+                            marginTop: '1rem'
+                        }}
+                    />
+                </div>
             </motion.div>
-        </motion.div>
+        </motion.div >
     );
 };
 
@@ -219,84 +184,130 @@ const Services = () => {
     });
 
     const services = [
-        { title: "Corporate Strategy", subtitle: "Defining long-term vision and actionable roadmaps for sustainable growth.", img: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=800" },
-        { title: "Operational Efficiency", subtitle: "Optimizing processes and resource allocation to maximize performance.", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" },
-        { title: "Digital Transformation", subtitle: "Leveraging technology to modernize systems and elevate customer experiences.", img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800" },
-        { title: "Mergers & Acquisitions", subtitle: "Rigorous due diligence and seamless integration planning for complex deals.", img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800" }
+        {
+            title: "Sourcing Strategy",
+            description: "Factory identification, negotiation, and partnership development across Asia's manufacturing landscape.",
+            image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=1200",
+            hoverImage: "https://assets.mixkit.co/videos/preview/mixkit-woman-walking-on-a-catwalk-during-a-fashion-show-42823-large.mp4"
+        },
+        {
+            title: "Quality Assurance",
+            description: "On-site inspections, technical specifications validation, and production oversight.",
+            image: "https://images.unsplash.com/photo-1537832816519-689ad163238b?auto=format&fit=crop&q=80&w=1200", // Fashion Hands/Material Check (Stable)
+            hoverImage: "https://assets.mixkit.co/videos/preview/mixkit-sewing-machine-working-on-fabric-42829-large.mp4"
+        },
+        {
+            title: "Supply Chain Optimization",
+            description: "Lead time reduction, logistics coordination, and inventory management systems.",
+            image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&q=80&w=1200",
+            hoverImage: "https://assets.mixkit.co/videos/preview/mixkit-fashion-designer-working-with-fabric-42827-large.mp4"
+        },
+        {
+            title: "Compliance & Ethics",
+            description: "Factory audits, labor standards verification, and sustainability compliance documentation.",
+            image: "https://images.unsplash.com/photo-1467043237213-65f2da53396f?auto=format&fit=crop&q=80&w=1200",
+            hoverImage: "https://assets.mixkit.co/videos/preview/mixkit-model-posing-for-a-fashion-photoshoot-42824-large.mp4"
+        }
     ];
 
-    // Final Collapse: Entire stack moves up at 95% scroll
-    const finalCollapse = useTransform(scrollYProgress, [0.95, 1], ["0%", "-100%"]);
-    const finalOpacity = useTransform(scrollYProgress, [0.95, 1], [1, 0]);
-
     return (
-        <section ref={containerRef} style={{ height: '800vh', position: 'relative' }}>
-            <div style={{
-                position: 'sticky',
-                top: 0,
-                height: '100vh',
-                overflow: 'hidden',
-                background: 'var(--color-obsidian-slate)'
-            }}>
-
-                {/* 1. FIXED TITLE */}
+        <section id="services" ref={containerRef} style={{
+            minHeight: '100vh',
+            background: '#111111',
+            padding: 'var(--space-xl) 0',
+            position: 'relative'
+        }}>
+            <div className="container">
+                {/* Editorial Section Header with enhanced reveal */}
                 <div style={{
-                    position: 'absolute',
-                    top: window.innerWidth < 768 ? '10%' : '20%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    zIndex: 10,
-                    textAlign: 'center',
-                    width: '100%',
-                    pointerEvents: 'none'
+                    marginBottom: 'var(--space-lg)',
+                    maxWidth: '800px'
                 }}>
-                    <h2 style={{
-                        fontSize: window.innerWidth < 768 ? '2.5rem' : "clamp(3rem, 6vw, 6rem)",
-                        lineHeight: 1,
-                        fontWeight: 800,
-                        color: 'white',
-                        margin: 0
-                    }}>
-                        Our <span style={{ color: 'var(--color-heritage-bronze)' }}>Capabilities.</span>
-                    </h2>
-                    <p style={{
-                        marginTop: window.innerWidth < 768 ? '1rem' : '2rem',
-                        fontSize: window.innerWidth < 768 ? '0.9rem' : '1.2rem',
-                        color: 'var(--color-text-secondary)',
-                        maxWidth: '600px',
-                        margin: window.innerWidth < 768 ? '1rem auto 0 auto' : '2rem auto 0 auto'
-                    }}>
-                        Stacked for success.
-                    </p>
+                    <motion.div
+                        initial={{ opacity: 0, y: 50, scale: 0.96 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
+                    >
+                        <div style={{
+                            display: 'inline-flex',
+                            padding: '0.5rem 1.5rem',
+                            background: 'rgba(254, 255, 255, 0.05)',
+                            border: '1px solid rgba(254, 255, 255, 0.1)',
+                            borderRadius: '2rem',
+                            marginBottom: '2rem'
+                        }}>
+                            <span style={{
+                                fontSize: '0.75rem',
+                                color: '#C5A059',
+                                fontFamily: 'monospace',
+                                letterSpacing: '0.15em',
+                                textTransform: 'uppercase'
+                            }}>HOW WE WORK</span>
+                        </div>
+
+                        <motion.h2
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
+                            style={{
+                                fontSize: 'clamp(3rem, 8vw, 6rem)',
+                                fontWeight: 500,
+                                lineHeight: 1,
+                                color: '#FEFFFF',
+                                marginBottom: '2rem',
+                                fontFamily: 'Outfit, sans-serif',
+                                letterSpacing: '-0.03em'
+                            }}
+                        >
+                            Execution<br />Over Theory.
+                        </motion.h2>
+
+                        <motion.p
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+                            style={{
+                                fontSize: '1.2rem',
+                                lineHeight: 1.7,
+                                color: 'rgba(254, 255, 255, 0.6)',
+                                fontFamily: 'Inter, sans-serif',
+                                maxWidth: '600px'
+                            }}
+                        >
+                            On-the-ground expertise transforming supply chain challenges into seamless execution.
+                        </motion.p>
+                    </motion.div>
                 </div>
 
-                {/* 2. STACKING CARDS CONTAINER */}
-                {/* 
-                    We place this container slightly lower so cards don't overlap the title too much 
-                    initially, or we let them cover the title? 
-                    User said "bundle bana... header me jaye". 
-                    Let's utilize the full height, cards will slide ON TOP of everything.
-                */}
+                {/* Asymmetric Grid - Editorial Layout with staggered reveals */}
                 <div style={{
-                    position: 'absolute',
-                    top: '0',
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginTop: window.innerWidth < 768 ? '15vh' : '5vh' // Push cards down more on mobile
+                    display: 'grid',
+                    gridTemplateColumns: typeof window !== 'undefined' && window.innerWidth < 768 ? '1fr' : 'repeat(12, 1fr)',
+                    gap: '2rem',
+                    marginTop: 'var(--space-xl)'
                 }}>
-                    {services.map((service, i) => (
-                        <ServiceItem
-                            key={i}
-                            index={i}
-                            total={services.length}
-                            {...service}
-                            scrollYProgress={scrollYProgress}
-                        />
-                    ))}
+                    {/* Card 1: Spans 7 columns */}
+                    <div style={{ gridColumn: typeof window !== 'undefined' && window.innerWidth < 768 ? 'span 1' : 'span 7' }}>
+                        <ServiceCard {...services[0]} index={0} totalCards={services.length} />
+                    </div>
+
+                    {/* Card 2: Spans 5 columns */}
+                    <div style={{ gridColumn: typeof window !== 'undefined' && window.innerWidth < 768 ? 'span 1' : 'span 5' }}>
+                        <ServiceCard {...services[1]} index={1} totalCards={services.length} />
+                    </div>
+
+                    {/* Card 3: Spans 5 columns */}
+                    <div style={{ gridColumn: typeof window !== 'undefined' && window.innerWidth < 768 ? 'span 1' : 'span 5' }}>
+                        <ServiceCard {...services[2]} index={2} totalCards={services.length} />
+                    </div>
+
+                    {/* Card 4: Spans 7 columns */}
+                    <div style={{ gridColumn: typeof window !== 'undefined' && window.innerWidth < 768 ? 'span 1' : 'span 7' }}>
+                        <ServiceCard {...services[3]} index={3} totalCards={services.length} />
+                    </div>
                 </div>
             </div>
         </section>
