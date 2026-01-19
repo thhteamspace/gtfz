@@ -9,27 +9,25 @@ const Hero = () => {
     // Slow motion effect
     useEffect(() => {
         if (videoRef.current) {
-            videoRef.current.playbackRate = 0.7; // 70% speed
+            videoRef.current.playbackRate = 0.7;
         }
     }, []);
 
     const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
     const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.96]);
     const y = useTransform(scrollYProgress, [0, 0.5], [0, -60]);
-
-    // Background parallax - more subtle
     const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '15%']);
-    const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
 
     return (
         <section ref={containerRef} style={{
             minHeight: '100vh',
             display: 'flex',
             alignItems: 'center',
+            justifyContent: 'center',
             position: 'relative',
             overflow: 'hidden',
             marginTop: 'calc(-1 * var(--header-height))',
-            paddingTop: 'calc(var(--header-height) + 4rem)',
+            paddingTop: 'var(--header-height)',
             background: '#0a0a0a'
         }}>
             {/* Cinematic Background Video */}
@@ -41,22 +39,27 @@ const Hero = () => {
                 playsInline
                 style={{
                     position: 'absolute',
-                    top: '-10%',
-                    left: 0,
+                    inset: 0,
                     width: '100%',
-                    height: '120%',
+                    height: '100%',
                     y: bgY,
                     objectFit: 'cover',
-                    filter: 'brightness(0.6) contrast(1.15) saturate(1.2) blur(2px)',
+                    filter: 'brightness(0.5) contrast(1.1) saturate(1.2)',
                     zIndex: 0
                 }}
             >
                 <source src="/videos/hero.mp4" type="video/mp4" />
             </motion.video>
 
+            {/* Dark Gradient Overlay */}
+            <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.6) 100%)',
+                zIndex: 1
+            }} />
 
-
-            {/* Grain Overlay - Fashion Depth */}
+            {/* Grain Overlay */}
             <div style={{
                 position: 'absolute',
                 inset: 0,
@@ -67,127 +70,116 @@ const Hero = () => {
                 mixBlendMode: 'overlay'
             }} />
 
+            {/* Hero Content - Centered Premium Layout */}
             <motion.div
                 className="container"
                 style={{
                     position: 'relative',
                     zIndex: 3,
                     width: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    textAlign: 'center',
                     opacity,
                     scale,
                     y
                 }}
             >
-                {/* Asymmetric Editorial Layout */}
-                <div style={{ maxWidth: '1200px' }}>
-                    {/* Small Badge - Top */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-                        style={{
-                            display: 'inline-flex',
-                            padding: '0.5rem 1.5rem',
-                            background: 'rgba(255, 255, 255, 0.05)',
-                            border: '1px solid rgba(255, 255, 255, 0.1)',
-                            borderRadius: '2rem',
-                            marginBottom: '2rem'
-                        }}
-                    >
-                        <span style={{
-                            fontSize: '0.75rem',
-                            color: '#FEFFFF',
-                            fontFamily: 'monospace',
-                            letterSpacing: '0.15em',
-                            textTransform: 'uppercase'
-                        }}>Fashion Supply-Chain Expertise</span>
-                    </motion.div>
+                {/* Small Badge */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+                    style={{
+                        display: 'inline-flex',
+                        padding: '0.6rem 1.8rem',
+                        background: 'rgba(197, 160, 89, 0.1)',
+                        border: '1px solid rgba(197, 160, 89, 0.3)',
+                        borderRadius: '2rem',
+                        marginBottom: '2.5rem'
+                    }}
+                >
+                    <span style={{
+                        fontSize: '0.75rem',
+                        color: '#C5A059',
+                        fontFamily: 'monospace',
+                        letterSpacing: '0.2em',
+                        textTransform: 'uppercase',
+                        fontWeight: 500
+                    }}>Fashion Supply-Chain Consultancy</span>
+                </motion.div>
 
-                    {/* Large Editorial Headline - Staggered with movement */}
-                    <div style={{ marginBottom: '3rem' }}>
-                        <motion.h1
-                            initial={{ opacity: 0, x: -40, scale: 0.97 }}
-                            animate={{ opacity: 1, x: 0, scale: 1 }}
-                            transition={{ duration: 0.9, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
-                            style={{
-                                fontSize: 'clamp(4rem, 11vw, 12rem)',
-                                lineHeight: 0.9,
-                                fontWeight: 500,
-                                letterSpacing: '-0.03em',
-                                color: '#FEFFFF',
-                                marginBottom: '1rem',
-                                fontFamily: 'Outfit, sans-serif'
-                            }}
-                        >
-                            Strategic
-                        </motion.h1>
-                        <motion.h1
-                            initial={{ opacity: 0, x: 40, scale: 0.97 }}
-                            animate={{ opacity: 1, x: 0, scale: 1 }}
-                            transition={{ duration: 0.9, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-                            style={{
-                                fontSize: 'clamp(4rem, 11vw, 12rem)',
-                                lineHeight: 0.9,
-                                fontWeight: 500,
-                                letterSpacing: '-0.03em',
-                                color: '#C5A059',
-                                marginLeft: '15%',
-                                fontFamily: 'Outfit, sans-serif'
-                            }}
-                        >
-                            Precision.
-                        </motion.h1>
-                    </div>
+                {/* Main Headline */}
+                <motion.h1
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+                    style={{
+                        fontSize: 'clamp(3.5rem, 10vw, 9rem)',
+                        lineHeight: 1.05,
+                        fontWeight: 500,
+                        letterSpacing: '-0.03em',
+                        color: '#FEFFFF',
+                        marginBottom: '1.5rem',
+                        fontFamily: 'Outfit, sans-serif',
+                        maxWidth: '900px'
+                    }}
+                >
+                    Strategic <span style={{ color: '#C5A059' }}>Precision</span>
+                </motion.h1>
 
-                    {/* Editorial Two-Column Layout */}
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: typeof window !== 'undefined' && window.innerWidth < 768 ? '1fr' : '1fr 1fr',
-                        gap: '4rem',
-                        maxWidth: '1000px'
+                {/* Subheadline */}
+                <motion.p
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+                    style={{
+                        fontSize: 'clamp(1rem, 2vw, 1.25rem)',
+                        lineHeight: 1.7,
+                        color: 'rgba(255, 255, 255, 0.7)',
+                        fontFamily: 'Inter, sans-serif',
+                        fontWeight: 300,
+                        maxWidth: '600px',
+                        marginBottom: '2rem'
+                    }}
+                >
+                    We partner with fashion brands to solve complex sourcing, operational, and execution challenges across global supply chains.
+                </motion.p>
+
+                {/* CTA Buttons */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                    style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', justifyContent: 'center' }}
+                >
+                    <a href="#services" className="btn btn-primary" style={{
+                        borderRadius: '2rem',
+                        padding: '1.1rem 2.8rem',
+                        background: 'transparent',
+                        color: '#FEFFFF',
+                        border: '1px solid rgba(255, 255, 255, 0.3)',
+                        fontWeight: 500,
+                        fontSize: '0.95rem',
+                        textDecoration: 'none'
                     }}>
-                        <motion.div
-                            initial={{ opacity: 0, y: 30, scale: 0.97 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            transition={{ duration: 0.8, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-                        >
-                            <p style={{
-                                fontSize: '1.1rem',
-                                lineHeight: 1.7,
-                                color: 'rgba(255, 255, 255, 0.8)',
-                                fontFamily: 'Inter, sans-serif',
-                                fontWeight: 300
-                            }}>
-                                Transforming vision into execution. We optimize the critical space between creative excellence and commercial reality in fashion supply chains.
-                            </p>
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, y: 30, scale: 0.97 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            transition={{ duration: 0.8, delay: 0.65, ease: [0.25, 0.1, 0.25, 1] }}
-                            style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }}
-                        >
-                            <a href="#services" className="btn btn-primary" style={{
-                                borderRadius: '2rem',
-                                padding: '1rem 2.5rem',
-                                background: '#FEFFFF',
-                                color: '#111111',
-                                border: '1px solid #FEFFFF'
-                            }}>
-                                Understand Our Services
-                            </a>
-                            <div style={{
-                                fontSize: '0.85rem',
-                                color: 'rgba(255, 255, 255, 0.5)',
-                                fontFamily: 'monospace',
-                                letterSpacing: '0.05em'
-                            }}>
-                                Operational Design Standards / 2026
-                            </div>
-                        </motion.div>
-                    </div>
-                </div>
+                        Understand Our Services
+                    </a>
+                    <a href="/contact" className="btn" style={{
+                        borderRadius: '2rem',
+                        padding: '1.1rem 2.8rem',
+                        background: 'transparent',
+                        color: '#FEFFFF',
+                        border: '1px solid rgba(255, 255, 255, 0.3)',
+                        fontWeight: 500,
+                        fontSize: '0.95rem',
+                        textDecoration: 'none'
+                    }}>
+                        Let's Talk
+                    </a>
+                </motion.div>
             </motion.div>
         </section>
     );
