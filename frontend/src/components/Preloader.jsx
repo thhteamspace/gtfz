@@ -3,14 +3,30 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const Preloader = () => {
     const [count, setCount] = useState(0);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        // Check if preloader has already been shown in this session
+        const hasSeenPreloader = sessionStorage.getItem('gtfz_preloader_shown');
+
+        if (hasSeenPreloader) {
+            // User has already seen preloader in this session, skip it
+            setIsLoading(false);
+            return;
+        }
+
+        // First time loading - show preloader
+        setIsLoading(true);
+
         const timer = setInterval(() => {
             setCount((prev) => {
                 if (prev >= 100) {
                     clearInterval(timer);
-                    setTimeout(() => setIsLoading(false), 500);
+                    setTimeout(() => {
+                        setIsLoading(false);
+                        // Mark preloader as shown in sessionStorage
+                        sessionStorage.setItem('gtfz_preloader_shown', 'true');
+                    }, 500);
                     return 100;
                 }
                 return prev + 1;
@@ -60,3 +76,4 @@ const Preloader = () => {
 };
 
 export default Preloader;
+

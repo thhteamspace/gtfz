@@ -167,18 +167,7 @@ const Hero = () => {
                     }}>
                         Understand Our Services
                     </a>
-                    <a href="/contact" className="btn" style={{
-                        borderRadius: '2rem',
-                        padding: '1.1rem 2.8rem',
-                        background: 'transparent',
-                        color: '#FEFFFF',
-                        border: '1px solid rgba(255, 255, 255, 0.3)',
-                        fontWeight: 500,
-                        fontSize: '0.95rem',
-                        textDecoration: 'none'
-                    }}>
-                        Let's Talk
-                    </a>
+
                 </motion.div>
             </motion.div>
         </section>

@@ -1,11 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-
-import imgCompliance from '../assets/images/impact-compliance.png';
-import imgQuality from '../assets/images/impact-quality.png';
-import imgSourcing from '../assets/images/impact-sourcing.png';
-import imgTeam from '../assets/images/impact-team.png';
-import imgLogistics from '../assets/images/impact-logistics.png';
+import { useNavigate } from 'react-router-dom';
+import { CASE_STUDIES_FULL } from './CaseStudyDetail';
 
 const COLORS = {
     opticalWhite: '#FEFFFF',
@@ -15,69 +11,6 @@ const COLORS = {
     text: '#111111',
     textSecondary: 'rgba(17, 17, 17, 0.6)'
 };
-
-const CASE_STUDIES = [
-    {
-        title: "Resolving Compliance Issues in Fashion Manufacturing",
-        category: "Compliance & Standards",
-        excerpt: "A fashion manufacturer encountered compliance issues related to manufacturing processes and SOPs. Global Thread FZ implemented corrective measures, revising workflows and training staff. Result: Achieved compliance ahead of key retailer's audit, strengthening business relationships.",
-        image: imgCompliance,
-        metric: "100%",
-        label: "Audit Success",
-        challenge: "Manufacturer faced compliance violations in SOPs and manufacturing processes, risking major retailer relationship.",
-        solution: "Conducted thorough assessment, revised workflows, implemented training programs, and established monitoring systems.",
-        client: "Asian Fashion Manufacturer",
-        duration: "3 Months"
-    },
-    {
-        title: "Implementing Quality Control Standards",
-        category: "Quality Assurance",
-        excerpt: "Fashion company with manufacturing sites across Asia faced inconsistent quality due to lack of standardized QC measures. Global Thread FZ researched solutions, implemented comprehensive QC framework with real-time reporting tools. Result: Significant defect reduction & increased customer satisfaction.",
-        image: imgQuality,
-        metric: "85%",
-        label: "Defect Reduction",
-        challenge: "Inconsistent quality across multiple Asian manufacturing sites due to lack of standardization and limited factory performance visibility.",
-        solution: "Researched software solutions, implemented standardized QC procedures, deployed real-time reporting tools for enhanced oversight.",
-        client: "International Fashion Brand",
-        duration: "6 Months"
-    },
-    {
-        title: "Diversifying Supply Chains Amid Tariff Challenges",
-        category: "Strategic Sourcing",
-        excerpt: "Fashion brands faced significant challenges in early 2025 due to rising tariffs. Global Thread FZ conducted comprehensive analysis of potential manufacturing locations, identifying factories aligned with quality and ethical standards. Result: Mitigated tariff impact and enhanced operational resilience.",
-        image: imgSourcing,
-        metric: "40%",
-        label: "Cost Mitigation",
-        challenge: "Rising tariffs in early 2025 threatened profitability and required urgent supply chain diversification strategy.",
-        solution: "Comprehensive location analysis, factory vetting for quality/ethics alignment, diversified manufacturing network implementation.",
-        client: "Multiple Fashion Brands",
-        duration: "4 Months"
-    },
-    {
-        title: "Enhancing Supply Chain Team Efficiency",
-        category: "Process Optimization",
-        excerpt: "Fashion company's supply chain team struggled with communication breakdowns and delayed shipments. Global Thread FZ assessed existing processes, identified bottlenecks, and implemented centralized communication platform with streamlined workflows. Result: 25% lead time reduction & enhanced productivity.",
-        image: imgTeam,
-        metric: "25%",
-        label: "Lead Time Reduction",
-        challenge: "Communication breakdowns and delayed shipments plagued supply chain operations, affecting customer satisfaction.",
-        solution: "Process assessment, bottleneck identification, centralized platform implementation, workflow optimization for better collaboration.",
-        client: "North American Fashion Company",
-        duration: "5 Months"
-    },
-    {
-        title: "Addressing Supply Chain Delays Through Local Support",
-        category: "Operational Excellence",
-        excerpt: "Fashion company faced persistent supply chain delays and long lead times affecting North American operations. Global Thread FZ established in-office support team in China for real-time communication and local supplier collaboration. Result: 30% lead time reduction and improved delivery schedules.",
-        image: imgLogistics,
-        metric: "30%",
-        label: "Faster Delivery",
-        challenge: "Persistent delays and long lead times between North American operations and Asian manufacturing hindered business performance.",
-        solution: "Established dedicated China-based support team enabling real-time communication, quick issue resolution, enhanced supplier collaboration.",
-        client: "Fashion Company (NA Operations)",
-        duration: "4 Months"
-    }
-];
 
 const ImpactHero = () => {
     const containerRef = useRef(null);
@@ -186,10 +119,10 @@ const ImpactHero = () => {
 
 const KeyMetrics = () => {
     const metrics = [
-        { value: '26+', label: 'Partner Factories', sublabel: 'Across Asia' },
-        { value: '98%', label: 'On-Time Delivery', sublabel: 'Industry Leading' },
-        { value: '40%', label: 'Cost Reduction', sublabel: 'Average Savings' },
-        { value: '100%', label: 'Compliance Rate', sublabel: 'Audit Success' }
+        { value: '50+', label: 'Global Partners', sublabel: 'Trusted by established and emerging fashion houses.' },
+        { value: '100%', label: 'Audit Verified', sublabel: 'Full compliance documentation for every facility.' }, // Files/Doc supported
+        { value: '99.8%', label: 'Quality Grade', sublabel: 'Consistently meeting luxury standard inspections.' },
+        { value: 'Zero', label: 'Compliance Risks', sublabel: 'Documented adherence to global labor standards.' }
     ];
 
     return (
@@ -254,6 +187,7 @@ const KeyMetrics = () => {
 // --- Editorial Case Studies Component ---
 const EditorialCaseStudies = () => {
     const [hoverState, setHoverState] = useState({ index: null, section: null });
+    const navigate = useNavigate();
 
     const getGridTemplate = (idx) => {
         if (hoverState.index !== idx) return '1fr 1fr';
@@ -303,7 +237,7 @@ const EditorialCaseStudies = () => {
             </div>
 
             {/* Case Study Cards */}
-            {CASE_STUDIES.map((study, index) => (
+            {CASE_STUDIES_FULL.map((study, index) => (
                 <motion.div
                     key={index}
                     initial={{ opacity: 0 }}
@@ -330,6 +264,7 @@ const EditorialCaseStudies = () => {
                         viewport={{ once: false, amount: 0.3 }}
                         transition={{ duration: 1, delay: 0.2 }}
                         onMouseEnter={() => setHoverState({ index, section: 'image' })}
+                        onClick={() => navigate(`/impact/${study.id}`)}
                         style={{
                             position: 'relative',
                             overflow: 'hidden',
@@ -384,6 +319,7 @@ const EditorialCaseStudies = () => {
                         viewport={{ once: false, amount: 0.3 }}
                         transition={{ duration: 1, delay: 0.3 }}
                         onMouseEnter={() => setHoverState({ index, section: 'content' })}
+                        onClick={() => navigate(`/impact/${study.id}`)}
                         style={{
                             display: 'flex',
                             flexDirection: 'column',
@@ -478,6 +414,33 @@ const EditorialCaseStudies = () => {
                                 <div style={{ fontSize: '0.9rem', color: COLORS.opticalWhite, fontWeight: 500 }}>{study.duration}</div>
                             </div>
                         </div>
+
+                        {/* Read Full Story Button */}
+                        <motion.div
+                            style={{
+                                marginTop: '2rem',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '0.75rem',
+                                padding: '0.75rem 1.5rem',
+                                background: 'transparent',
+                                border: `1px solid ${COLORS.bronze}`,
+                                borderRadius: '2rem',
+                                color: COLORS.bronze,
+                                fontSize: '0.85rem',
+                                fontWeight: 500,
+                                cursor: 'pointer',
+                                alignSelf: 'flex-start',
+                                transition: 'all 0.3s'
+                            }}
+                            whileHover={{
+                                background: COLORS.bronze,
+                                color: '#111'
+                            }}
+                        >
+                            Read Full Story
+                            <span style={{ fontSize: '1.1rem' }}>→</span>
+                        </motion.div>
                     </motion.div>
                 </motion.div>
             ))}
@@ -489,8 +452,8 @@ const Impact = () => {
     return (
         <main style={{ background: COLORS.opticalWhite }}>
             <ImpactHero />
-            <KeyMetrics />
             <EditorialCaseStudies />
+            <KeyMetrics />
         </main>
     );
 };

@@ -119,25 +119,6 @@ const ServiceCard = ({ title, description, image, hoverImage, index, totalCards 
                     flexDirection: 'column',
                     gap: '1.5rem'
                 }}>
-                    {/* Small Index Badge */}
-                    <div style={{
-                        display: 'inline-flex',
-                        alignSelf: 'flex-start',
-                        padding: '0.35rem 1rem',
-                        background: index % 2 === 0 ? 'rgba(17,17,17,0.05)' : 'rgba(254,255,255,0.05)',
-                        border: `1px solid ${index % 2 === 0 ? 'rgba(17,17,17,0.1)' : 'rgba(254,255,255,0.1)'}`,
-                        borderRadius: '2rem'
-                    }}>
-                        <span style={{
-                            fontSize: '0.7rem',
-                            fontFamily: 'monospace',
-                            letterSpacing: '0.15em',
-                            color: index % 2 === 0 ? '#111111' : '#FEFFFF'
-                        }}>
-                            0{index + 1}
-                        </span>
-                    </div>
-
                     <h3 style={{
                         fontSize: 'clamp(1.8rem, 3vw, 2.5rem)',
                         fontWeight: 500,

@@ -72,23 +72,24 @@ const ContactHero = () => {
                         fontFamily: 'Outfit, sans-serif',
                         letterSpacing: '-0.03em',
                         display: 'flex',
-                        gap: '0.3em',
                         justifyContent: 'center'
                     }}>
-                        <RevealText>Let's</RevealText>
-                        <RevealText delay={0.3}>Talk.</RevealText>
+                        <RevealText>Let's Talk</RevealText>
                     </h1>
 
                     <div style={{
-                        fontSize: '1.2rem',
-                        lineHeight: 1.7,
-                        color: 'rgba(254, 255, 255, 0.6)',
-                        maxWidth: '600px',
+                        fontSize: '1.25rem', // Slightly larger
+                        lineHeight: 1.6,
+                        color: 'rgba(255, 255, 255, 0.85)', // Much sharper/brighter
+                        maxWidth: '800px', // Wider to avoid cramped wrapping
                         margin: '0 auto',
-                        fontFamily: 'Inter, sans-serif'
+                        fontFamily: 'Inter, sans-serif',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center'
                     }}>
-                        <RevealText delay={0.5}>Ready to optimize your supply chain?</RevealText>
-                        <RevealText delay={0.6}>Let's discuss how we can help.</RevealText>
+                        <RevealText delay={0.5}>A focused conversation on sourcing, production, and compliance</RevealText>
+                        <RevealText delay={0.6}>Discreet. Strategic. Execution-driven.</RevealText>
                     </div>
                 </div>
             </div>
@@ -199,7 +200,7 @@ const InquirySection = () => {
                                 fontFamily: 'Outfit, sans-serif'
                             }}
                         >
-                            Start Optimizing Your <span style={{ color: COLORS.bronze }}>Supply Chain</span>
+                            Start Optimizing Your <span style={{ color: COLORS.bronze }}>Fashion Supply Chain</span>
                         </motion.h2>
 
                         <motion.p
@@ -214,7 +215,7 @@ const InquirySection = () => {
                                 fontFamily: 'Inter, sans-serif'
                             }}
                         >
-                            Whether you need to optimize an existing network or build from the ground up, our team is ready to deploy.
+                            Whether you need to optimize sourcing, strengthen factory compliance, or improve production efficiency, our team supports fashion brands with hands-on execution.
                         </motion.p>
                     </div>
 
@@ -227,7 +228,7 @@ const InquirySection = () => {
                                 letterSpacing: '0.15em',
                                 marginBottom: '1rem',
                                 fontFamily: 'monospace'
-                            }}>LOCATIONS</h4>
+                            }}>OUR PRESENCE</h4>
                             <ul style={{
                                 listStyle: 'none',
                                 padding: 0,
@@ -302,7 +303,7 @@ const InquirySection = () => {
                             }}>MESSAGE</label>
                             <textarea
                                 rows="4"
-                                placeholder="Tell us about your supply chain challenges..."
+                                placeholder="Tell us about your sourcing, production, or compliance challenge..."
                                 style={{
                                     background: 'transparent',
                                     border: 'none',
@@ -336,7 +337,7 @@ const InquirySection = () => {
                                 transition: 'all var(--duration-normal) var(--ease-fabric)'
                             }}
                         >
-                            Send Inquiry
+                            Start a Conversation
                         </button>
                     </form>
                 </motion.div>
@@ -405,19 +406,19 @@ const FAQAccordion = ({ question, answer }) => {
 const FAQSection = () => {
     const faqs = [
         {
-            q: "Do you work with startups?",
+            q: "Do you work with emerging fashion brands and startups?",
             a: "We primarily work with established fashion brands, but we do partner with high-growth startups that have secured Series A funding or beyond."
         },
         {
-            q: "What regions do you cover?",
+            q: "What sourcing and production regions do you cover?",
             a: "We have active on-ground operations in China, Vietnam, Bangladesh, and Turkey, with headquarters in Montreal."
         },
         {
-            q: "How does your pricing model work?",
+            q: "How is your advisory engagement structured?",
             a: "We typically operate on a retainer basis for advisory services, or a percentage-of-savings model for sourcing optimization."
         },
         {
-            q: "What's your typical engagement timeline?",
+            q: "What does a typical engagement timeline look like?",
             a: "Initial diagnostic phase takes 2-4 weeks, followed by 3-6 months implementation depending on scope and complexity."
         }
     ];
@@ -473,7 +474,7 @@ const FAQSection = () => {
                             letterSpacing: '-0.03em'
                         }}
                     >
-                        Common <span style={{ color: COLORS.bronze }}>Questions</span>
+                        Before We <span style={{ color: COLORS.bronze }}>Connect</span>
                     </motion.h2>
                 </motion.div>
 

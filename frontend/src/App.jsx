@@ -8,6 +8,7 @@ const Ethos = lazy(() => import('./pages/Ethos'));
 const Solutions = lazy(() => import('./pages/Solutions'));
 const Impact = lazy(() => import('./pages/Impact'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
+const CaseStudyDetail = lazy(() => import('./pages/CaseStudyDetail'));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: "impact",
         element: <Suspense fallback={<PageLoader />}><Impact /></Suspense>,
+      },
+      {
+        path: "impact/:id",
+        element: <Suspense fallback={<PageLoader />}><CaseStudyDetail /></Suspense>,
       },
       {
         path: "contact",

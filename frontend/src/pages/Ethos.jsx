@@ -1,808 +1,778 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useMotionValue } from 'framer-motion';
+import React, { useRef, useEffect } from 'react';
+import { motion, useInView } from 'framer-motion';
 
-// --- Assets / Icons ---
-// Updated to high-quality Unsplash Images for consistent "High-Tech/Dark" aesthetic
+// --- Color Palette ---
+const COLORS = {
+    opticalWhite: '#FEFFFF',
+    darkCharcoal: '#111111',
+    bronze: '#C5A059',
+    gold: '#D4AF37',
+    text: '#111111',
+    textSecondary: 'rgba(17, 17, 17, 0.65)',
+    lightBg: '#F8F7F5'
+};
+
+// --- High-Quality Fashion/Supply Chain Images ---
 const IMAGES = {
-    heroNodes: "https://images.unsplash.com/photo-1614728853911-04df86576839?auto=format&fit=crop&q=80&w=2574", // Golden Global Network
-    triadGrid: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=2670", // Abstract Grid/Blueprint
-    tunnel1: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&q=80&w=2670",   // Glass/Light/Transparency
-    tunnel2: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2670",  // Agility: Cybersecurity/Speed
-    tunnel3: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=2670",  // Compliance: Digital Security/Shield
-    founder: "/assets/karina-founder.jpg" // Karina - Founder
+    hero: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=2574', // Fashion Store/Retail Display
+    methodology: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=2670', // Sewing Detail
+    founder: '/assets/images/karina-founder-v2.png'
 };
 
-const Icons = {
-    Transparency: () => (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path d="M2 12h20M12 2v20" opacity="0.2" />
-            <circle cx="12" cy="12" r="8" />
-            <path d="M12 8v4h4" />
-        </svg>
-    ),
-    Agility: () => (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-        </svg>
-    ),
-    Compliance: () => (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <rect x="3" y="11" width="18" height="10" rx="2" />
-            <circle cx="12" cy="5" r="3" />
-            <path d="M12 8v3" />
-        </svg>
-    )
+// --- Subtle Animation Variants ---
+const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0 }
 };
 
-// --- 5.1 Scroll Progress Sidebar (From Sketch) ---
-const ScrollProgressTracker = () => {
-    const { scrollYProgress } = useScroll();
-    const thumbY = useTransform(scrollYProgress, [0, 1], ['5vh', '95vh']);
-
-    return (
-        <div style={{ position: 'fixed', top: 0, right: '25px', height: '100vh', width: '2px', zIndex: 50, pointerEvents: 'none' }}>
-            {/* Track */}
-            <div style={{ position: 'absolute', top: '5vh', bottom: '5vh', width: '1px', background: 'rgba(255,255,255,0.1)' }} />
-            {/* Thumb */}
-            <motion.div style={{
-                y: thumbY, position: 'absolute', top: 0, left: '-2px',
-                width: '6px', height: '30px', background: '#fff', borderRadius: '1px',
-                boxShadow: '0 0 10px rgba(255,255,255,0.5)'
-            }} />
-        </div>
-    );
+const fadeIn = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 }
 };
 
-// --- 5.0 Global Spine: "The Meandering Data Path" ---
-const GlobalSpine = () => {
-    const { scrollYProgress } = useScroll();
-
-    // Path Concept: "Ghum kr jaye" (Winds through the entire page content)
-    // UPDATED: Start at 22% (After Hero Section) from Left
-    // M 0 22 -> Starts at 0% X, 22% Y (approx 200vh down)
-    // Then curves into the main flow
-    const pathDefinition = "M 0 22 C 10 25, 50 28, 50 35 S 10 45, 10 50 S 90 60, 90 70 S 50 80, 50 90 L 50 95 C 50 98, 95 98, 95 100";
-
-    return (
-        <div style={{
-            position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-            zIndex: 1, pointerEvents: 'none', overflow: 'hidden'
-        }}>
-            <svg
-                style={{ width: '100%', height: '100%', filter: 'drop-shadow(0 0 10px rgba(197, 160, 89, 0.5))' }}
-                viewBox="0 0 100 100"
-                preserveAspectRatio="none"
-            >
-                {/* Active Fill - Traveling Pulse (Worm) */}
-                <motion.path
-                    d={pathDefinition}
-                    fill="none"
-                    stroke="url(#spineGradient)"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                    vectorEffect="non-scaling-stroke"
-                    style={{
-                        pathLength: 0.15,
-                        pathSpacing: 1,
-                        // Start animation when user reaches approx 15-20% scroll (End of Hero)
-                        pathOffset: useTransform(scrollYProgress, [0.15, 1], [-0.15, 1]),
-                        // Fade in quickly at that point
-                        opacity: useTransform(scrollYProgress, [0.15, 0.2], [0, 1])
-                    }}
-                />
-
-                <defs>
-                    <linearGradient id="spineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="var(--color-heritage-bronze)" />
-                        <stop offset="50%" stopColor="var(--color-cashmere-gold)" />
-                        <stop offset="100%" stopColor="#fff" />
-                    </linearGradient>
-                </defs>
-            </svg>
-        </div>
-    )
-}
-
-// --- 1.0 Hero: "The Architectural Blueprint" ---
-// --- 1.0 Hero: "The Architectural Blueprint" ---
+// ============================================
+// 1. ETHOS HERO (70-80vh)
+// ============================================
 const EthosHero = () => {
-    const containerRef = useRef(null);
-    const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
-
-    // Scroll-Driven Reveals
-    const protectOpacity = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
-    const protectBlur = useTransform(scrollYProgress, [0, 0.15], ['blur(20px)', 'blur(0px)']);
-    const protectX = useTransform(scrollYProgress, [0, 0.15], [-50, 0]);
-
-    const optOpacity = useTransform(scrollYProgress, [0.15, 0.3], [0, 1]);
-    const optBlur = useTransform(scrollYProgress, [0.15, 0.3], ['blur(20px)', 'blur(0px)']);
-    const optX = useTransform(scrollYProgress, [0.15, 0.3], [50, 0]);
-
-    return (
-        <section
-            ref={containerRef}
-            style={{
-                height: '200vh',
-                marginTop: 'calc(var(--header-height) * -1)',
-                position: 'relative',
-                background: '#050505',
-            }}
-        >
-            {/* Sticky Container */}
-            <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-
-                {/* New "Dark Fiber" Background - Updated to Golden Global Network */}
-                <motion.div
-                    style={{
-                        position: 'absolute', inset: 0,
-                        backgroundImage: `url(${IMAGES.heroNodes})`,
-                        backgroundSize: 'cover', backgroundPosition: 'center',
-                        opacity: 0.5, // Standard visibility
-                        filter: 'grayscale(20%) contrast(1.2) brightness(0.8)', // Gold tint preserved
-                        scale: 1.1
-                    }}
-                />
-                {/* Overlay Gradient */}
-                <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at center, transparent 0%, #050505 90%)' }} />
-
-                {/* Content Container - Asymmetric Layout */}
-                <motion.div style={{ zIndex: 10, width: '100%', maxWidth: '1600px', padding: '0 4vw' }}>
-
-                    {/* Line 1: Left Aligned */}
-                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '2rem', marginBottom: '4rem' }}>
-                        <motion.h2
-                            style={{
-                                opacity: protectOpacity, filter: protectBlur, x: protectX,
-                                fontSize: 'clamp(4rem, 9vw, 10rem)', fontWeight: 800, color: '#fff', letterSpacing: '-0.03em', lineHeight: 0.9
-                            }}
-                        >
-                            Protecting
-                        </motion.h2>
-                        <motion.span
-                            initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, delay: 0.5 }}
-                            style={{ fontSize: 'clamp(1rem, 2vw, 2rem)', fontFamily: 'monospace', color: '#888', textTransform: 'uppercase', letterSpacing: '0.1em' }}
-                        >
-                            The Product
-                        </motion.span>
-                    </div>
-
-                    {/* Line 2: Right Aligned */}
-                    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '2rem' }}>
-                        <motion.span
-                            initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, delay: 0.5 }}
-                            style={{ fontSize: 'clamp(1rem, 2vw, 2rem)', fontFamily: 'monospace', color: 'var(--color-heritage-bronze)', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'right' }}
-                        >
-                            The Process
-                        </motion.span>
-                        <motion.h2
-                            style={{
-                                opacity: optOpacity, filter: optBlur, x: optX,
-                                fontSize: 'clamp(4rem, 9vw, 10rem)', fontWeight: 800, color: 'var(--color-heritage-bronze)', letterSpacing: '-0.03em', lineHeight: 0.9, textAlign: 'right'
-                            }}
-                        >
-                            Optimizing
-                        </motion.h2>
-                    </div>
-
-                </motion.div>
-            </div>
-        </section>
-    );
-};
-
-// --- 2.0 Triad: "The Extraction" ---
-const TRIAD_DATA = [
-    {
-        icon: Icons.Transparency,
-        label: "INTEGRITY",
-        sub: "The Core Foundation",
-        angle: 0, // 0 deg relative to container (Right Side)
-        description: "The foundation of trust. Every process is transparent, traceable, and accountable."
-    },
-    {
-        icon: Icons.Compliance,
-        label: "SAFETY",
-        sub: "Risk Elimination",
-        angle: 120, // 120 deg
-        description: "Mitigating risk before it manifests. Built-in compliance with industry standards."
-    },
-    {
-        icon: Icons.Agility,
-        label: "AGILITY",
-        sub: "High-Speed Protocol",
-        angle: 240, // 240 deg
-        description: "Speed without sacrifice. Adapting to change while maintaining precision."
-    }
-];
-
-const GTTriad = () => {
-    const containerRef = useRef(null);
-    const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
-
-    // PHASE 1: Expansion (0-15%)
-    const expansion = useTransform(scrollYProgress, [0, 0.15], [0, 300]);
-    // PHASE 2: Panel moves left (15-20%) -> NO SCALING, just move left
-    // Panel stays left - next section scrolls in
-    const panelX = useTransform(scrollYProgress, [0.15, 0.20], ['0%', '-35%']);
-    const panelScale = 1; // Keep same size throughout
-
-
-    // ROTATION LOGIC: "Spin then Stop"
-    // Node 1 (0deg) Active (0.2-0.4): Rotation 0.
-    // Spin to Node 2 (120deg) (0.4-0.45): Rotation -120.
-    // Node 2 Active (0.45-0.65): Rotation -120.
-    // Spin to Node 3 (240deg) (0.65-0.7): Rotation -240.
-    // Node 3 Active (0.7-0.9): Rotation -240.
-
-    const turbineRotate = useTransform(scrollYProgress,
-        [0.2, 0.4, 0.45, 0.65, 0.7, 0.9],
-        [0, 0, -120, -120, -240, -240]
-    );
-
-    return (
-        <section ref={containerRef} style={{ height: '700vh', background: '#080808', position: 'relative' }}>
-            {/* Tech Background */}
-            <div style={{
-                position: 'absolute', inset: 0,
-                backgroundImage: `url(${IMAGES.triadGrid})`,
-                backgroundSize: 'cover', backgroundPosition: 'center',
-                opacity: 0.05, mixBlendMode: 'screen', filter: 'grayscale(100%)'
-            }} />
-
-            <div style={{ position: 'sticky', top: 0, height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10 }}>
-
-                {/* Turbine Panel */}
-                <motion.div style={{
-                    x: panelX,
-                    scale: panelScale,
-                    rotate: turbineRotate,
-                    position: 'absolute',
-                    width: '800px', height: '800px',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    zIndex: 10 // Ensure Turbine/Nodes sit ABOVE the GlobalSpine (z=1)
-                }}>
-                    {/* Turbine Blocking Background (Hides Spine) */}
-                    <div style={{ position: 'absolute', width: '200px', height: '200px', background: '#080808', borderRadius: '50%', boxShadow: '0 0 50px #000' }} />
-
-                    {/* Turbine Core Rings - Refined */}
-                    <div style={{ position: 'absolute', width: '200px', height: '200px', border: '1px solid rgba(254, 255, 255, 0.2)', borderRadius: '50%' }} />
-                    <div style={{ position: 'absolute', width: '350px', height: '350px', border: '1px solid #C5A059', borderRadius: '50%', opacity: 0.2 }} />
-                    <div style={{ position: 'absolute', width: '600px', height: '600px', border: '1px solid rgba(254,255,255,0.03)', borderRadius: '50%' }} />
-
-                    {/* Nodes - Integrated Fly-out Logic */}
-                    <TriadNode
-                        item={TRIAD_DATA[0]} expansion={expansion} progress={scrollYProgress}
-                        activeRange={[0.2, 0.4]} turbineRotate={turbineRotate}
-                    />
-                    <TriadNode
-                        item={TRIAD_DATA[1]} expansion={expansion} progress={scrollYProgress}
-                        activeRange={[0.45, 0.65]} turbineRotate={turbineRotate}
-                    />
-                    <TriadNode
-                        item={TRIAD_DATA[2]} expansion={expansion} progress={scrollYProgress}
-                        activeRange={[0.7, 0.9]} turbineRotate={turbineRotate}
-                    />
-
-                </motion.div>
-            </div>
-        </section>
-    );
-};
-
-// Node that lives on the turbine but can "detach" and fly right
-const TriadNode = ({ item, expansion, progress, activeRange, turbineRotate }) => {
-    const Icon = item.icon;
-    const rad = item.angle * (Math.PI / 180);
-
-    // Calculate Fly-Out Distance
-    // Reduced distance so nodes stay visible
-    const flyOutDist = useTransform(progress,
-        [activeRange[0], activeRange[0] + 0.05, activeRange[1] - 0.05, activeRange[1]],
-        [0, 400, 400, 0]
-    );
-
-    // Scale Up when flying out (moderate scale)
-    const activeScale = useTransform(progress,
-        [activeRange[0], activeRange[0] + 0.05, activeRange[1] - 0.05, activeRange[1]],
-        [1, 1.5, 1.5, 1]
-    );
-
-    // Counter-rotate to keep text upright (Ferris Wheel effect)
-    const counterRotate = useTransform(turbineRotate, r => -r);
-
-    // Combine expansion and flyOut to get total distance from center
-    const currentDist = useTransform([expansion, flyOutDist], ([e, f]) => e + f);
-    const x = useTransform(currentDist, d => Math.cos(rad) * d);
-    const y = useTransform(currentDist, d => Math.sin(rad) * d);
-
-    // Content Reveal
-    const contentOpacity = useTransform(progress,
-        [activeRange[0] + 0.05, activeRange[0] + 0.1, activeRange[1] - 0.1, activeRange[1] - 0.05],
-        [0, 1, 1, 0]
-    );
-
-    return (
-        <React.Fragment>
-            {/* Mechanical Tether Line */}
-            <motion.div style={{
-                position: 'absolute',
-                top: '50%', left: '50%',
-                height: '1px',
-                background: 'linear-gradient(90deg, transparent, var(--color-heritage-bronze), transparent)',
-                width: currentDist,
-                originX: 0,
-                rotate: item.angle, // Rotate to match the node's angle
-                zIndex: 0,
-                opacity: 0.6
-            }} />
-
-            <motion.div style={{
-                x, y,
-                scale: activeScale,
-                rotate: counterRotate,
-                position: 'absolute',
-                top: '50%', left: '50%', // Origin Point
-                width: 0, height: 0,
-                zIndex: 1,
-                display: 'flex', alignItems: 'center', justifyContent: 'center'
-            }}>
-
-                {/* The Node Icon - Centered on the Point */}
-                <div style={{
-                    position: 'absolute',
-                    top: '-30px', left: '-30px',
-                    width: '60px', height: '60px',
-                    background: 'rgba(20,20,25,0.95)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '50%',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    color: 'var(--color-heritage-bronze)',
-                    boxShadow: '0 0 30px rgba(0,0,0,0.5)',
-                    flexShrink: 0
-                }}>
-                    <Icon />
-                </div>
-
-                {/* Details Text - Positioned BELOW the Node */}
-                <motion.div style={{
-                    opacity: contentOpacity,
-                    position: 'absolute',
-                    top: '80px', // Below the 60px icon (+ gap)
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    width: '400px', // Limit width for readability
-                    textAlign: 'center',
-                    pointerEvents: 'none',
-                    display: 'flex', flexDirection: 'column', alignItems: 'center',
-                    // Clean text only, no card background
-                }}>
-                    <h3 style={{ color: '#FEFFFF', fontSize: '1.5rem', fontWeight: 500, marginBottom: '0.5rem', fontFamily: 'Outfit, sans-serif' }}>{item.label}</h3>
-                    <span style={{ color: '#C5A059', fontFamily: 'monospace', display: 'block', marginBottom: '1rem', fontSize: '0.85rem', letterSpacing: '0.05em' }}>{item.sub}</span>
-                    <p style={{ color: 'rgba(254, 255, 255, 0.6)', fontSize: '0.9rem', lineHeight: 1.6, fontFamily: 'Inter, sans-serif' }}>{item.description}</p>
-                </motion.div>
-
-            </motion.div>
-        </React.Fragment>
-    );
-};
-
-// --- 3.0 Core Values: "Scroll-Driven Hero Reveal" ---
-const PREMIUM_VALUES = [
-    {
-        id: '01',
-        title: 'Transparency',
-        subtitle: '30% emissions',
-        description: 'The clean industrial revolution starts with transforming how we track everything in the supply chain—from raw materials to final delivery.',
-        image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2670',
-        smallImages: [
-            'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=400',
-            'https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&q=80&w=400',
-            'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&q=80&w=400'
-        ]
-    },
-    {
-        id: '02',
-        title: 'Precision',
-        subtitle: '26% efficiency',
-        description: 'The world must build 21st century supply chains while delivering operational excellence—efficient, reliable, and accountable systems for everyone.',
-        image: 'https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&q=80&w=2671',
-        smallImages: [
-            'https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&q=80&w=400',
-            'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=400',
-            'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=400'
-        ]
-    },
-    {
-        id: '03',
-        title: 'Accountability',
-        subtitle: '100% verified',
-        description: 'Every decision backed by evidence. Every result measured against targets. The foundation of trust is built on verifiable impact.',
-        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2426',
-        smallImages: [
-            'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=400',
-            'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=400',
-            'https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&q=80&w=400'
-        ]
-    }
-];
-
-const ScrollDrivenValueCard = ({ value, index }) => {
-    const containerRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start end", "end start"]
-    });
-
-    // Only first value (index 0) gets scattered animation
-    const isFirstValue = index === 0;
-
-    // Phase 1: Small images scattered (0-0.2)
-    // Phase 2: Images zoom and move toward center (0.2-0.4)
-    // Phase 3: Main image grows, others fade (0.4-0.6)
-    // Phase 4: Title appears (0.6-0.75)
-    // Phase 5: Full content visible (0.75-1)
-
-    // Small images opacity and scale (only for first value)
-    const smallImagesOpacity = useTransform(scrollYProgress, [0.1, 0.3, 0.5], [1, 1, 0]);
-    const smallImagesScale = useTransform(scrollYProgress, [0.1, 0.3, 0.5], [0.8, 1.2, 1.5]);
-
-    // Main image scale and opacity
-    const mainImageScale = isFirstValue
-        ? useTransform(scrollYProgress, [0.3, 0.5, 0.7], [0.6, 1, 1.1])
-        : useTransform(scrollYProgress, [0.2, 0.5], [1.05, 1]);
-
-    const mainImageOpacity = isFirstValue
-        ? useTransform(scrollYProgress, [0.3, 0.4, 0.7], [0, 1, 1])
-        : useTransform(scrollYProgress, [0.2, 0.4], [0, 1]);
-
-    // Title opacity and scale
-    const titleOpacity = isFirstValue
-        ? useTransform(scrollYProgress, [0.5, 0.65, 0.8], [0, 0.3, 1])
-        : useTransform(scrollYProgress, [0.3, 0.5], [0, 1]);
-
-    const titleScale = useTransform(scrollYProgress, [0.5, 0.7], [0.9, 1]);
-
-    // Content opacity
-    const contentOpacity = isFirstValue
-        ? useTransform(scrollYProgress, [0.65, 0.8], [0, 1])
-        : useTransform(scrollYProgress, [0.4, 0.6], [0, 1]);
-
-    const contentY = useTransform(scrollYProgress, [0.65, 0.8], [40, 0]);
-
-    // Background overlay darkness
-    const overlayOpacity = useTransform(scrollYProgress, [0.5, 0.75], [0.3, 0.7]);
-
-    return (
-        <section
-            ref={containerRef}
-            style={{
-                height: isFirstValue ? '300vh' : '200vh', // First value longer scroll
-                position: 'relative',
-                background: '#000'
-            }}
-        >
-            <div style={{
-                position: 'sticky',
-                top: 0,
-                height: '100vh',
-                overflow: 'hidden',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                zIndex: 5 // Higher than GlobalSpine (zIndex: 1)
-            }}>
-                {/* Scattered Small Images - ONLY for first value */}
-                {isFirstValue && (
-                    <motion.div
-                        style={{
-                            opacity: smallImagesOpacity,
-                            position: 'absolute',
-                            inset: 0,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-around',
-                            padding: '10%',
-                            pointerEvents: 'none'
-                        }}
-                    >
-                        {value.smallImages.map((img, i) => (
-                            <motion.div
-                                key={i}
-                                style={{
-                                    scale: smallImagesScale,
-                                    position: 'absolute',
-                                    left: `${20 + i * 25}%`,
-                                    top: `${15 + i * 30}%`,
-                                    width: '200px',
-                                    height: '150px',
-                                    borderRadius: '4px',
-                                    overflow: 'hidden'
-                                }}
-                            >
-                                <img
-                                    src={img}
-                                    alt=""
-                                    style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        objectFit: 'cover',
-                                        filter: 'grayscale(30%) brightness(0.8)'
-                                    }}
-                                />
-                            </motion.div>
-                        ))}
-                    </motion.div>
-                )}
-
-                {/* Full-Bleed Background Image */}
-                <motion.div
-                    style={{
-                        opacity: mainImageOpacity,
-                        scale: mainImageScale,
-                        position: 'absolute',
-                        inset: 0,
-                        willChange: 'transform, opacity'
-                    }}
-                >
-                    <div
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            backgroundImage: `url(${value.image})`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                            filter: 'grayscale(20%) brightness(0.7) contrast(1.1)'
-                        }}
-                    />
-                    {/* Dark overlay */}
-                    <motion.div style={{
-                        position: 'absolute',
-                        inset: 0,
-                        background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.7) 100%)',
-                        opacity: overlayOpacity
-                    }} />
-                </motion.div>
-
-                {/* Content Overlay */}
-                <motion.div
-                    style={{
-                        position: 'relative',
-                        zIndex: 10,
-                        maxWidth: '1400px',
-                        width: '100%',
-                        padding: '0 4rem',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-between',
-                        height: '85%'
-                    }}
-                >
-                    {/* Badge - Top Left */}
-                    <motion.div
-                        style={{
-                            opacity: contentOpacity,
-                            y: contentY,
-                            display: 'inline-flex',
-                            alignSelf: 'flex-start',
-                            padding: '0.5rem 1.5rem',
-                            background: 'rgba(255, 255, 255, 0.15)',
-                            border: '1px solid rgba(255, 255, 255, 0.3)',
-                            borderRadius: '2rem',
-                            backdropFilter: 'blur(10px)'
-                        }}
-                    >
-                        <span style={{
-                            fontSize: '0.85rem',
-                            color: '#FFFFFF',
-                            fontFamily: 'monospace',
-                            letterSpacing: '0.1em'
-                        }}>
-                            {value.subtitle}
-                        </span>
-                    </motion.div>
-
-                    {/* Large YELLOW Title - Center */}
-                    <motion.h2
-                        style={{
-                            opacity: titleOpacity,
-                            scale: titleScale,
-                            fontSize: 'clamp(4rem, 12vw, 10rem)',
-                            fontWeight: 700,
-                            color: '#D4E157', // Bright yellow/neon like reference
-                            margin: 0,
-                            lineHeight: 0.95,
-                            letterSpacing: '-0.02em',
-                            textShadow: '0 4px 30px rgba(0,0,0,0.8)',
-                            textAlign: 'left',
-                            alignSelf: 'flex-start'
-                        }}
-                    >
-                        {value.title}
-                    </motion.h2>
-
-                    {/* Description + Button - Bottom */}
-                    <motion.div
-                        style={{
-                            opacity: contentOpacity,
-                            y: contentY,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '2rem',
-                            alignSelf: 'flex-start'
-                        }}
-                    >
-                        <p
-                            style={{
-                                fontSize: '1.1rem',
-                                color: '#E8E8E8',
-                                lineHeight: 1.7,
-                                maxWidth: '500px',
-                                textShadow: '0 2px 10px rgba(0,0,0,0.5)',
-                                margin: 0
-                            }}
-                        >
-                            {value.description}
-                        </p>
-
-                        {/* Yellow CTA Button */}
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            style={{
-                                alignSelf: 'flex-start',
-                                padding: '0.75rem 2rem',
-                                background: '#D4E157',
-                                color: '#000',
-                                border: 'none',
-                                borderRadius: '2rem',
-                                fontSize: '0.9rem',
-                                fontWeight: 600,
-                                cursor: 'pointer',
-                                boxShadow: '0 4px 15px rgba(212, 225, 87, 0.4)'
-                            }}
-                        >
-                            29 {value.title} Companies
-                        </motion.button>
-                    </motion.div>
-                </motion.div>
-            </div>
-        </section>
-    );
-};
-
-const PremiumValueTunnel = () => {
     return (
         <section style={{
-            background: '#000',
-            position: 'relative'
+            height: '75vh',
+            minHeight: '500px',
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+            overflow: 'hidden'
         }}>
-            {PREMIUM_VALUES.map((value, i) => (
-                <ScrollDrivenValueCard
-                    key={value.id}
-                    value={value}
-                    index={i}
-                />
-            ))}
+            {/* Background Image */}
+            <div style={{
+                position: 'absolute',
+                inset: 0,
+                backgroundImage: `url(${IMAGES.hero})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                filter: 'brightness(0.35)'
+            }} />
+
+            {/* Content Overlay */}
+            <div className="container" style={{ position: 'relative', zIndex: 1, height: '100%', display: 'flex', alignItems: 'center' }}>
+                <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false, amount: 0.3 }} // Repeat animation on scroll
+                    variants={fadeInUp}
+                    transition={{ duration: 0.8 }}
+                    style={{ maxWidth: '800px' }}
+                >
+                    <h1 style={{
+                        fontSize: 'clamp(3rem, 6vw, 5.5rem)',
+                        fontWeight: 500,
+                        color: COLORS.opticalWhite,
+                        lineHeight: 1.2,
+                        letterSpacing: '-0.02em',
+                        marginBottom: '1.5rem',
+                        paddingBottom: '0.2rem',
+                        fontFamily: 'Outfit, sans-serif'
+                    }}>
+                        Protecting the Product. Optimizing the <span style={{ color: COLORS.bronze }}>Process.</span>
+                    </h1>
+                    <p style={{
+                        fontSize: 'clamp(1.1rem, 2vw, 1.35rem)',
+                        color: 'rgba(255,255,255,0.85)',
+                        maxWidth: '600px',
+                        lineHeight: 1.6,
+                        fontFamily: 'Inter, sans-serif',
+                        fontWeight: 300
+                    }}>
+                        Ensuring design intent translates to factory execution through rigorous quality, compliance, and efficiency frameworks.
+                    </p>
+                </motion.div>
+            </div>
         </section>
     );
 };
 
-
-// --- 4.0 Founder: "Decryption Terminal" ---
-const FounderUnknown = () => {
-    const containerRef = useRef(null);
-    const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start end", "end end"] });
-
-    // Decrypt effect
-    const maskWidth = useTransform(scrollYProgress, [0.2, 0.5], ['100%', '0%']);
-
+// ============================================
+// 2. HOW WE CREATE IMPACT
+// ============================================
+const HowWeCreateImpact = () => {
     return (
-        <section ref={containerRef} style={{ height: '200vh', background: '#050505', position: 'relative' }}>
-            <div style={{ position: 'sticky', top: 0, height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ maxWidth: '1000px', width: '100%', padding: '2rem', display: 'flex', gap: '4rem', alignItems: 'center' }}>
-
-                    {/* Image with Decryption Mask */}
-                    <div style={{ flex: 1, position: 'relative' }}>
-                        <img
-                            src={IMAGES.founder}
-                            alt="Karina"
-                            style={{ width: '100%', filter: 'contrast(1.2)' }}
-                        />
-                        <motion.div style={{
-                            position: 'absolute', inset: 0, background: '#050505',
-                            width: maskWidth, right: 0, left: 'auto',
-                            borderLeft: '2px solid var(--color-heritage-bronze)'
-                        }} />
-                    </div>
-
-                    {/* Terminal Text */}
-                    <div style={{ flex: 1 }}>
-                        <div style={{ fontFamily: 'monospace', color: 'var(--color-heritage-bronze)', marginBottom: '1.5rem' }}>
-                            DECRYPTING_MESSAGE...
-                        </div>
-
-                        <h2 style={{ fontSize: '3rem', fontWeight: 700, color: '#fff', marginBottom: '1.5rem', lineHeight: 1.1 }}>
-                            "We do not build.<br /> We evolve."
+        <section style={{
+            background: COLORS.opticalWhite,
+            padding: '6rem 0'
+        }}>
+            <div className="container">
+                <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false, amount: 0.3 }}
+                    variants={fadeInUp}
+                    transition={{ duration: 0.7 }}
+                    style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
+                        gap: '4rem',
+                        alignItems: 'center'
+                    }}
+                >
+                    {/* Text Column */}
+                    <div>
+                        <h2 style={{
+                            fontSize: 'clamp(1.75rem, 3vw, 2.5rem)',
+                            fontWeight: 500,
+                            color: COLORS.text,
+                            fontFamily: 'Outfit, sans-serif',
+                            marginBottom: '1.5rem',
+                            lineHeight: 1.2
+                        }}>
+                            How We Create <span style={{ color: COLORS.bronze }}>Impact</span>
                         </h2>
-                        <p style={{ color: '#888', lineHeight: 1.6, fontFamily: 'monospace' }}>
-                            &gt; The objective is not just to deliver.<br />
-                            &gt; It is to redefine the standard of delivery.<br />
-                            &gt; Precision is our only currency.
+
+                        <p style={{
+                            fontSize: '1.05rem',
+                            color: COLORS.textSecondary,
+                            lineHeight: 1.8,
+                            marginBottom: '1.5rem'
+                        }}>
+                            At Global Thread FZ, we combine deep industry expertise with hands-on execution.
+                            Our team embeds directly into your supply chain operations—identifying inefficiencies,
+                            resolving quality issues, and building systems that scale with your growth.
                         </p>
-                        <div style={{ marginTop: '2rem', border: '1px solid #333', padding: '1rem', display: 'inline-block', fontFamily: 'monospace', fontSize: '0.9rem', letterSpacing: '0.1em' }}>
-                            Karina Khalife
-                        </div>
+
+                        <p style={{
+                            fontSize: '1.05rem',
+                            color: COLORS.textSecondary,
+                            lineHeight: 1.8
+                        }}>
+                            We don't just advise—we execute. From factory floor to final shipment,
+                            we take ownership of the details that matter, so you can focus on
+                            building your brand.
+                        </p>
                     </div>
 
-                </div>
+                    {/* Visual Column */}
+                    <div style={{
+                        position: 'relative',
+                        height: '350px',
+                        background: `linear-gradient(135deg, ${COLORS.bronze}10, ${COLORS.gold}05)`,
+                        borderRadius: '4px',
+                        overflow: 'hidden'
+                    }}>
+                        <div style={{
+                            position: 'absolute',
+                            inset: 0,
+                            backgroundImage: `url(${IMAGES.methodology})`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            opacity: 0.15
+                        }} />
+
+                        {/* Stats Overlay */}
+                        <div style={{
+                            position: 'relative',
+                            height: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            padding: '2.5rem'
+                        }}>
+                            {[
+                                { value: '26+', label: 'Partner Factories Across Asia' },
+                                { value: '98%', label: 'On-Time Delivery Performance' },
+                                { value: '15+', label: 'Years of On-Ground Fashion Experience' }
+                            ].map((stat, i) => (
+                                <div key={i} style={{
+                                    display: 'flex',
+                                    alignItems: 'baseline',
+                                    gap: '1rem',
+                                    marginBottom: i < 2 ? '1.5rem' : 0
+                                }}>
+                                    <span style={{
+                                        fontSize: '2.5rem',
+                                        fontWeight: 600,
+                                        color: COLORS.bronze,
+                                        fontFamily: 'Outfit, sans-serif'
+                                    }}>{stat.value}</span>
+                                    <span style={{
+                                        fontSize: '0.95rem',
+                                        color: COLORS.text,
+                                        fontFamily: 'Inter, sans-serif'
+                                    }}>{stat.label}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </motion.div>
             </div>
         </section>
     );
-}
+};
 
-const Ethos = () => {
+// ============================================
+// 3. OUR METHODOLOGY — DIAGNOSE TO SUSTAIN
+// ============================================
+const methodologySteps = [
+    {
+        step: '01',
+        title: 'Diagnose',
+        description: 'We audit your supply chain to identify bottlenecks, compliance gaps, and production inefficiencies.'
+    },
+    {
+        step: '02',
+        title: 'Design',
+        description: 'We engineer sourcing strategies and quality frameworks aligned with your product goals.'
+    },
+    {
+        step: '03',
+        title: 'Deploy',
+        description: 'We embed on the factory floor to train teams, standardize workflows, and oversee pilot runs.'
+    },
+    {
+        step: '04',
+        title: 'Sustain',
+        description: 'We maintain oversight through continuous monitoring and real-time issue resolution.'
+    }
+];
+
+const OurMethodology = () => {
     return (
-        <main style={{ position: 'relative' }}>
-            <GlobalSpine />
-            <EthosHero />
-            <GTTriad />
-
-            {/* Editorial Break - Fashion Mood Moment */}
-            <section style={{
-                height: '100vh',
-                position: 'relative',
-                overflow: 'hidden'
-            }}>
+        <section style={{
+            background: COLORS.darkCharcoal,
+            padding: '5rem 0'
+        }}>
+            <div className="container">
+                {/* Section Header */}
                 <motion.div
-                    style={{
-                        position: 'absolute',
-                        inset: '-10%',
-                        backgroundImage: 'url(https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&q=80&w=2670)',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        filter: 'brightness(0.7) saturate(1.1)'
-                    }}
-                    initial={{ scale: 1.1 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1.5, ease: [0.25, 0.1, 0.25, 1] }}
-                />
-                {/* Grain Overlay */}
-                <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")',
-                    opacity: 0.05,
-                    pointerEvents: 'none',
-                    mixBlendMode: 'overlay',
-                    zIndex: 2
-                }} />
-                {/* Minimal Caption */}
-                <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.9, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                    style={{
-                        position: 'absolute',
-                        bottom: '15%',
-                        left: '5%',
-                        zIndex: 3
-                    }}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false }}
+                    variants={fadeIn}
+                    transition={{ duration: 0.6 }}
+                    style={{ marginBottom: '3rem' }}
                 >
-                    <p style={{
-                        fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
-                        color: '#fff',
+                    <h2 style={{
+                        fontSize: 'clamp(1.75rem, 3vw, 2.5rem)',
+                        fontWeight: 500,
+                        color: COLORS.opticalWhite,
                         fontFamily: 'Outfit, sans-serif',
-                        fontWeight: 300,
-                        letterSpacing: '-0.02em',
-                        lineHeight: 1.3,
-                        maxWidth: '500px'
+                        marginBottom: '0.75rem'
                     }}>
-                        Where craft<br />meets conviction.
+                        Our Methodology
+                    </h2>
+                    <p style={{
+                        fontSize: '1rem',
+                        color: 'rgba(255,255,255,0.5)',
+                        fontFamily: 'Inter, sans-serif'
+                    }}>
+                        From Insight to Impact — A structured approach to supply chain excellence.
                     </p>
                 </motion.div>
-            </section>
 
-            <PremiumValueTunnel />
-            <FounderUnknown />
+                {/* Steps Grid - Horizontal Layout */}
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(4, 1fr)',
+                    gap: '1px',
+                    background: 'rgba(255,255,255,0.1)'
+                }}>
+                    {methodologySteps.map((item, index) => (
+                        <motion.div
+                            key={item.step}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: false }}
+                            variants={fadeInUp}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            style={{
+                                background: COLORS.darkCharcoal,
+                                padding: '2rem'
+                            }}
+                        >
+                            {/* Title */}
+                            <h3 style={{
+                                fontSize: '1.5rem',
+                                fontWeight: 500,
+                                color: COLORS.opticalWhite,
+                                fontFamily: 'Outfit, sans-serif',
+                                marginBottom: '1rem'
+                            }}>
+                                {item.title}
+                            </h3>
+
+                            {/* Description */}
+                            <p style={{
+                                fontSize: '0.9rem',
+                                color: 'rgba(255,255,255,0.6)',
+                                lineHeight: 1.6,
+                                fontFamily: 'Inter, sans-serif'
+                            }}>
+                                {item.description}
+                            </p>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Mobile Layout Styles */}
+            <style>{`
+                @media (max-width: 900px) {
+                    .container > div:last-child {
+                        grid-template-columns: repeat(2, 1fr) !important;
+                    }
+                }
+                @media (max-width: 600px) {
+                    .container > div:last-child {
+                        grid-template-columns: 1fr !important;
+                    }
+                }
+            `}</style>
+        </section>
+    );
+};
+
+// ============================================
+// 4. WHAT SETS US APART
+// ============================================
+const differentiators = [
+    {
+        title: 'Embedded Expertise',
+        description: "We don't operate from boardrooms. Our teams work on the factory floor to solve production issues in real-time."
+    },
+    {
+        title: 'End-to-End Ownership',
+        description: 'We take responsibility beyond isolated checkpoints. From raw material to final shipment, we own the outcome.'
+    },
+    {
+        title: 'Fashion-Specific Focus',
+        description: 'We speak the language of apparel. Our processes catch quality nuances that generalist firms miss.'
+    },
+    {
+        title: 'Relationship-Driven Approach',
+        description: 'We build leverage with factories through respect and long-term partnership, ensuring your production gets priority.'
+    }
+];
+
+const WhatSetsUsApart = () => {
+    const sectionRef = useRef(null);
+    const videoRef = useRef(null);
+    const isInView = useInView(sectionRef, { margin: "0px 0px -10% 0px" }); // Play when 10% visible
+
+    useEffect(() => {
+        if (videoRef.current) {
+            if (isInView) {
+                const playPromise = videoRef.current.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.log("Auto-play prevented (User interaction needed?):", error);
+                    });
+                }
+            } else {
+                videoRef.current.pause();
+            }
+        }
+    }, [isInView]);
+
+    return (
+        <section ref={sectionRef} style={{
+            background: COLORS.lightBg,
+            padding: '6rem 0',
+            position: 'relative',
+            overflow: 'hidden'
+        }}>
+            {/* Background Video */}
+            <div style={{
+                position: 'absolute',
+                inset: 0,
+                zIndex: 0,
+                opacity: 0.5, // Adjusted to user preference
+                pointerEvents: 'none'
+            }}>
+                <video
+                    ref={videoRef}
+                    loop
+                    muted
+                    playsInline
+                    preload="metadata"
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        filter: 'blur(4px)', // Kept blur for text readability, removed grayscale
+                        transform: 'scale(1.05)' // Slight scale to hide blurred edges
+                    }}
+                >
+                    <source src="/videos/sets-us-apart-bg.mp4" type="video/mp4" />
+                </video>
+            </div>
+
+            {/* Soft White Overlay */}
+            <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'rgba(255,255,255,0.4)', // Reduced overlay so video shows through
+                pointerEvents: 'none',
+                zIndex: 1
+            }} />
+
+            <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '4rem'
+                }}>
+                    {/* Title - Top Aligned */}
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: false }}
+                        variants={fadeInUp}
+                        transition={{ duration: 0.6 }}
+                        style={{ maxWidth: '800px' }}
+                    >
+                        <h2 style={{
+                            fontSize: 'clamp(3rem, 6vw, 4rem)', // Adjusted to 4rem max
+                            fontWeight: 600,
+                            color: COLORS.text,
+                            fontFamily: 'Outfit, sans-serif',
+                            lineHeight: 1.2, // Increased from 1.1
+                            paddingBottom: '0.2rem', // Added padding
+                            textShadow: '0 2px 20px rgba(255,255,255,0.8)' // Highlight text against video
+                        }}>
+                            What Sets <span style={{ color: COLORS.bronze }}>Us Apart</span>
+                        </h2>
+                    </motion.div>
+
+                    {/* Grid List */}
+                    <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: window.innerWidth < 768 ? '1fr' : '1fr 1fr', // Force 2 columns on desktop
+                        gap: '3rem',
+                        columnGap: '6rem', // Increased gap to cover more horizontal space
+                        width: '100%'
+                    }}>
+                        {differentiators.map((item, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }} // Even from Left, Odd from Right
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: false, amount: 0.2 }}
+                                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: index * 0.2 }} // Slow cinematic eased
+                                style={{
+                                    padding: '2rem', // Reduced from 2.5rem
+                                    background: 'rgba(255, 255, 255, 0.7)',
+                                    backdropFilter: 'blur(12px)',
+                                    borderRadius: '16px',
+                                    border: '1px solid rgba(255, 255, 255, 0.4)',
+                                    boxShadow: '0 10px 30px rgba(0,0,0,0.05)',
+                                    height: '100%',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'center'
+                                }}
+                            >
+                                <h3 style={{
+                                    fontSize: '1.6rem', // Adjusted to 1.6rem
+                                    fontWeight: 600,
+                                    color: COLORS.text,
+                                    fontFamily: 'Outfit, sans-serif',
+                                    marginBottom: '1.25rem',
+                                    textShadow: '0 2px 15px rgba(255,255,255,0.8)' // Highlight
+                                }}>
+                                    {item.title}
+                                </h3>
+                                <p style={{
+                                    fontSize: '1.1rem', // Adjusted to 1.1rem
+                                    color: 'rgba(17, 17, 17, 0.85)',
+                                    lineHeight: 1.6,
+                                    textShadow: '0 1px 1px rgba(255,255,255,0.5)', // Subtle lift
+                                    maxWidth: '90%'
+                                }}>
+                                    {item.description}
+                                </p>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* Mobile Layout */}
+            <style>{`
+                @media (max-width: 768px) {
+                    .container > div {
+                        grid-template-columns: 1fr !important;
+                        gap: 2rem !important;
+                    }
+                }
+            `}</style>
+        </section>
+    );
+};
+
+// ============================================
+// 5. FOUNDER'S PERSPECTIVE
+// ============================================
+const FounderPerspective = () => {
+    return (
+        <section style={{
+            background: COLORS.opticalWhite,
+            minHeight: '100vh', // Full Screen
+            display: 'flex',
+            alignItems: 'flex-end', // Anchor image to bottom
+            position: 'relative',
+            overflow: 'hidden'
+        }}>
+            {/* 1. Large Watermark Text to fill void */}
+            <div style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                fontSize: 'clamp(10rem, 25vw, 30rem)',
+                fontWeight: 900,
+                color: 'rgba(0,0,0,0.02)', // Very subtle
+                fontFamily: 'Inter, sans-serif',
+                whiteSpace: 'nowrap',
+                zIndex: 0,
+                pointerEvents: 'none',
+                letterSpacing: '-0.05em'
+            }}>
+                VISION
+            </div>
+
+            {/* 2. Architectural Grid Pattern */}
+            <div style={{
+                position: 'absolute',
+                inset: 0,
+                backgroundImage: 'linear-gradient(rgba(17,17,17,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(17,17,17,0.03) 1px, transparent 1px)',
+                backgroundSize: '100px 100px',
+                zIndex: 0,
+                pointerEvents: 'none'
+            }} />
+
+            {/* Subtle Gradient Overlay for depth */}
+            <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: `radial-gradient(circle at 70% 80%, transparent 20%, ${COLORS.opticalWhite} 100%)`, // Fade edges
+                zIndex: 1
+            }} />
+
+            <div className="container" style={{ position: 'relative', zIndex: 10 }}>
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1.5fr 1fr', // Adjusted balance
+                    gap: '4rem',
+                    alignItems: 'stretch', // Stretch to control vertical alignment independently
+                    maxWidth: '1200px',
+                    margin: '0 auto',
+                    height: '100vh', // Full height grid
+                    paddingBottom: 0 // No bottom padding for image flush
+                }}>
+                    {/* Quote Column - Vertically Centered */}
+                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '4rem' }}>
+                        {/* Label Animation */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: false, amount: 0.3 }}
+                            transition={{ duration: 0.6 }}
+                            style={{
+                                fontSize: '0.85rem',
+                                color: COLORS.bronze,
+                                fontFamily: 'monospace',
+                                letterSpacing: '0.2em',
+                                textTransform: 'uppercase',
+                                marginBottom: '1.5rem',
+                                display: 'block'
+                            }}
+                        >
+                            FOUNDER'S PERSPECTIVE
+                        </motion.div>
+
+                        {/* Quote Text Animation */}
+                        <motion.blockquote
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: false, amount: 0.3 }}
+                            transition={{ duration: 0.8, delay: 0.1 }}
+                            style={{
+                                fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+                                fontWeight: 400,
+                                color: COLORS.text,
+                                fontFamily: 'Outfit, sans-serif',
+                                lineHeight: 1.4,
+                                margin: 0,
+                                marginBottom: '2rem',
+                                fontStyle: 'normal'
+                            }}
+                        >
+                            "We treat every brand as our own—owning every deadline,
+                            every stitch, and every quality standard.
+                            Excellence is our only metric."
+                        </motion.blockquote>
+
+                        {/* Name & Title Animation */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: false, amount: 0.3 }}
+                            transition={{ duration: 0.8, delay: 0.3 }}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '1rem'
+                            }}
+                        >
+                            <div style={{
+                                width: '40px',
+                                height: '1px',
+                                background: COLORS.bronze
+                            }} />
+                            <div>
+                                <div style={{
+                                    fontSize: '1rem',
+                                    fontWeight: 500,
+                                    color: COLORS.text,
+                                    fontFamily: 'Outfit, sans-serif'
+                                }}>
+                                    Karina Khalife
+                                </div>
+                                <div style={{
+                                    fontSize: '0.85rem',
+                                    color: COLORS.textSecondary
+                                }}>
+                                    Founder, Global Thread FZ
+                                </div>
+                            </div>
+                        </motion.div>
+                    </div>
+
+                    {/* Founder Image Animation - Anchored Bottom */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: false, amount: 0.3 }}
+                        transition={{ duration: 1, ease: "easeOut" }}
+                        style={{
+                            display: 'flex',
+                            alignItems: 'flex-end', // Anchor Bottom
+                            height: '100%',
+                            position: 'relative'
+                        }}
+                    >
+                        <div style={{
+                            width: '100%',
+                            height: '90%', // Occupy most of height
+                            position: 'relative'
+                        }}>
+                            <img
+                                src={IMAGES.founder}
+                                alt="Karina Khalife - Founder"
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'contain',
+                                    objectPosition: 'bottom center', // Sit on bottom
+                                    filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.1))'
+                                }}
+                            />
+                        </div>
+                    </motion.div>
+                </div>
+            </div>
+
+            {/* Mobile Layout */}
+            <style>{`
+                @media (max-width: 768px) {
+                    .container > div > div {
+                        grid-template-columns: 1fr !important;
+                    }
+                }
+            `}</style>
+        </section>
+    );
+};
+
+// ============================================
+// 6. CLOSING STATEMENT
+// ============================================
+const ClosingStatement = () => {
+    return (
+        <section style={{
+            background: COLORS.darkCharcoal,
+            padding: '5rem 0'
+        }}>
+            <div className="container">
+                <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false }}
+                    variants={fadeIn}
+                    transition={{ duration: 0.8 }}
+                    style={{
+                        textAlign: 'center',
+                        maxWidth: '800px',
+                        margin: '0 auto'
+                    }}
+                >
+                    <h2 style={{
+                        fontSize: 'clamp(1.75rem, 4vw, 3rem)',
+                        fontWeight: 500,
+                        color: COLORS.opticalWhite,
+                        fontFamily: 'Outfit, sans-serif',
+                        lineHeight: 1.3,
+                        marginBottom: '2rem'
+                    }}>
+                        From factory floor to your front door—
+                        <span style={{ color: COLORS.bronze }}> we make it happen.</span>
+                    </h2>
+
+                    <p style={{
+                        fontSize: '1.1rem',
+                        color: 'rgba(255,255,255,0.6)',
+                        lineHeight: 1.7,
+                        marginBottom: '2.5rem'
+                    }}>
+                        Ready to work with a team that executes? Partner with us for
+                        sourcing and production that delivers.
+                    </p>
+
+                    <a
+                        href="/contact"
+                        style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.75rem',
+                            padding: '1rem 2rem',
+                            background: COLORS.bronze,
+                            color: COLORS.darkCharcoal,
+                            textDecoration: 'none',
+                            fontSize: '0.95rem',
+                            fontWeight: 500,
+                            borderRadius: '2rem',
+                            transition: 'all 0.3s'
+                        }}
+                    >
+                        Request Advisory Call
+                        <span>→</span>
+                    </a>
+                </motion.div>
+            </div>
+        </section>
+    );
+};
+
+// ============================================
+// MAIN ETHOS PAGE
+// ============================================
+const Ethos = () => {
+    return (
+        <main style={{ background: COLORS.opticalWhite }}>
+            <EthosHero />
+            <HowWeCreateImpact />
+            <OurMethodology />
+            <WhatSetsUsApart />
+            <FounderPerspective />
+            <ClosingStatement />
         </main>
     );
 };

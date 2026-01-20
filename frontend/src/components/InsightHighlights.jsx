@@ -1,11 +1,13 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 import imgSourcing from '../assets/images/latest-sourcing.jpg';
 import imgQuality from '../assets/images/latest-quality.jpg';
 import imgSustainability from '../assets/images/latest-sustainability.jpg';
 
-const InsightCard = ({ category, title, image, index, isLarge = false }) => {
+const InsightCard = ({ category, title, image, index, isLarge = false, link }) => {
+    const navigate = useNavigate();
     const cardRef = useRef(null);
     const { scrollYProgress } = useScroll({
         target: cardRef,
@@ -35,6 +37,7 @@ const InsightCard = ({ category, title, image, index, isLarge = false }) => {
             <motion.div
                 whileHover={{ y: -8 }}
                 transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                onClick={() => navigate(link)}
                 style={{
                     background: '#111111',
                     overflow: 'hidden',
@@ -155,17 +158,20 @@ const InsightHighlights = () => {
         {
             category: "Material Sourcing",
             title: "Reducing Lead Times by 40% Through Strategic Factory Partnerships",
-            image: imgSourcing
+            image: imgSourcing,
+            link: "/impact/supply-chain-diversification"
         },
         {
             category: "Quality Control",
             title: "Zero-Defect Production: Implementing Advanced QA Protocols",
-            image: imgQuality
+            image: imgQuality,
+            link: "/impact/quality-control"
         },
         {
             category: "Sustainability",
             title: "Building Ethical Supply Chains in Southeast Asia",
-            image: imgSustainability
+            image: imgSustainability,
+            link: "/impact/compliance-issues"
         }
     ];
 
@@ -193,24 +199,6 @@ const InsightHighlights = () => {
                         transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
                         style={{ maxWidth: '600px' }}
                     >
-                        {/* Badge */}
-                        <div style={{
-                            display: 'inline-flex',
-                            padding: '0.5rem 1.5rem',
-                            background: 'rgba(17, 17, 17, 0.05)',
-                            border: '1px solid rgba(17, 17, 17, 0.1)',
-                            borderRadius: '2rem',
-                            marginBottom: '2rem'
-                        }}>
-                            <span style={{
-                                fontSize: '0.75rem',
-                                color: '#111111',
-                                fontFamily: 'monospace',
-                                letterSpacing: '0.15em',
-                                textTransform: 'uppercase'
-                            }}>CASE STUDIES</span>
-                        </div>
-
                         <motion.h2
                             initial={{ opacity: 0, x: -30 }}
                             whileInView={{ opacity: 1, x: 0 }}

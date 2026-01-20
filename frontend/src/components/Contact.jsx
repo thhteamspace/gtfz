@@ -99,8 +99,8 @@ const Contact = () => {
                     marginBottom: 'var(--space-xl)',
                     fontWeight: 800
                 }}>
-                    <RevealText>Let's Build</RevealText>
-                    <RevealText delay={0.1}><span style={{ color: 'var(--color-heritage-bronze)' }}>The Future.</span></RevealText>
+                    <RevealText>Let’s strengthen your</RevealText>
+                    <RevealText delay={0.1}><span style={{ color: 'var(--color-heritage-bronze)' }}>supply chain execution.</span></RevealText>
                 </h2>
 
                 <div style={{ display: 'grid', gridTemplateColumns: window.innerWidth < 768 ? '1fr' : 'repeat(auto-fit, minmax(400px, 1fr))', gap: window.innerWidth < 768 ? '2rem' : '4rem' }}>
@@ -109,11 +109,11 @@ const Contact = () => {
                     <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         <AnimatedInput type="text" placeholder="What's your name?" />
                         <AnimatedInput type="email" placeholder="Your email address" />
-                        <AnimatedInput type="textarea" placeholder="Tell us about your vision" rows={1} />
+                        <AnimatedInput type="textarea" placeholder="Describe your current sourcing or production challenge" rows={1} />
 
                         <div style={{ marginTop: window.innerWidth < 768 ? '1.5rem' : '3rem' }}>
                             <button className="btn btn-primary" style={{ fontSize: window.innerWidth < 768 ? '1rem' : '1.2rem', padding: window.innerWidth < 768 ? '1rem 2rem' : '1.5rem 3rem', width: window.innerWidth < 768 ? '100%' : 'auto' }}>
-                                Send Proposal
+                                Send Inquiry
                             </button>
                         </div>
                     </form>
@@ -121,9 +121,17 @@ const Contact = () => {
                     {/* Info Side */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', justifyContent: 'space-between', height: '100%', textAlign: window.innerWidth < 768 ? 'center' : 'left' }}>
                         <div>
-                            <h4 style={{ color: '#666', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Contact</h4>
-                            <a href="mailto:partnerships@gtfz.com" style={{ fontSize: window.innerWidth < 768 ? '1.25rem' : '2rem', display: 'block', color: '#333', textDecoration: 'none', marginBottom: '0.5rem' }}>partnerships@gtfz.com</a>
-                            <a href="tel:+15550000000" style={{ fontSize: window.innerWidth < 768 ? '1.25rem' : '2rem', display: 'block', color: '#333', textDecoration: 'none' }}>+1 (555) 000-0000</a>
+                            <h4 style={{ color: '#666', marginBottom: '1.5rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Connect With GTFZ</h4>
+
+                            <div style={{ marginBottom: '1.5rem' }}>
+                                <span style={{ display: 'block', fontSize: '0.8rem', color: '#888', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Partnerships & Advisory</span>
+                                <a href="mailto:partnerships@gtfz.com" style={{ fontSize: window.innerWidth < 768 ? '1.25rem' : '1.75rem', display: 'block', color: '#333', textDecoration: 'none' }}>partnerships@gtfz.com</a>
+                            </div>
+
+                            <div>
+                                <span style={{ display: 'block', fontSize: '0.8rem', color: '#888', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Advisory Inquiries</span>
+                                <a href="tel:+15550000000" style={{ fontSize: window.innerWidth < 768 ? '1.25rem' : '1.75rem', display: 'block', color: '#333', textDecoration: 'none' }}>+1 (555) 000-0000</a>
+                            </div>
                         </div>
 
                         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: window.innerWidth < 768 ? 'center' : 'flex-start', marginTop: window.innerWidth < 768 ? '1rem' : '4rem' }}>
@@ -159,7 +167,7 @@ const Contact = () => {
                 paddingLeft: '5vw',
                 paddingRight: '5vw'
             }}>
-                <span>© {new Date().getFullYear()} GTFZ Inc.</span>
+                <span>© {new Date().getFullYear()} GTFZ — Fashion Supply-Chain Consultancy. All rights reserved.</span>
                 <span>Designed for Impact.</span>
             </div>
         </footer>

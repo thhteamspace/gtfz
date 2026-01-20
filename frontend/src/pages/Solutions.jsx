@@ -49,39 +49,47 @@ const SOLUTIONS = [
         id: 'procurement',
         title: 'Procurement',
         subtitle: 'Cost Optimization',
-        description: 'Strategic sourcing & vendor negotiation to reduce material costs by up to 30%.',
-        metrics: { value: '30%', label: 'Cost Reduction' },
+        description: 'Strategic sourcing & vendor negotiation to reduce material costs across production runs.',
+        metrics: { value: 'Up to 30%', label: 'Cost Reduction' },
         icon: 'Procurement',
-        bgImage: 'https://images.unsplash.com/photo-1558171813-4c088753af8f?auto=format&fit=crop&q=80&w=2670'
+        bgImage: 'https://images.pexels.com/photos/5710046/pexels-photo-5710046.jpeg?auto=compress&cs=tinysrgb&w=1600' // Pexels: Fabric Rolls in Factory
     },
     {
         id: 'process',
         title: 'Process Engineering',
         subtitle: 'Lean Six Sigma',
-        description: 'Eliminate waste, optimize workflows, and boost operational efficiency.',
-        metrics: { value: '45%', label: 'Efficiency Gain' },
+        description: 'Eliminating waste and optimizing workflows for maximum operational output.',
+        metrics: { value: '45%', label: 'Efficiency Gain (Avg)' },
         icon: 'Process',
-        bgImage: 'https://images.unsplash.com/photo-1612423284934-2850a4ea6b0f?auto=format&fit=crop&q=80&w=2670'
+        bgImage: 'https://images.pexels.com/photos/3738088/pexels-photo-3738088.jpeg?auto=compress&cs=tinysrgb&w=1600' // Working: Sewing Machine
     },
     {
         id: 'integration',
         title: 'Supplier Integration',
         subtitle: 'Network Optimization',
-        description: 'Comprehensive vetting, onboarding, and performance management.',
-        metrics: { value: '99.2%', label: 'Compliance Rate' },
+        description: 'Comprehensive vetting, onboarding, and performance management modules.',
+        metrics: { value: '99.2%', label: 'Compliance (Global)' },
         icon: 'Integration',
-        bgImage: 'https://images.unsplash.com/photo-1605289355680-75fb41239154?auto=format&fit=crop&q=80&w=2670'
+        bgImage: 'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=1600' // Working: Clothing Rack
     },
     {
         id: 'advisory',
         title: 'Risk Advisory',
         subtitle: 'Compliance & Mitigation',
         description: 'Proactive risk identification and regulatory compliance assurance.',
-        metrics: { value: '100%', label: 'Audit Success' },
+        metrics: { value: '100%', label: 'Audit Success (Cases)' },
         icon: 'Advisory',
-        bgImage: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=2670'
+        bgImage: 'https://images.pexels.com/photos/6214476/pexels-photo-6214476.jpeg?auto=compress&cs=tinysrgb&w=1600' // Pexels: Quality Inspection
     }
 ];
+
+// ... (Timeline Data remains same)
+
+// ... (Hero Section remains same)
+
+// ...
+
+
 
 // --- Timeline Data ---
 const TIMELINE_STEPS = [
@@ -263,134 +271,126 @@ const SolutionSlide = ({ solution, index }) => {
 
 
 
-            {/* Main Content - Premium Layout */}
+            {/* Main Content - Editorial Layout (Bottom Left) */}
             <motion.div
                 style={{
                     position: 'relative',
                     zIndex: 10,
                     width: '100%',
-                    maxWidth: '1200px',
-                    padding: '4rem 3rem',
-                    opacity,
-                    y: contentY,
+                    height: '100%',
+                    padding: '6rem 4rem',
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'center',
-                    textAlign: 'center'
+                    justifyContent: 'flex-end', // Align to bottom
+                    alignItems: 'flex-start', // Align to left
+                    textAlign: 'left' // text-left
                 }}
             >
-
-
-                {/* Centered Content */}
-                <div style={{ width: '100%', maxWidth: '900px' }}>
-                    {/* Subtitle Badge */}
-                    <div style={{ overflow: 'hidden', padding: '0.5rem', marginBottom: '1.5rem' }}>
+                <div style={{
+                    width: '100%',
+                    maxWidth: '1400px', // Wider container
+                    margin: '0 auto',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-end',
+                    flexWrap: 'wrap',
+                    gap: '4rem'
+                }}>
+                    {/* Left Block: Text */}
+                    <div style={{ flex: 1, minWidth: '300px', opacity: 1, transform: 'translateY(0)' }}>
+                        {/* Subtitle Badge */}
                         <motion.div style={{
-                            fontSize: '0.75rem',
-                            color: COLORS.bronze,
-                            fontFamily: 'monospace',
-                            letterSpacing: '0.15em',
-                            textTransform: 'uppercase',
                             display: 'inline-block',
-                            padding: '0.5rem 1.5rem',
+                            padding: '0.5rem 1.25rem',
                             border: `1px solid ${COLORS.bronze}`,
                             borderRadius: '2rem',
-                            background: 'rgba(254, 255, 255, 0.05)',
+                            background: 'rgba(17, 17, 17, 0.4)',
                             backdropFilter: 'blur(10px)',
+                            marginBottom: '2rem',
                             y: subtitleY
                         }}>
-                            {solution.subtitle}
+                            <span style={{
+                                fontSize: '0.8rem',
+                                color: COLORS.bronze,
+                                fontFamily: 'monospace',
+                                letterSpacing: '0.15em',
+                                textTransform: 'uppercase'
+                            }}>
+                                {solution.subtitle}
+                            </span>
                         </motion.div>
+
+                        {/* Title */}
+                        <div style={{ overflow: 'hidden', marginBottom: '2rem', paddingBottom: '0.5rem' }}> {/* Added padding for descenders */}
+                            <motion.h2 style={{
+                                fontSize: 'clamp(4rem, 9vw, 8rem)',
+                                fontWeight: 600,
+                                color: COLORS.opticalWhite,
+                                letterSpacing: '-0.03em',
+                                lineHeight: 1.1, // Increased line-height
+                                fontFamily: 'Outfit, sans-serif',
+                                margin: 0,
+                                y: titleY
+                            }}>
+                                {solution.title}
+                            </motion.h2>
+                        </div>
+
+                        {/* Description - Compact */}
+                        <div style={{ overflow: 'hidden', maxWidth: '600px', paddingBottom: '0.5rem' }}>
+                            <motion.p style={{
+                                color: 'rgba(255,255,255,0.85)',
+                                fontSize: '1.2rem',
+                                lineHeight: 1.6,
+                                fontWeight: 300,
+                                y: descY
+                            }}>
+                                {solution.description}
+                            </motion.p>
+                        </div>
                     </div>
 
-                    {/* Title */}
-                    <div style={{ overflow: 'hidden', marginBottom: '2rem', paddingBottom: '20px' }}>
-                        <motion.h2 style={{
-                            fontSize: 'clamp(3.5rem, 8vw, 7rem)',
-                            fontWeight: 500,
-                            color: COLORS.opticalWhite,
-                            letterSpacing: '-0.03em',
-                            lineHeight: 1,
-                            fontFamily: 'Outfit, sans-serif',
-                            y: titleY
+                    {/* Right Block: Metrics (Big Number) */}
+                    <div style={{ overflow: 'hidden' }}>
+                        <motion.div style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'flex-end', // Right align metric
+                            y: metricsY
                         }}>
-                            {solution.title}
-                        </motion.h2>
-                    </div>
-
-                    {/* Minimal Divider */}
-                    <div style={{
-                        width: '60px',
-                        height: '1px',
-                        background: COLORS.bronze,
-                        marginBottom: '2rem',
-                        marginLeft: 'auto',
-                        marginRight: 'auto',
-                        opacity: 0.5
-                    }} />
-
-                    {/* Description */}
-                    {/* Description */}
-                    <div style={{ overflow: 'hidden', marginBottom: '2.5rem', maxWidth: '600px', margin: '0 auto 2.5rem', paddingBottom: '10px' }}>
-                        <motion.p style={{
-                            color: '#ccc',
-                            fontSize: 'clamp(1rem, 1.8vw, 1.3rem)',
-                            lineHeight: 1.8,
-                            fontWeight: 300,
-                            y: descY
-                        }}>
-                            {solution.description}
-                        </motion.p>
-                    </div>
-
-                    {/* Metrics - Centered */}
-                    <div style={{ overflow: 'hidden', padding: '1rem' }}>
-                        <motion.div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', y: metricsY }}>
                             <motion.div
-                                animate={{
-                                    scale: [1, 1.02, 1],
-                                }}
-                                transition={{ duration: 3, repeat: Infinity }}
                                 style={{
-                                    fontSize: 'clamp(4rem, 8vw, 6rem)',
-                                    fontWeight: 900,
-                                    background: `linear-gradient(135deg, ${COLORS.bronze} 0%, ${COLORS.gold} 50%, #fff 100%)`,
-                                    backgroundClip: 'text',
-                                    WebkitBackgroundClip: 'text',
-                                    WebkitTextFillColor: 'transparent',
-                                    letterSpacing: '-0.02em',
-                                    lineHeight: 1
+                                    fontSize: 'clamp(5rem, 10vw, 9rem)', // Huge Metric
+                                    fontWeight: 800,
+                                    color: COLORS.opticalWhite,
+                                    letterSpacing: '-0.04em',
+                                    lineHeight: 0.9
                                 }}
                             >
                                 {solution.metrics.value}
                             </motion.div>
                             <div style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'flex-start',
-                                gap: '0.25rem'
+                                fontSize: '1rem',
+                                color: COLORS.bronze,
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.2em',
+                                fontFamily: 'monospace',
+                                marginTop: '1rem'
                             }}>
-                                <div style={{
-                                    fontSize: 'clamp(0.9rem, 1.2vw, 1.1rem)',
-                                    color: COLORS.bronze,
-                                    textTransform: 'uppercase',
-                                    letterSpacing: '0.15em',
-                                    fontWeight: 600,
-                                    fontFamily: 'monospace'
-                                }}>
-                                    {solution.metrics.label}
-                                </div>
-                                <div style={{
-                                    width: '60px',
-                                    height: '1px',
-                                    background: COLORS.bronze,
-                                    opacity: 0.5
-                                }} />
+                                {solution.metrics.label}
                             </div>
                         </motion.div>
                     </div>
                 </div>
             </motion.div>
+
+            {/* Gradient Overlay for Readability at Bottom */}
+            <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(to top, rgba(17,17,17,0.9) 0%, rgba(17,17,17,0.4) 50%, transparent 100%)',
+                zIndex: 1
+            }} />
 
 
         </section>
@@ -402,8 +402,10 @@ const EngagementTimeline = () => {
     const containerRef = useRef(null);
     const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
 
+
+
     return (
-        <section ref={containerRef} style={{ height: '300vh', background: COLORS.opticalWhite, position: 'relative' }}>
+        <section ref={containerRef} style={{ height: '400vh', background: COLORS.opticalWhite, position: 'relative' }}>
             <div style={{ position: 'sticky', top: 0, height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
                 {/* Premium Checkered Pattern Background */}
                 <motion.div style={{
@@ -436,76 +438,99 @@ const EngagementTimeline = () => {
                     opacity: 1
                 }} />
 
-                <div style={{ maxWidth: '1400px', width: '100%', padding: '0 4rem', zIndex: 10 }}>
-                    {/* Editorial Header */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 40, scale: 0.97 }}
-                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-                        style={{
-                            marginBottom: '6rem',
-                            opacity: useTransform(scrollYProgress, [0, 0.1], [0, 1])
-                        }}
-                    >
-                        <div style={{
-                            display: 'inline-flex',
-                            padding: '0.5rem 1.5rem',
-                            background: 'rgba(17, 17, 17, 0.05)',
-                            border: '1px solid rgba(17, 17, 17, 0.1)',
-                            borderRadius: '2rem',
-                            marginBottom: '2rem'
-                        }}>
-                            <span style={{
-                                fontSize: '0.75rem',
-                                color: COLORS.bronze,
-                                fontFamily: 'monospace',
-                                letterSpacing: '0.15em',
-                                textTransform: 'uppercase'
-                            }}>ENGAGEMENT PROCESS</span>
-                        </div>
+                <div style={{ maxWidth: '1400px', width: '100%', padding: '0 4rem', zIndex: 10, display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'center' }}>
 
-                        <motion.h2
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                    {/* Top Row: Header + Dynamic Image (The implementation user asked for) */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem', gap: '4rem' }}>
+
+                        {/* Left: Header Text */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 40, scale: 0.97 }}
+                            whileInView={{ opacity: 1, y: 0, scale: 1 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.7, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
+                            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
                             style={{
-                                fontSize: 'clamp(3rem, 6vw, 5rem)',
-                                fontWeight: 500,
-                                color: COLORS.text,
-                                lineHeight: 1.1,
-                                fontFamily: 'Outfit, sans-serif',
-                                letterSpacing: '-0.03em'
+                                // opacity: useTransform(scrollYProgress, [0, 0.1], [0, 1]), // REMOVED: Title should be visible via whileInView
+                                maxWidth: '600px'
                             }}
                         >
-                            From Diagnostic<br />to Deployment
-                        </motion.h2>
-                    </motion.div>
+                            <div style={{
+                                display: 'inline-flex',
+                                padding: '0.5rem 1.5rem',
+                                background: 'rgba(17, 17, 17, 0.05)',
+                                border: '1px solid rgba(17, 17, 17, 0.1)',
+                                borderRadius: '2rem',
+                                marginBottom: '2rem'
+                            }}>
+                                <span style={{
+                                    fontSize: '0.75rem',
+                                    color: COLORS.bronze,
+                                    fontFamily: 'monospace',
+                                    letterSpacing: '0.15em',
+                                    textTransform: 'uppercase'
+                                }}>ENGAGEMENT PROCESS</span>
+                            </div>
 
-                    {/* Timeline Steps */}
+                            <motion.h2
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.7, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
+                                style={{
+                                    fontSize: 'clamp(3rem, 6vw, 5rem)',
+                                    fontWeight: 500,
+                                    color: COLORS.text,
+                                    lineHeight: 1.1,
+                                    fontFamily: 'Outfit, sans-serif',
+                                    letterSpacing: '-0.03em'
+                                }}
+                            >
+                                From Diagnostic<br />to Deployment
+                            </motion.h2>
+                        </motion.div>
+
+                        {/* Right: Dynamic Image Display (Targeted Area) */}
+                        <motion.div
+                            style={{
+                                width: '350px',
+                                height: '350px',
+                                position: 'relative',
+                                borderRadius: '50%',
+                                overflow: 'hidden',
+                                boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+                                opacity: useTransform(scrollYProgress, [0, 0.1], [0, 1]), // Fade in container
+                                marginRight: '4rem', // Nudge left
+                                marginTop: '2rem' // Nudge down slightly
+                            }}
+                        >
+                            <TimelineGallery scrollYProgress={scrollYProgress} />
+                        </motion.div>
+                    </div>
+
+                    {/* Bottom Row: Timeline Steps */}
                     <div style={{ display: 'flex', gap: '3rem', alignItems: 'flex-start', position: 'relative' }}>
                         {TIMELINE_STEPS.map((step, idx) => (
                             <TimelineStep key={step.phase} step={step} index={idx} scrollProgress={scrollYProgress} />
                         ))}
-                    </div>
 
-                    {/* Progress Line */}
-                    <motion.div style={{
-                        position: 'absolute',
-                        top: '75px', // Moved below the 50px circle node
-                        left: '6rem',
-                        right: '6rem',
-                        height: '1px',
-                        background: 'rgba(197, 160, 89, 0.2)',
-                        zIndex: 0
-                    }}>
+                        {/* Progress Line */}
                         <motion.div style={{
-                            height: '100%',
-                            background: COLORS.bronze,
-                            width: useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
-                        }} />
-                    </motion.div>
+                            position: 'absolute',
+                            top: '25px', // Center of 50px badge
+                            left: '25px',
+                            right: '0',
+                            width: '100%',
+                            height: '1px',
+                            background: 'rgba(197, 160, 89, 0.2)',
+                            zIndex: 0
+                        }}>
+                            <motion.div style={{
+                                height: '100%',
+                                background: COLORS.bronze,
+                                width: useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
+                            }} />
+                        </motion.div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -513,11 +538,13 @@ const EngagementTimeline = () => {
 };
 
 const TimelineStep = ({ step, index, scrollProgress }) => {
+    // Ranges matched to 400vh logic & new offset
+    // 0: 0-0.25, 1: 0.25-0.5, etc.
     const start = index * 0.25;
-    const end = start + 0.25;
 
-    const opacity = useTransform(scrollProgress, [start, start + 0.1, end - 0.1, 1], [0, 1, 1, 1]);
-    const y = useTransform(scrollProgress, [start, end], [30, 0]);
+    // Fade in: [start, start + 0.1]
+    const opacity = useTransform(scrollProgress, [start, start + 0.15], [0, 1]);
+    const y = useTransform(scrollProgress, [start, start + 0.15], [50, 0]);
 
     return (
         <motion.div style={{ opacity, y, flex: 1, position: 'relative', zIndex: 10 }}>
@@ -564,6 +591,49 @@ const TimelineStep = ({ step, index, scrollProgress }) => {
     );
 };
 
+const TimelineGallery = ({ scrollYProgress }) => {
+    // Optimized Ranges with PLATEAUS (Hold opacity 1) so images are clearly visible
+    // Image 0 START: Opacity 1 immediately (0-0.2). Parent container handles the "Fade In".
+    const op0 = useTransform(scrollYProgress, [0, 0.2, 0.25], [1, 1, 0]);
+
+    // Image 1: FadeIn 0.2-0.25, Hold 0.25-0.45, FadeOut 0.45-0.5
+    const op1 = useTransform(scrollYProgress, [0.25, 0.3, 0.5, 0.55], [0, 1, 1, 0]);
+
+    // Image 2: FadeIn 0.45-0.5, Hold 0.5-0.7, FadeOut 0.7-0.75
+    const op2 = useTransform(scrollYProgress, [0.5, 0.55, 0.75, 0.8], [0, 1, 1, 0]);
+
+    // Image 3: FadeIn 0.7-0.75, Hold 0.75-1.0
+    const op3 = useTransform(scrollYProgress, [0.75, 0.8, 1], [0, 1, 1]);
+
+    const imageOpacities = [op0, op1, op2, op3];
+
+    const STEP_IMAGES = [
+        'https://images.pexels.com/photos/4614119/pexels-photo-4614119.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', // Diagnostic: Inspection/Check (Clear Audit)
+        'https://images.pexels.com/photos/461035/pexels-photo-461035.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', // Strategy: Yarn Spools
+        'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',   // Execution: Industrial Production (Kept)
+        'https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'    // Optimization: Clean Retail Display (Kept)
+    ];
+
+    return (
+        <>
+            {STEP_IMAGES.map((imgSrc, idx) => (
+                <motion.div
+                    key={idx}
+                    style={{
+                        position: 'absolute',
+                        inset: 0,
+                        backgroundImage: `url(${imgSrc})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        opacity: imageOpacities[idx],
+                        filter: 'grayscale(30%) contrast(1.1)'
+                    }}
+                />
+            ))}
+        </>
+    );
+};
+
 const Solutions = () => {
     return (
         <main style={{ background: COLORS.obsidian }}>
@@ -579,10 +649,10 @@ const Solutions = () => {
                     style={{
                         position: 'absolute',
                         inset: 0,
-                        backgroundImage: 'url(https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=2670)',
+                        backgroundImage: 'url(https://images.pexels.com/photos/2249290/pexels-photo-2249290.jpeg?auto=compress&cs=tinysrgb&w=1600)', // Pexels: Industrial Warehouse
                         backgroundSize: 'cover',
                         backgroundPosition: 'center center',
-                        filter: 'brightness(0.6) saturate(1.1)'
+                        filter: 'brightness(0.5) saturate(0)' // Grayscale for industrial execution feel
                     }}
                     initial={{ scale: 1.05 }}
                     whileInView={{ scale: 1 }}

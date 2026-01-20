@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import RevealText from './motion/RevealText';
 
 const CallToAction = () => {
+    const navigate = useNavigate();
+
     return (
         <section className="section" data-theme-trigger="light" style={{
             position: 'relative',
@@ -65,8 +68,8 @@ const CallToAction = () => {
 
                     {/* Headline */}
                     <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 5rem)', lineHeight: 1.1, marginBottom: '1.5rem', fontWeight: 700, color: '#1a1a1a' }}>
-                        <RevealText>Ready to transform</RevealText>
-                        <RevealText delay={0.2}>your digital future?</RevealText>
+                        <RevealText>Ready to strengthen your</RevealText>
+                        <RevealText delay={0.2}>supply chain execution?</RevealText>
                     </h2>
 
                     <motion.p
@@ -75,13 +78,14 @@ const CallToAction = () => {
                         transition={{ delay: 0.4 }}
                         style={{ fontSize: '1.25rem', color: '#555', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem auto' }}
                     >
-                        Streamline your strategy with our intuitive, scalable solutions. Designed for global leaders.
+                        From sourcing strategy to on-ground factory execution, we partner with fashion brands to deliver measurable results.
                     </motion.p>
 
                     {/* Button */}
                     <motion.button
                         whileHover={{ scale: 1.05, boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}
                         whileTap={{ scale: 0.95 }}
+                        onClick={() => navigate('/contact')}
                         style={{
                             background: '#1a1a1a',
                             color: 'white',
@@ -93,7 +97,7 @@ const CallToAction = () => {
                             cursor: 'pointer'
                         }}
                     >
-                        Get Started
+                        Request Advisory Call
                     </motion.button>
                 </motion.div>
             </div>
