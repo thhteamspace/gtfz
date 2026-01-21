@@ -1,0 +1,22 @@
+[
+    {
+        "phase": "01",
+        "title": "Diagnostic",
+        "desc": "We audit your current chain."
+    },
+    {
+        "phase": "02",
+        "title": "Strategy",
+        "desc": "We design the optimization roadmap."
+    },
+    {
+        "phase": "03",
+        "title": "Deployment",
+        "desc": "We execute with boots on the ground."
+    },
+    {
+        "phase": "04",
+        "title": "Optimization",
+        "desc": "Continuous improvement cycles."
+    }
+]

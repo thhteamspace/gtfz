@@ -1,151 +1,369 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
+import useMediaQuery from '../../hooks/useMediaQuery';
 
 const HorizontalScroll = () => {
-    const targetRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: targetRef,
-    });
-
-    const x = useTransform(scrollYProgress, [0, 1], ["0%", "-225vw"]);
-
+    const isMobile = useMediaQuery('(max-width: 768px)');
     const cards = [
-        { title: "Fashion Consultant", id: "01", img: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=800" },
-        { title: "Material Sourcing", id: "02", img: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=800" },
-        { title: "Quality Assurance", id: "03", img: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=800" },
-        { title: "Supply Chain", id: "04", img: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&q=80&w=800" },
-        { title: "Compliance", id: "05", img: "https://images.unsplash.com/photo-1467043237213-65f2da53396f?auto=format&fit=crop&q=80&w=800" },
-        { title: "Global Network", id: "06", img: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=800" },
+        {
+            title: "Strategic Advisory",
+            id: "01",
+            description: "Market entry strategies, cost engineering, and scalable supply chain architecture.",
+            img: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+            title: "Material Sourcing",
+            id: "02",
+            description: "Sustainable and high-quality fabric sourcing from global networks.",
+            img: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+            title: "Quality Assurance",
+            id: "03",
+            description: "Rigorous testing and quality control protocols for every product.",
+            img: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+            title: "Supply Chain",
+            id: "04",
+            description: "Optimized logistics and supply chain management solutions.",
+            img: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+            title: "Compliance",
+            id: "05",
+            description: "Ensuring adherence to global ethical and safety standards.",
+            img: "https://images.unsplash.com/photo-1467043237213-65f2da53396f?auto=format&fit=crop&q=80&w=800"
+        },
+        {
+            title: "Global Network",
+            id: "06",
+            description: "Connecting you with partners and manufacturers worldwide.",
+            img: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=800"
+        },
     ];
 
+    const scrollContainerRef = useRef(null);
+    const [canScrollLeft, setCanScrollLeft] = React.useState(false);
+    const [canScrollRight, setCanScrollRight] = React.useState(true);
+
+    const checkScroll = () => {
+        if (scrollContainerRef.current) {
+            const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+            setCanScrollLeft(scrollLeft > 0);
+            // Allow a small buffer (e.g. 2px) for float/zoom discrepancies
+            setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 2);
+        }
+    };
+
+    React.useEffect(() => {
+        const container = scrollContainerRef.current;
+        if (container) {
+            container.addEventListener('scroll', checkScroll);
+            // Check initially
+            checkScroll();
+            // Check on resize
+            window.addEventListener('resize', checkScroll);
+        }
+        return () => {
+            if (container) {
+                container.removeEventListener('scroll', checkScroll);
+            }
+            window.removeEventListener('resize', checkScroll);
+        };
+    }, []);
+
+    const handleScroll = (direction) => {
+        if (scrollContainerRef.current) {
+            const scrollAmount = direction === 'left' ? -400 : 400;
+            scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+    };
+
     return (
-        <section ref={targetRef} style={{ height: "300vh", position: "relative" }}>
-            <div style={{
-                position: "sticky",
-                top: 0,
-                height: "100vh",
-                background: "var(--color-obsidian-slate)",
-                overflow: "hidden",
-                display: "flex",
-                alignItems: "flex-end",
-                paddingBottom: "10vh"
-            }}>
-                {/* STICKY HEADLINE with viewport reveal animation */}
+        <section style={{
+            background: '#0a0a0a',
+            position: 'relative',
+            padding: isMobile ? '4rem 0' : '8rem 0',
+            overflow: 'hidden'
+        }}>
+            <div className="container">
+                {/* Header Section */}
                 <div style={{
-                    position: 'absolute',
-                    top: '20%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    zIndex: 10,
-                    width: '100%',
-                    textAlign: 'center',
-                    pointerEvents: 'none'
+                    marginBottom: '3rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    position: 'relative' // Ensure relative here just in case
                 }}>
-                    {/* Headline with down-to-up reveal */}
-                    <motion.h2
-                        initial={{ opacity: 0, y: 50, scale: 0.97 }}
-                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                        viewport={{ once: true, margin: "-10% 0px" }}
-                        transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-                        style={{
-                            fontSize: "clamp(3rem, 6vw, 6rem)",
-                            lineHeight: 1,
-                            fontWeight: 800,
-                            color: 'white',
-                            margin: 0
-                        }}
-                    >
-                        Global <span style={{ color: 'var(--color-heritage-bronze)' }}>Capabilities.</span>
-                    </motion.h2>
-
-                    {/* Subtext with staggered down-to-up reveal */}
-                    <motion.p
-                        initial={{ opacity: 0, y: 30 }}
+                    <motion.span
+                        initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-10% 0px" }}
-                        transition={{ duration: 0.7, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
+                        viewport={{ once: true }}
                         style={{
-                            marginTop: '2rem',
-                            fontSize: '1.2rem',
-                            color: 'var(--color-text-secondary)',
-                            maxWidth: '600px',
-                            margin: '2rem auto 0 auto'
+                            color: '#C5A059',
+                            fontFamily: 'monospace',
+                            letterSpacing: '0.2em',
+                            textTransform: 'uppercase',
+                            fontSize: '0.9rem',
+                            marginBottom: '1.5rem',
+                            display: 'block'
                         }}
                     >
-                        Delivering impact across borders and industries.
-                    </motion.p>
-                </div>
+                        Our Expertise
+                    </motion.span>
 
-                {/* MOVING TRACK */}
-                <motion.div style={{
-                    x,
-                    display: "flex",
-                    gap: "2rem",
-                    paddingLeft: "100vw",
-                    height: "50vh",
-                    alignItems: "center"
-                }}>
-                    {cards.map((card, index) => (
-                        <motion.div
-                            key={card.id}
-                            initial={{
-                                opacity: 0,
-                                y: index % 2 === 0 ? 60 : -60, // Alternating Y direction
-                                x: index % 2 === 0 ? -30 : 30, // Alternating X direction
-                                scale: 0.92,
-                                rotate: index % 2 === 0 ? 1.5 : -1.5
-                            }}
-                            whileInView={{
-                                opacity: 1,
-                                y: 0,
-                                x: 0,
-                                scale: 1,
-                                rotate: 0
-                            }}
-                            viewport={{ once: true, margin: "-5% 0px" }}
-                            transition={{
-                                duration: 0.8,
-                                delay: index * 0.08,
-                                ease: [0.25, 0.1, 0.25, 1]
-                            }}
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'flex-end',
+                        width: '100%',
+                        flexWrap: 'wrap',
+                        gap: '2rem'
+                    }}>
+                        <motion.h2
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
                             style={{
-                                minWidth: "35vw",
-                                height: "100%",
-                                position: 'relative',
-                                overflow: 'hidden',
-                                borderRadius: '12px',
-                                border: '1px solid rgba(255,255,255,0.1)',
-                                background: '#111'
+                                fontSize: 'clamp(3rem, 5vw, 5rem)',
+                                lineHeight: 1.1,
+                                color: '#FEFFFF',
+                                fontFamily: 'Outfit, sans-serif',
+                                margin: 0
                             }}
                         >
-                            <motion.img
-                                whileHover={{ scale: 1.1 }}
-                                transition={{ duration: 0.6 }}
-                                src={card.img}
-                                alt={card.title}
-                                style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.85) saturate(1.1)' }}
-                            />
-                            <div style={{ position: 'absolute', bottom: '2rem', left: '2rem', pointerEvents: 'none' }}>
-                                <h3 style={{ fontSize: '2.5rem', color: 'white', marginBottom: '0.5rem' }}>{card.title}</h3>
-                                <div style={{ height: '2px', width: '50px', background: 'var(--color-heritage-bronze)' }} />
-                            </div>
-                            <span style={{
-                                fontSize: '8rem',
+                            Global <span style={{ color: '#C5A059', fontFamily: 'Playfair Display, serif', fontStyle: 'italic' }}>Capabilities</span>
+                        </motion.h2>
+
+
+                    </div>
+                </div>
+
+                {/* Relative Wrapper for Cards + Arrows */}
+                <div style={{ position: 'relative' }}>
+
+                    {/* Left Navigation Button */}
+                    {!isMobile && canScrollLeft && (
+                        <motion.button
+                            onClick={() => handleScroll('left')}
+                            whileHover={{ scale: 1.1, backgroundColor: '#C5A059', color: '#000' }}
+                            whileTap={{ scale: 0.95 }}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -20 }}
+                            transition={{ duration: 0.4 }}
+                            style={{
                                 position: 'absolute',
-                                top: '-2rem',
-                                right: '-1rem',
-                                opacity: 0.05,
-                                fontWeight: 900,
-                                color: 'white',
-                                pointerEvents: 'none'
-                            }}>
-                                {card.id}
-                            </span>
-                        </motion.div>
-                    ))}
-                </motion.div>
+                                left: '-40px',
+                                top: '40%',
+                                transform: 'translateY(-50%)',
+                                width: '80px',
+                                height: '80px',
+                                borderRadius: '50%',
+                                border: '1px solid rgba(255,255,255,0.2)',
+                                background: '#0a0a0a',
+                                color: '#FEFFFF',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer',
+                                outline: 'none',
+                                zIndex: 20,
+                                boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
+                            }}
+                        >
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="19" y1="12" x2="5" y2="12"></line>
+                                <polyline points="12 19 5 12 12 5"></polyline>
+                            </svg>
+                        </motion.button>
+                    )}
+
+                    {/* Scrollable Grid Layout - Matches original grid size but scrolls */}
+                    <div
+                        ref={scrollContainerRef}
+                        className="hide-scrollbar"
+                        style={{
+                            display: 'grid',
+                            gridAutoFlow: 'column',
+                            gridAutoColumns: isMobile ? '85vw' : 'minmax(370px, 1fr)',
+                            gap: isMobile ? '1rem' : '2.5rem',
+                            overflowX: 'auto',
+                            paddingBottom: '2rem', // Space for potential scrollbar (hidden but interactable)
+                            scrollBehavior: 'smooth',
+                            width: '100%',
+                            paddingRight: isMobile ? '1.5rem' : '60px',
+                            paddingLeft: isMobile ? '1.5rem' : '60px'
+                        }}
+                    >
+                        {/* Inline style to hide scrollbar */}
+                        <style>{`
+                            .hide-scrollbar::-webkit-scrollbar {
+                                display: none;
+                            }
+                            .hide-scrollbar {
+                                -ms-overflow-style: none;
+                                scrollbar-width: none;
+                            }
+                        `}</style>
+
+                        {cards.map((card, index) => (
+                            <Card key={card.id} card={card} index={index} />
+                        ))}
+                    </div>
+
+                    {/* Right Navigation Button */}
+                    {!isMobile && canScrollRight && (
+                        <motion.button
+                            onClick={() => handleScroll('right')}
+                            whileHover={{ scale: 1.1, backgroundColor: '#C5A059', color: '#000' }}
+                            whileTap={{ scale: 0.95 }}
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: 20 }}
+                            transition={{ duration: 0.4 }}
+                            style={{
+                                position: 'absolute',
+                                right: '-40px',
+                                top: '40%',
+                                transform: 'translateY(-50%)',
+                                width: '80px',
+                                height: '80px',
+                                borderRadius: '50%',
+                                border: '1px solid rgba(255,255,255,0.2)',
+                                background: '#0a0a0a',
+                                color: '#FEFFFF',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer',
+                                outline: 'none',
+                                zIndex: 20,
+                                boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
+                            }}
+                        >
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </motion.button>
+                    )}
+                </div>
             </div>
         </section>
+    );
+};
+
+// Extracted Card Component matching the 'Arched Image' design
+const Card = ({ card, index }) => {
+    return (
+        <motion.div
+            initial={{ opacity: 0, scale: 0.85, y: 100 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8, delay: (index % 2) * 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+            whileHover="hover"
+            style={{
+                background: 'linear-gradient(180deg, #161616 0%, #0a0a0a 100%)',
+                borderRadius: '32px',
+                padding: '0', // Removed global padding for full bleed content
+                border: '1px solid rgba(255,255,255,0.05)',
+                display: 'flex',
+                flexDirection: 'column',
+                position: 'relative',
+                overflow: 'hidden',
+                height: '550px',
+                cursor: 'pointer'
+            }}
+        >
+            {/* Hover Glow Border */}
+            <motion.div
+                variants={{
+                    hover: { opacity: 1 }
+                }}
+                initial={{ opacity: 0 }}
+                transition={{ duration: 0.4 }}
+                style={{
+                    position: 'absolute',
+                    inset: 0,
+                    borderRadius: '32px',
+                    border: '1px solid rgba(197, 160, 89, 0.3)',
+                    boxShadow: '0 0 30px rgba(197, 160, 89, 0.1)',
+                    pointerEvents: 'none',
+                    zIndex: 10
+                }}
+            />
+
+            {/* Card Content Top - Padded Container */}
+            <div style={{ zIndex: 2, padding: '2.5rem 2.5rem 0 2.5rem', display: 'flex', flexDirection: 'column', height: '100%' }}>
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-start',
+                    marginBottom: '1rem'
+                }}>
+                    <h3 style={{
+                        fontSize: '2rem',
+                        color: '#FEFFFF',
+                        fontFamily: 'Outfit, sans-serif',
+                        lineHeight: 1.1,
+                        margin: 0
+                    }}>{card.title}</h3>
+
+
+                </div>
+
+                <p style={{
+                    color: 'rgba(255,255,255,0.6)',
+                    lineHeight: 1.6,
+                    fontSize: '1rem',
+                    maxWidth: '90%',
+                    fontFamily: 'Inter, sans-serif',
+                    marginBottom: '2rem'
+                }}>{card.description}</p>
+
+                {/* Card Image Bottom - Full Bleed Arched */}
+                <div style={{
+                    marginTop: 'auto',
+                    flex: 1,
+                    // Use negative margin to pull image to edges of the parent container
+                    marginLeft: '-2.5rem',
+                    marginRight: '-2.5rem',
+                    marginBottom: '0',
+                    minHeight: '280px',
+                    display: 'flex',
+                    position: 'relative'
+                }}>
+                    <motion.img
+                        variants={{
+                            hover: { scale: 1.05 }
+                        }}
+                        transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+                        src={card.img}
+                        alt={card.title}
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            objectPosition: 'center 20%',
+                            borderRadius: '40px 40px 0 0', // The Arched Top - Critical for the reference look
+                            filter: 'brightness(0.9) contrast(1.1)'
+                        }}
+                    />
+
+                    {/* Image Overlay Gradient */}
+                    <div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'linear-gradient(to top, rgba(0,0,0,0.5), transparent)',
+                        pointerEvents: 'none',
+                        borderRadius: '40px 40px 0 0'
+                    }} />
+                </div>
+            </div>
+        </motion.div>
     );
 };
 

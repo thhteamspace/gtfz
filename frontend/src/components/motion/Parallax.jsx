@@ -11,7 +11,7 @@ const Parallax = ({ children, offset = 50, className, style }) => {
     const y = useTransform(scrollYProgress, [0, 1], [-offset, offset]);
 
     return (
-        <div ref={ref} className={className} style={{ ...style, overflow: 'hidden' }}>
+        <div ref={ref} className={className} style={{ ...style, position: 'relative', overflow: 'hidden' }}>
             <motion.div style={{ y }}>
                 {children}
             </motion.div>

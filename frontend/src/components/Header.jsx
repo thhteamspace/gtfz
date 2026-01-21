@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 
-const MagneticLink = ({ children, to }) => {
+const MagneticLink = ({ children, to, isActive }) => {
     const ref = useRef(null);
     const position = { x: useMotionValue(0), y: useMotionValue(0) };
 
@@ -38,8 +38,9 @@ const MagneticLink = ({ children, to }) => {
                 fontSize: '0.9rem',
                 fontWeight: 600,
                 color: 'inherit',
-                opacity: 0.8,
-                textDecoration: 'none'
+                opacity: isActive ? 1 : 0.8,
+                textDecoration: 'none',
+                textShadow: isActive ? '0 0 15px rgba(255, 255, 255, 0.6)' : 'none'
             }}>
                 {children}
             </Link>
@@ -95,12 +96,14 @@ const Header = () => {
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    width: '100%'
+                    width: '100%',
+                    position: 'relative', // Ensure relative positioning context
+                    zIndex: 1002 // Ensure logo and clutter stay above menu background if needed
                 }}>
                     {/* LOGO */}
                     <Link to="/" onClick={() => setMobileMenuOpen(false)} style={{
                         textDecoration: 'none',
-                        zIndex: 1001,
+                        zIndex: 1003, // Higher than menu background
                         display: 'flex',
                         alignItems: 'center'
                     }}>
@@ -126,6 +129,7 @@ const Header = () => {
                             <MagneticLink
                                 key={link.name}
                                 to={link.path}
+                                isActive={location.pathname === link.path}
                             >
                                 {link.name}
                             </MagneticLink>
@@ -144,7 +148,9 @@ const Header = () => {
                                 fontWeight: 700,
                                 textTransform: 'uppercase',
                                 marginLeft: '2rem',
-                                textDecoration: 'none'
+                                textDecoration: 'none',
+                                boxShadow: location.pathname === '/contact' ? '0 0 20px rgba(255, 255, 255, 0.4)' : 'none',
+                                borderColor: location.pathname === '/contact' ? 'white' : 'currentColor'
                             }}
                         >
                             Contact
@@ -152,7 +158,7 @@ const Header = () => {
                     </nav>
 
                     {/* BURGER BUTTON (Mobile Only) */}
-                    <div className="mobile-only" onClick={toggleMenu} style={{ cursor: 'pointer', zIndex: 1001, padding: '10px' }}>
+                    <div className="mobile-only" onClick={toggleMenu} style={{ cursor: 'pointer', zIndex: 1003, padding: '10px' }}>
                         <div style={{
                             width: '25px',
                             height: '2px',

@@ -1,9 +1,11 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import useMediaQuery from '../hooks/useMediaQuery';
 
 const Hero = () => {
     const containerRef = useRef(null);
     const videoRef = useRef(null);
+    const isMobile = useMediaQuery('(max-width: 768px)');
     const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] });
 
     // Slow motion effect
@@ -14,17 +16,17 @@ const Hero = () => {
     }, []);
 
     const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-    const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.96]);
-    const y = useTransform(scrollYProgress, [0, 0.5], [0, -60]);
-    const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '15%']);
+    const scale = useTransform(scrollYProgress, [0, 0.5], [1, isMobile ? 0.98 : 0.96]);
+    const y = useTransform(scrollYProgress, [0, 0.5], [0, isMobile ? -30 : -60]);
+    const bgY = useTransform(scrollYProgress, [0, 1], ['0%', isMobile ? '7%' : '15%']);
 
     return (
         <section ref={containerRef} style={{
-            minHeight: '100vh',
+            minHeight: isMobile ? '100svh' : '100vh',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            position: 'relative',
+            position: 'relative', // Ensure relative positioning for useScroll
             overflow: 'hidden',
             marginTop: 'calc(-1 * var(--header-height))',
             paddingTop: 'var(--header-height)',
@@ -44,18 +46,21 @@ const Hero = () => {
                     height: '100%',
                     y: bgY,
                     objectFit: 'cover',
-                    filter: 'brightness(0.5) contrast(1.1) saturate(1.2)',
+                    objectPosition: isMobile ? 'center 30%' : 'center',
+                    filter: isMobile ? 'brightness(0.35) contrast(1.05)' : 'brightness(0.5) contrast(1.1) saturate(1.2)',
                     zIndex: 0
                 }}
             >
-                <source src="/videos/hero.mp4" type="video/mp4" />
+                <source src="/videos/hero.mp4?v=1" type="video/mp4" />
             </motion.video>
 
             {/* Dark Gradient Overlay */}
             <div style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.6) 100%)',
+                background: isMobile
+                    ? 'linear-gradient(to bottom, rgba(10,10,10,0.5) 0%, rgba(10,10,10,0.8) 100%)'
+                    : 'linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.6) 100%)',
                 zIndex: 1
             }} />
 
@@ -84,25 +89,40 @@ const Hero = () => {
                     textAlign: 'center',
                     opacity,
                     scale,
-                    y
+                    y,
+                    padding: isMobile ? '0 2rem' : '0'
                 }}
             >
                 {/* Small Badge */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+                    whileHover="hover"
+                    transition={{ duration: isMobile ? 0.4 : 0.6, ease: [0.25, 0.1, 0.25, 1] }}
                     style={{
                         display: 'inline-flex',
-                        padding: '0.6rem 1.8rem',
-                        background: 'rgba(197, 160, 89, 0.1)',
-                        border: '1px solid rgba(197, 160, 89, 0.3)',
-                        borderRadius: '2rem',
-                        marginBottom: '2.5rem'
+                        alignItems: 'center',
+                        marginBottom: isMobile ? '1.5rem' : '2.5rem',
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        backdropFilter: 'blur(10px)',
+                        WebkitBackdropFilter: 'blur(10px)',
+                        padding: isMobile ? '0.5rem 1rem' : '0.75rem 1.5rem',
+                        borderRadius: '50px'
                     }}
                 >
+                    <motion.div
+                        whileHover={{ scale: 1.2 }}
+                        style={{
+                            width: '6px',
+                            height: '6px',
+                            borderRadius: '50%',
+                            backgroundColor: '#C5A059',
+                            marginRight: '1rem'
+                        }}
+                    />
+
                     <span style={{
-                        fontSize: '0.75rem',
+                        fontSize: isMobile ? '0.65rem' : '0.75rem',
                         color: '#C5A059',
                         fontFamily: 'monospace',
                         letterSpacing: '0.2em',
@@ -113,9 +133,9 @@ const Hero = () => {
 
                 {/* Main Headline */}
                 <motion.h1
-                    initial={{ opacity: 0, y: 40 }}
+                    initial={{ opacity: 0, y: isMobile ? 20 : 40 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+                    transition={{ duration: isMobile ? 0.6 : 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
                     style={{
                         fontSize: 'clamp(3.5rem, 10vw, 9rem)',
                         lineHeight: 1.05,
@@ -132,9 +152,9 @@ const Hero = () => {
 
                 {/* Subheadline */}
                 <motion.p
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: isMobile ? 15 : 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+                    transition={{ duration: isMobile ? 0.6 : 0.8, delay: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
                     style={{
                         fontSize: 'clamp(1rem, 2vw, 1.25rem)',
                         lineHeight: 1.7,
@@ -142,28 +162,35 @@ const Hero = () => {
                         fontFamily: 'Inter, sans-serif',
                         fontWeight: 300,
                         maxWidth: '600px',
-                        marginBottom: '2rem'
+                        marginBottom: isMobile ? '2.5rem' : '2rem'
                     }}
                 >
-                    We partner with fashion brands to solve complex sourcing, operational, and execution challenges across global supply chains.
+                    We bridge the gap between boardroom strategy and factory-floor reality, solving complex sourcing challenges with on-ground execution.
                 </motion.p>
 
                 {/* CTA Buttons */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                    style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', justifyContent: 'center' }}
+                    transition={{ duration: isMobile ? 0.5 : 0.7, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                    style={{
+                        display: 'flex',
+                        gap: isMobile ? '1rem' : '1.5rem',
+                        flexWrap: 'wrap',
+                        justifyContent: 'center',
+                        width: isMobile ? '100%' : 'auto'
+                    }}
                 >
                     <a href="#services" className="btn btn-primary" style={{
                         borderRadius: '2rem',
-                        padding: '1.1rem 2.8rem',
+                        padding: isMobile ? '1rem 2rem' : '1.1rem 2.8rem',
                         background: 'transparent',
                         color: '#FEFFFF',
                         border: '1px solid rgba(255, 255, 255, 0.3)',
                         fontWeight: 500,
-                        fontSize: '0.95rem',
-                        textDecoration: 'none'
+                        fontSize: isMobile ? '0.9rem' : '0.95rem',
+                        textDecoration: 'none',
+                        width: isMobile ? '100%' : 'auto'
                     }}>
                         Understand Our Services
                     </a>

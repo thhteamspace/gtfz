@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import RevealText from '../components/motion/RevealText';
+import useMediaQuery from '../hooks/useMediaQuery';
 
 const COLORS = {
     opticalWhite: '#FEFFFF',
@@ -13,9 +14,10 @@ const COLORS = {
 };
 
 const ContactHero = () => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
     return (
         <section style={{
-            height: '100vh',
+            height: isMobile ? '80svh' : '100vh',
             background: COLORS.darkCharcoal,
             display: 'flex',
             justifyContent: 'center',
@@ -36,7 +38,8 @@ const ContactHero = () => {
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover',
-                    filter: 'brightness(0.4) saturate(1.1)',
+                    objectPosition: isMobile ? 'center 30%' : 'center',
+                    filter: isMobile ? 'brightness(0.35) saturate(1.1)' : 'brightness(0.4) saturate(1.1)',
                     zIndex: 0
                 }}
                 onError={(e) => {
@@ -61,14 +64,14 @@ const ContactHero = () => {
                 zIndex: 0
             }} />
 
-            <div className="container" style={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
+            <div className="container" style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: isMobile ? '0 2rem' : '0' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <h1 style={{
-                        fontSize: 'clamp(4rem, 10vw, 8rem)',
+                        fontSize: isMobile ? '3.5rem' : 'clamp(2.5rem, 10vw, 8rem)',
                         fontWeight: 500,
-                        lineHeight: 0.9,
+                        lineHeight: 1,
                         color: COLORS.opticalWhite,
-                        marginBottom: '2rem',
+                        marginBottom: isMobile ? '1.5rem' : '2rem',
                         fontFamily: 'Outfit, sans-serif',
                         letterSpacing: '-0.03em',
                         display: 'flex',
@@ -78,10 +81,10 @@ const ContactHero = () => {
                     </h1>
 
                     <div style={{
-                        fontSize: '1.25rem', // Slightly larger
+                        fontSize: isMobile ? '1.1rem' : '1.25rem',
                         lineHeight: 1.6,
-                        color: 'rgba(255, 255, 255, 0.85)', // Much sharper/brighter
-                        maxWidth: '800px', // Wider to avoid cramped wrapping
+                        color: 'rgba(255, 255, 255, 0.85)',
+                        maxWidth: '800px',
                         margin: '0 auto',
                         fontFamily: 'Inter, sans-serif',
                         display: 'flex',
@@ -130,11 +133,12 @@ const InputField = ({ label, type = "text", placeholder }) => (
 );
 
 const InquirySection = () => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
     return (
         <section style={{
-            minHeight: '100vh',
+            minHeight: isMobile ? 'auto' : '100vh',
             background: COLORS.opticalWhite,
-            padding: '8rem 2rem',
+            padding: isMobile ? '6rem 2rem' : '8rem 2rem',
             display: 'flex',
             alignItems: 'center',
             position: 'relative',
@@ -151,20 +155,20 @@ const InquirySection = () => {
                 width: '100%',
                 margin: '0 auto',
                 display: 'grid',
-                gridTemplateColumns: window.innerWidth < 768 ? '1fr' : '1fr 1.2fr',
-                gap: '6rem'
+                gridTemplateColumns: isMobile ? '1fr' : '1fr 1.2fr',
+                gap: isMobile ? '4rem' : '6rem'
             }}>
                 {/* LEFT: Info */}
                 <motion.div
-                    initial={{ opacity: 0, y: 60 }}
+                    initial={{ opacity: 0, y: isMobile ? 30 : 60 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: false, amount: 0.3 }}
-                    transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
-                    style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}
+                    transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+                    style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '2rem' : '3rem', textAlign: isMobile ? 'center' : 'left' }}
                 >
                     <div>
                         <motion.div
-                            initial={{ opacity: 0, y: 30 }}
+                            initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: false, amount: 0.5 }}
                             transition={{ duration: 0.8, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
@@ -174,7 +178,7 @@ const InquirySection = () => {
                                 background: 'rgba(17, 17, 17, 0.05)',
                                 border: '1px solid rgba(17, 17, 17, 0.1)',
                                 borderRadius: '2rem',
-                                marginBottom: '2rem'
+                                marginBottom: isMobile ? '1.5rem' : '2rem'
                             }}
                         >
                             <span style={{
@@ -187,16 +191,16 @@ const InquirySection = () => {
                         </motion.div>
 
                         <motion.h2
-                            initial={{ opacity: 0, y: 40 }}
+                            initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: false, amount: 0.5 }}
                             transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
                             style={{
-                                fontSize: 'clamp(2rem, 4vw, 3rem)',
+                                fontSize: isMobile ? '2.2rem' : 'clamp(2rem, 4vw, 3rem)',
                                 fontWeight: 500,
                                 color: COLORS.text,
                                 lineHeight: 1.2,
-                                marginBottom: '2rem',
+                                marginBottom: isMobile ? '1.5rem' : '2rem',
                                 fontFamily: 'Outfit, sans-serif'
                             }}
                         >
@@ -204,13 +208,13 @@ const InquirySection = () => {
                         </motion.h2>
 
                         <motion.p
-                            initial={{ opacity: 0, y: 30 }}
+                            initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: false, amount: 0.5 }}
                             transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
                             style={{
                                 color: COLORS.textSecondary,
-                                fontSize: '1rem',
+                                fontSize: isMobile ? '0.95rem' : '1rem',
                                 lineHeight: 1.7,
                                 fontFamily: 'Inter, sans-serif'
                             }}
@@ -219,14 +223,14 @@ const InquirySection = () => {
                         </motion.p>
                     </div>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '2rem', justifyContent: isMobile ? 'center' : 'flex-start' }}>
                         <div>
                             <h4 style={{
                                 fontSize: '0.75rem',
                                 color: COLORS.bronze,
                                 textTransform: 'uppercase',
                                 letterSpacing: '0.15em',
-                                marginBottom: '1rem',
+                                marginBottom: '0.5rem',
                                 fontFamily: 'monospace'
                             }}>OUR PRESENCE</h4>
                             <ul style={{
@@ -234,10 +238,11 @@ const InquirySection = () => {
                                 padding: 0,
                                 margin: 0,
                                 color: COLORS.text,
-                                fontSize: '1.1rem',
+                                fontSize: '1rem',
                                 display: 'flex',
-                                flexDirection: 'column',
-                                gap: '0.5rem',
+                                flexDirection: isMobile ? 'row' : 'column',
+                                justifyContent: isMobile ? 'center' : 'flex-start',
+                                gap: isMobile ? '1rem' : '0.5rem',
                                 fontFamily: 'Inter, sans-serif'
                             }}>
                                 <li>Montreal</li>
@@ -250,16 +255,16 @@ const InquirySection = () => {
                                 color: COLORS.bronze,
                                 textTransform: 'uppercase',
                                 letterSpacing: '0.15em',
-                                marginBottom: '1rem',
+                                marginBottom: '0.5rem',
                                 fontFamily: 'monospace'
                             }}>EMAIL</h4>
                             <a href="mailto:partnerships@gtfz.com" style={{
                                 color: COLORS.text,
-                                fontSize: '1.1rem',
+                                fontSize: '1rem',
                                 textDecoration: 'none',
                                 fontFamily: 'Inter, sans-serif',
                                 borderBottom: `1px solid ${COLORS.bronze}`,
-                                paddingBottom: '0.25rem',
+                                paddingBottom: '0.1rem',
                                 transition: 'all var(--duration-normal) var(--ease-fabric)'
                             }}>
                                 partnerships@gtfz.com
@@ -270,21 +275,22 @@ const InquirySection = () => {
 
                 {/* RIGHT: Form */}
                 <motion.div
-                    initial={{ opacity: 0, x: 150 }}
-                    whileInView={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, x: isMobile ? 0 : 150, y: isMobile ? 40 : 0 }}
+                    whileInView={{ opacity: 1, x: 0, y: 0 }}
                     viewport={{ once: false, amount: 0.2 }}
-                    transition={{ duration: 1.2, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+                    transition={{ duration: 1, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
                     style={{
                         background: 'rgba(17,17,17,0.02)',
-                        padding: '3rem',
-                        border: `1px solid rgba(17,17,17,0.1)`
+                        padding: isMobile ? '2rem 1.5rem' : '3rem',
+                        border: `1px solid rgba(17,17,17,0.1)`,
+                        width: '100%'
                     }}
                 >
-                    <form style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                    <form style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '1.5rem' : '2rem' }}>
                         <div style={{
                             display: 'grid',
-                            gridTemplateColumns: window.innerWidth < 768 ? '1fr' : '1fr 1fr',
-                            gap: '2rem'
+                            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+                            gap: isMobile ? '1.5rem' : '2rem'
                         }}>
                             <InputField label="Name" placeholder="Jane Doe" />
                             <InputField label="Title" placeholder="Director of Sourcing" />
@@ -332,7 +338,7 @@ const InquirySection = () => {
                                 fontWeight: 500,
                                 letterSpacing: '0.02em',
                                 cursor: 'pointer',
-                                alignSelf: 'flex-start',
+                                alignSelf: isMobile ? 'stretch' : 'flex-start',
                                 borderRadius: '2rem',
                                 transition: 'all var(--duration-normal) var(--ease-fabric)'
                             }}
@@ -348,13 +354,14 @@ const InquirySection = () => {
 
 const FAQAccordion = ({ question, answer }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const isMobile = useMediaQuery('(max-width: 768px)');
 
     return (
         <div style={{ borderBottom: `1px solid rgba(17,17,17,0.1)` }}>
             <div
                 onClick={() => setIsOpen(!isOpen)}
                 style={{
-                    padding: '2rem 0',
+                    padding: isMobile ? '1.5rem 0' : '2rem 0',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
@@ -362,11 +369,12 @@ const FAQAccordion = ({ question, answer }) => {
                 }}
             >
                 <h4 style={{
-                    fontSize: '1.2rem',
+                    fontSize: isMobile ? '1.1rem' : '1.2rem',
                     fontWeight: 500,
                     color: COLORS.text,
                     margin: 0,
-                    fontFamily: 'Outfit, sans-serif'
+                    fontFamily: 'Outfit, sans-serif',
+                    paddingRight: '1rem'
                 }}>
                     {question}
                 </h4>
@@ -392,6 +400,7 @@ const FAQAccordion = ({ question, answer }) => {
                             paddingBottom: '2rem',
                             color: COLORS.textSecondary,
                             lineHeight: 1.7,
+                            fontSize: isMobile ? '0.9rem' : '1rem',
                             fontFamily: 'Inter, sans-serif'
                         }}>
                             {answer}
@@ -404,6 +413,7 @@ const FAQAccordion = ({ question, answer }) => {
 };
 
 const FAQSection = () => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
     const faqs = [
         {
             q: "Do you work with emerging fashion brands and startups?",
@@ -425,17 +435,17 @@ const FAQSection = () => {
 
     return (
         <section style={{
-            minHeight: '80vh',
-            padding: '8rem 2rem',
+            minHeight: isMobile ? 'auto' : '80vh',
+            padding: isMobile ? '6rem 2rem' : '8rem 2rem',
             background: COLORS.opticalWhite
         }}>
             <div style={{ maxWidth: '900px', margin: '0 auto' }}>
                 <motion.div
-                    initial={{ opacity: 0, y: 40, scale: 0.97 }}
+                    initial={{ opacity: 0, y: isMobile ? 30 : 40, scale: 0.97 }}
                     whileInView={{ opacity: 1, y: 0, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-                    style={{ marginBottom: '4rem' }}
+                    style={{ marginBottom: isMobile ? '2.5rem' : '4rem', textAlign: isMobile ? 'center' : 'left' }}
                 >
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -448,7 +458,7 @@ const FAQSection = () => {
                             background: 'rgba(17, 17, 17, 0.05)',
                             border: '1px solid rgba(17, 17, 17, 0.1)',
                             borderRadius: '2rem',
-                            marginBottom: '2rem'
+                            marginBottom: isMobile ? '1.5rem' : '2rem'
                         }}
                     >
                         <span style={{
@@ -466,7 +476,7 @@ const FAQSection = () => {
                         viewport={{ once: true }}
                         transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
                         style={{
-                            fontSize: 'clamp(2.5rem, 6vw, 4rem)',
+                            fontSize: isMobile ? '2.5rem' : 'clamp(2.5rem, 6vw, 4rem)',
                             fontWeight: 500,
                             color: COLORS.text,
                             lineHeight: 1.1,
@@ -489,6 +499,7 @@ const FAQSection = () => {
 };
 
 const ContactPage = () => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
     return (
         <main style={{ background: COLORS.darkCharcoal }}>
             {/* Scroll container with sticky hero */}
@@ -497,7 +508,7 @@ const ContactPage = () => {
                 <div style={{
                     position: 'sticky',
                     top: 0,
-                    height: '100vh',
+                    height: isMobile ? '80svh' : '100vh',
                     zIndex: 1
                 }}>
                     <ContactHero />
@@ -507,10 +518,10 @@ const ContactPage = () => {
                 <div style={{
                     position: 'relative',
                     zIndex: 10,
-                    marginTop: '-100vh'
+                    marginTop: isMobile ? '-80svh' : '-100vh'
                 }}>
                     {/* Spacer to allow seeing hero first */}
-                    <div style={{ height: '100vh', pointerEvents: 'none' }} />
+                    <div style={{ height: isMobile ? '80svh' : '100vh', pointerEvents: 'none' }} />
 
                     {/* Actual content */}
                     <InquirySection />

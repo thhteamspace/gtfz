@@ -16,7 +16,7 @@ const About = () => {
     const words = paragraph.split(" ");
 
     return (
-        <section id="about" className="section" ref={containerRef} style={{ background: 'transparent' }}>
+        <section id="about" className="section" ref={containerRef} style={{ background: 'transparent', position: 'relative' }}>
             <div className="container">
                 <div style={{
                     display: 'grid',

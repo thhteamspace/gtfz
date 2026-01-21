@@ -1,262 +1,350 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import useMediaQuery from '../hooks/useMediaQuery';
 
 import imgSourcing from '../assets/images/latest-sourcing.jpg';
 import imgQuality from '../assets/images/latest-quality.jpg';
 import imgSustainability from '../assets/images/latest-sustainability.jpg';
 
-const InsightCard = ({ category, title, image, index, isLarge = false, link }) => {
-    const navigate = useNavigate();
-    const cardRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: cardRef,
-        offset: ["start end", "end start"]
-    });
-
-    // Alternating direction: even indices from left, odd from right
-    const xDirection = index % 2 === 0 ? -80 : 80;
-    const staggerDelay = index * 0.15; // Staggered entrance
-
-    // Enhanced scroll-linked transforms with directional movement + scale
-    const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0.85]);
-    const y = useTransform(scrollYProgress, [0, 0.25], [60, 0]);
-    const x = useTransform(scrollYProgress, [0, 0.25], [xDirection, 0]);
-    const scale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.93, 1, 1, 0.97]);
-    const rotate = useTransform(scrollYProgress, [0, 0.2], [index % 2 === 0 ? 1 : -1, 0]);
-
-    // Image parallax
-    const imageY = useTransform(scrollYProgress, [0, 1], ['-5%', '5%']);
-    const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.1, 1.05, 1.1]);
-
-    return (
-        <motion.div
-            ref={cardRef}
-            style={{ opacity, y, x, scale, rotate }}
-        >
-            <motion.div
-                whileHover={{ y: -8 }}
-                transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-                onClick={() => navigate(link)}
-                style={{
-                    background: '#111111',
-                    overflow: 'hidden',
-                    cursor: 'pointer',
-                    position: 'relative',
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column'
-                }}
-            >
-                {/* Image - Full Bleed with Parallax */}
-                <div style={{
-                    height: isLarge ? '500px' : '400px',
-                    overflow: 'hidden',
-                    position: 'relative'
-                }}>
-                    <motion.img
-                        src={image}
-                        alt={title}
-                        style={{
-                            y: imageY,
-                            scale: imageScale,
-                            width: '100%',
-                            height: '120%',
-                            objectFit: 'cover',
-                            filter: 'brightness(0.9) saturate(1.1)'
-                        }}
-                    />
-
-                    {/* Grain overlay */}
-                    <div style={{
-                        position: 'absolute',
-                        inset: 0,
-                        backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")',
-                        opacity: 0.05,
-                        pointerEvents: 'none',
-                        mixBlendMode: 'overlay'
-                    }} />
-
-                    {/* Category Badge Overlay */}
-                    <div style={{
-                        position: 'absolute',
-                        top: '1.5rem',
-                        left: '1.5rem',
-                        background: 'rgba(17, 17, 17, 0.8)',
-                        backdropFilter: 'blur(10px)',
-                        padding: '0.5rem 1rem',
-                        borderRadius: '2rem',
-                        border: '1px solid rgba(254, 255, 255, 0.1)'
-                    }}>
-                        <span style={{
-                            fontSize: '0.7rem',
-                            color: '#C5A059',
-                            fontFamily: 'monospace',
-                            letterSpacing: '0.15em',
-                            textTransform: 'uppercase'
-                        }}>
-                            {category}
-                        </span>
-                    </div>
-                </div>
-
-                {/* Content */}
-                <div style={{
-                    padding: '2.5rem',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '1.5rem',
-                    flexGrow: 1
-                }}>
-                    <h3 style={{
-                        fontSize: isLarge ? 'clamp(1.8rem, 3vw, 2.5rem)' : 'clamp(1.5rem, 2.5vw, 2rem)',
-                        fontWeight: 500,
-                        lineHeight: 1.3,
-                        color: '#FEFFFF',
-                        fontFamily: 'Outfit, sans-serif'
-                    }}>
-                        {title}
-                    </h3>
-
-                    {/* Bronze Accent Arrow */}
-                    <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        marginTop: 'auto'
-                    }}>
-                        <span style={{
-                            fontSize: '0.85rem',
-                            color: '#C5A059',
-                            fontFamily: 'Inter, sans-serif',
-                            fontWeight: 500
-                        }}>
-                            Read Case Study
-                        </span>
-                        <motion.span
-                            initial={{ x: 0 }}
-                            whileHover={{ x: 5 }}
-                            style={{ color: '#C5A059' }}
-                        >
-                            →
-                        </motion.span>
-                    </div>
-                </div>
-            </motion.div>
-        </motion.div>
-    );
-};
-
 const InsightHighlights = () => {
-    const containerRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start end", "end start"]
-    });
+    const scrollContainerRef = useRef(null);
+    const isMobile = useMediaQuery('(max-width: 768px)');
+    const navigate = useNavigate();
 
     const insights = [
         {
             category: "Material Sourcing",
+            date: "Oct 12, 2025 • 5 min read",
             title: "Reducing Lead Times by 40% Through Strategic Factory Partnerships",
             image: imgSourcing,
-            link: "/impact/supply-chain-diversification"
+            link: "/impact/supply-chain-diversification",
+            description: "How direct relationships with raw material suppliers can cut weeks off your production schedule."
         },
         {
             category: "Quality Control",
+            date: "Sep 28, 2025 • 7 min read",
             title: "Zero-Defect Production: Implementing Advanced QA Protocols",
             image: imgQuality,
-            link: "/impact/quality-control"
+            link: "/impact/quality-control",
+            description: "A deep dive into the multi-stage inspection processes that guarantee premium output."
         },
         {
             category: "Sustainability",
+            date: "Sep 15, 2025 • 4 min read",
             title: "Building Ethical Supply Chains in Southeast Asia",
             image: imgSustainability,
-            link: "/impact/compliance-issues"
+            link: "/impact/compliance-issues",
+            description: "Navigating the complexities of compliance and labor standards in emerging markets."
+        },
+        // Duplicate for scroll demonstration
+        {
+            category: "Logistics",
+            date: "Aug 30, 2025 • 6 min read",
+            title: "Optimizing Last-Mile Delivery for Global Fashion Brands",
+            image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800",
+            link: "/impact",
+            description: "Strategies to ensure your products reach distribution centers faster and cheaper."
         }
     ];
 
+    const [canScrollLeft, setCanScrollLeft] = React.useState(false);
+    const [canScrollRight, setCanScrollRight] = React.useState(true);
+
+    const checkScroll = () => {
+        if (scrollContainerRef.current) {
+            const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+            setCanScrollLeft(scrollLeft > 0);
+            setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5);
+        }
+    };
+
+    React.useEffect(() => {
+        const container = scrollContainerRef.current;
+        if (container) {
+            container.addEventListener('scroll', checkScroll);
+            checkScroll();
+            window.addEventListener('resize', checkScroll);
+        }
+        return () => {
+            if (container) container.removeEventListener('scroll', checkScroll);
+            window.removeEventListener('resize', checkScroll);
+        };
+    }, []);
+
+    const handleScroll = (direction) => {
+        if (scrollContainerRef.current) {
+            const scrollAmount = 400;
+            scrollContainerRef.current.scrollBy({
+                left: direction === 'left' ? -scrollAmount : scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    };
+
     return (
-        <section ref={containerRef} style={{
-            minHeight: '100vh',
-            background: '#FEFFFF',
-            padding: 'var(--space-xl) 0',
-            position: 'relative'
+        <section style={{
+            minHeight: isMobile ? 'auto' : '100vh',
+            background: '#0a0a0a', // Dark Theme from reference
+            padding: isMobile ? '6rem 2rem' : '6rem 0',
+            position: 'relative',
+            color: '#ffffff',
+            overflow: 'hidden'
         }}>
             <div className="container">
-                {/* Editorial Header with enhanced reveal */}
+                {/* Header Section */}
                 <div style={{
                     display: 'flex',
-                    flexDirection: typeof window !== 'undefined' && window.innerWidth < 768 ? 'column' : 'row',
                     justifyContent: 'space-between',
-                    alignItems: typeof window !== 'undefined' && window.innerWidth < 768 ? 'flex-start' : 'flex-end',
-                    marginBottom: 'var(--space-lg)',
-                    gap: '2rem'
+                    alignItems: isMobile ? 'center' : 'flex-end',
+                    marginBottom: isMobile ? '2.5rem' : '4rem',
+                    flexWrap: 'wrap',
+                    gap: isMobile ? '1.5rem' : '2rem'
                 }}>
-                    <motion.div
-                        initial={{ opacity: 0, y: 50, scale: 0.96 }}
-                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-                        style={{ maxWidth: '600px' }}
-                    >
-                        <motion.h2
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
+                    <div style={{ maxWidth: '600px' }}>
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.8, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
                             style={{
-                                fontSize: 'clamp(3rem, 7vw, 5.5rem)',
-                                fontWeight: 500,
-                                lineHeight: 1,
-                                color: '#111111',
-                                fontFamily: 'Outfit, sans-serif',
-                                letterSpacing: '-0.03em'
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                padding: '0.5rem 1rem',
+                                border: '1px solid rgba(255,255,255,0.1)',
+                                borderRadius: '100px',
+                                marginBottom: '1.5rem',
+                                background: 'rgba(255,255,255,0.03)'
                             }}
                         >
-                            Latest<br />Work
-                        </motion.h2>
-                    </motion.div>
+                            <span style={{
+                                fontSize: '0.75rem',
+                                color: '#C5A059',
+                                fontFamily: 'Inter, sans-serif',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.05em'
+                            }}>
+                                Latest Insights
+                            </span>
+                        </motion.div>
 
-                    <motion.a
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-                        href="/impact"
-                        className="btn btn-outline"
+                        <motion.h2
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1 }}
+                            viewport={{ once: true }}
+                            style={{
+                                fontSize: isMobile ? '2.5rem' : 'clamp(2.5rem, 5vw, 4rem)',
+                                fontWeight: 500,
+                                fontFamily: 'Outfit, sans-serif',
+                                lineHeight: 1.1,
+                                margin: 0,
+                                color: '#FEFFFF',
+                                textAlign: isMobile ? 'center' : 'left'
+                            }}
+                        >
+                            Supply Chain<br />Intelligence
+                        </motion.h2>
+                    </div>
+
+                    <motion.button
+                        whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.1)' }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => navigate('/impact')}
                         style={{
-                            alignSelf: typeof window !== 'undefined' && window.innerWidth < 768 ? 'flex-start' : 'flex-end',
-                            marginBottom: typeof window !== 'undefined' && window.innerWidth < 768 ? 0 : '1.5rem'
+                            padding: '0.8rem 1.5rem',
+                            borderRadius: '100px',
+                            border: '1px solid rgba(255,255,255,0.2)',
+                            background: 'transparent',
+                            color: '#FEFFFF',
+                            fontSize: '0.9rem',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                            fontFamily: 'Inter, sans-serif',
+                            margin: isMobile ? '0 auto' : '0'
                         }}
                     >
-                        View All Projects
-                    </motion.a>
+                        View All
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                    </motion.button>
                 </div>
 
-                {/* Asymmetric Grid with editorial treatment */}
+                {/* Horizontal Scroll Carousel */}
+                <div
+                    ref={scrollContainerRef}
+                    style={{
+                        display: 'flex',
+                        gap: isMobile ? '1.5rem' : '2rem',
+                        overflowX: 'auto',
+                        paddingBottom: isMobile ? '1rem' : '2rem',
+                        scrollBehavior: 'smooth',
+                        scrollbarWidth: 'none',
+                        msOverflowStyle: 'none'
+                    }}
+                    className="hide-scrollbar"
+                >
+                    <style>{`
+                        .hide-scrollbar::-webkit-scrollbar {
+                            display: none;
+                        }
+                    `}</style>
+
+                    {insights.map((item, i) => (
+                        <div key={i} style={{ flexShrink: 0, width: 'min(100%, 400px)' }}>
+                            <BlogCard {...item} />
+                        </div>
+                    ))}
+                </div>
+
+                {/* Navigation Controls */}
                 <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: typeof window !== 'undefined' && window.innerWidth < 768 ? '1fr' : 'repeat(12, 1fr)',
-                    gap: '2rem'
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    gap: '1rem',
+                    marginTop: '1rem'
                 }}>
-                    {/* Card 1: Spans 5 columns */}
-                    <div style={{ gridColumn: typeof window !== 'undefined' && window.innerWidth < 768 ? 'span 1' : 'span 5' }}>
-                        <InsightCard {...insights[0]} index={0} />
-                    </div>
-
-                    {/* Card 2: Spans 7 columns - larger editorial treatment */}
-                    <div style={{ gridColumn: typeof window !== 'undefined' && window.innerWidth < 768 ? 'span 1' : 'span 7' }}>
-                        <InsightCard {...insights[1]} index={1} isLarge={true} />
-                    </div>
-
-                    {/* Card 3: Spans full width - full editorial moment */}
-                    <div style={{ gridColumn: typeof window !== 'undefined' && window.innerWidth < 768 ? '1' : 'span 12' }}>
-                        <InsightCard {...insights[2]} index={2} isLarge={true} />
-                    </div>
+                    {canScrollLeft && <NavButton direction="left" onClick={() => handleScroll('left')} />}
+                    {canScrollRight && <NavButton direction="right" onClick={() => handleScroll('right')} />}
                 </div>
             </div>
         </section>
     );
 };
+
+const BlogCard = ({ category, date, title, image, link, description }) => {
+    const navigate = useNavigate();
+
+    return (
+        <motion.div
+            onClick={() => navigate(link)}
+            whileHover={{ y: -10 }}
+            style={{
+                cursor: 'pointer',
+                group: 'card'
+            }}
+        >
+            {/* Image Container */}
+            <div style={{
+                borderRadius: '32px', // Highly rounded per reference
+                overflow: 'hidden',
+                marginBottom: '1.5rem',
+                aspectRatio: '1 / 1', // Square per reference
+                background: '#1a1a1a', // Placeholder bg
+                position: 'relative'
+            }}>
+                <motion.img
+                    src={image}
+                    alt={title}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        opacity: 0.9
+                    }}
+                />
+            </div>
+
+            {/* Metadata Row */}
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginBottom: '1rem',
+                fontSize: '0.85rem'
+            }}>
+                <span style={{
+                    padding: '0.4rem 1rem',
+                    borderRadius: '100px',
+                    border: '1px solid rgba(255,255,255,0.15)',
+                    color: '#C5A059',
+                    fontFamily: 'Inter, sans-serif',
+                    fontWeight: 500
+                }}>
+                    {category}
+                </span>
+                <span style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'Inter, sans-serif' }}>
+                    {date}
+                </span>
+            </div>
+
+            {/* Content */}
+            <h3 style={{
+                fontSize: '1.5rem',
+                color: '#FEFFFF',
+                fontFamily: 'Outfit, sans-serif',
+                fontWeight: 500,
+                lineHeight: 1.3,
+                marginBottom: '0.75rem'
+            }}>
+                {title}
+            </h3>
+
+            <p style={{
+                fontSize: '1rem',
+                color: 'rgba(255,255,255,0.5)',
+                lineHeight: 1.6,
+                fontFamily: 'Inter, sans-serif',
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden'
+            }}>
+                {description}
+            </p>
+
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                marginTop: '1.25rem',
+                color: '#C5A059',
+                fontSize: '0.9rem',
+                fontFamily: 'Inter, sans-serif',
+                fontWeight: 500
+            }}>
+                Read Article
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </div>
+        </motion.div>
+    );
+};
+
+const NavButton = ({ direction, onClick }) => (
+    <motion.button
+        onClick={onClick}
+        whileHover={{ scale: 1.1, backgroundColor: 'rgba(255,255,255,0.1)' }}
+        whileTap={{ scale: 0.9 }}
+        style={{
+            width: '50px',
+            height: '50px',
+            borderRadius: '50%',
+            border: '1px solid rgba(255,255,255,0.1)',
+            background: 'transparent',
+            color: '#FEFFFF',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            outline: 'none'
+        }}
+    >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            {direction === 'left' ? (
+                <polyline points="15 18 9 12 15 6"></polyline>
+            ) : (
+                <polyline points="9 18 15 12 9 6"></polyline>
+            )}
+        </svg>
+    </motion.button>
+);
 
 export default InsightHighlights;

@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import useMediaQuery from '../hooks/useMediaQuery';
 
 const StrategicSplit = () => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
     const containerRef = useRef(null);
     const [activeSection, setActiveSection] = useState(0);
 
@@ -53,37 +55,36 @@ const StrategicSplit = () => {
 
     return (
         <section ref={containerRef} style={{
-            minHeight: '150vh',
+            minHeight: isMobile ? 'auto' : '150vh',
             background: '#FEFFFF',
             position: 'relative',
-            paddingTop: '6rem', // Added initial breathing room
-            paddingBottom: '12rem' // Added padding to prevent bottom sticking
+            paddingTop: isMobile ? '6rem' : '6rem', // Keep consistent top padding
+            paddingBottom: isMobile ? '6rem' : '12rem'
         }}>
-            <div style={{ width: '92%', maxWidth: '1800px', margin: '0 auto', height: '100%' }}>
+            <div style={{ width: isMobile ? '100%' : '92%', maxWidth: '1800px', margin: '0 auto', height: '100%', padding: isMobile ? '0 2rem' : '0' }}>
                 <div style={{
                     display: 'grid',
-                    gridTemplateColumns: typeof window !== 'undefined' && window.innerWidth < 768 ? '1fr' : '1.2fr 0.8fr',
-                    gap: '6rem',
+                    gridTemplateColumns: isMobile ? '1fr' : '1.2fr 0.8fr',
+                    gap: isMobile ? '3rem' : '6rem',
                     position: 'relative'
                 }}>
                     {/* LEFT: Sticky Visual */}
                     <div style={{
-                        position: 'sticky',
-                        top: '100px', // Simplified top offset
-                        height: 'fit-content', // Don't force full height, let it wrap content
+                        position: isMobile ? 'relative' : 'sticky',
+                        top: '100px',
+                        height: 'fit-content',
                         display: 'flex',
+                        flexDirection: 'column',
                         alignItems: 'flex-start',
-                        // paddingRemoved
+                        marginBottom: isMobile ? '3rem' : '0'
                     }}>
-                        <div style={{ position: 'relative', width: '100%', height: '100%' }}> {/* Added height 100% for absolute images */}
+                        <div style={{ position: 'relative', width: '100%' }}>
                             <motion.div
                                 style={{
-                                    // scale: imageScale, // Removed
-                                    // rotate: imageRotate, // Removed
-                                    // x: imageX, // Removed
                                     position: 'relative',
                                     overflow: 'hidden',
-                                    height: '500px', // Fixed height container for stability
+                                    height: isMobile ? '320px' : '500px',
+                                    width: '100%',
                                     borderRadius: '4px'
                                 }}
                             >
@@ -103,6 +104,7 @@ const StrategicSplit = () => {
                                             width: '100%',
                                             height: '100%',
                                             objectFit: 'cover',
+                                            objectPosition: isMobile ? 'center 30%' : 'center',
                                             filter: 'brightness(0.9) saturate(1.2)',
                                             display: 'block'
                                         }}
@@ -134,26 +136,28 @@ const StrategicSplit = () => {
                                 }} />
                             </motion.div>
 
-                            {/* Progress Indicator */}
-                            <motion.div
-                                style={{
-                                    position: 'absolute',
-                                    right: '-2rem',
-                                    top: 0,
-                                    width: '2px',
-                                    height: '80%', // Reduced from 100% to stop at metrics
-                                    background: 'rgba(17, 17, 17, 0.1)'
-                                }}
-                            >
+                            {/* Progress Indicator - Desktop Only */}
+                            {!isMobile && (
                                 <motion.div
                                     style={{
-                                        width: '100%',
-                                        height: progressHeight,
-                                        background: 'var(--color-heritage-bronze)',
-                                        transformOrigin: 'top'
+                                        position: 'absolute',
+                                        right: '-2rem',
+                                        top: 0,
+                                        width: '2px',
+                                        height: '80%',
+                                        background: 'rgba(17, 17, 17, 0.1)'
                                     }}
-                                />
-                            </motion.div>
+                                >
+                                    <motion.div
+                                        style={{
+                                            width: '100%',
+                                            height: progressHeight,
+                                            background: 'var(--color-heritage-bronze)',
+                                            transformOrigin: 'top'
+                                        }}
+                                    />
+                                </motion.div>
+                            )}
 
                             {/* Small Metrics */}
                             <motion.div
@@ -207,12 +211,12 @@ const StrategicSplit = () => {
 
                     {/* RIGHT: Scrolling Content */}
                     <div style={{
-                        padding: 'var(--space-xl) 0',
+                        padding: isMobile ? '0' : 'var(--space-xl) 0',
                         display: 'flex',
                         flexDirection: 'column',
-                        gap: '25vh',
+                        gap: isMobile ? '4rem' : '25vh',
                         justifyContent: 'flex-start',
-                        paddingTop: '15vh'
+                        paddingTop: isMobile ? '0' : '15vh'
                     }}>
                         {contentSections.map((section, index) => (
                             <motion.div
@@ -261,7 +265,7 @@ const StrategicSplit = () => {
                                 {/* Body Copy */}
                                 <div style={{
                                     display: 'grid',
-                                    gridTemplateColumns: typeof window !== 'undefined' && window.innerWidth < 768 ? '1fr' : '1fr 1fr',
+                                    gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
                                     gap: '2rem',
                                     marginBottom: section.cta ? '3rem' : '0'
                                 }}>

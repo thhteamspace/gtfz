@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
+import useMediaQuery from '../hooks/useMediaQuery';
 
 // --- Color Palette ---
 const COLORS = {
@@ -34,40 +35,52 @@ const fadeIn = {
 // 1. ETHOS HERO (70-80vh)
 // ============================================
 const EthosHero = () => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
     return (
         <section style={{
-            height: '75vh',
-            minHeight: '500px',
+            height: isMobile ? '80svh' : '75vh',
+            minHeight: isMobile ? '400px' : '500px',
             position: 'relative',
             display: 'flex',
             alignItems: 'center',
             overflow: 'hidden'
         }}>
             {/* Background Image */}
+            {/* Background Image - Keeping the exact essence of desktop, just scaled */}
             <div style={{
                 position: 'absolute',
                 inset: 0,
                 backgroundImage: `url(${IMAGES.hero})`,
                 backgroundSize: 'cover',
+                // Using exact center alignment like desktop to maintain the same "shot"
                 backgroundPosition: 'center',
+                // Matching desktop brightness/contrast intensity
                 filter: 'brightness(0.35)'
             }} />
 
-            {/* Content Overlay */}
-            <div className="container" style={{ position: 'relative', zIndex: 1, height: '100%', display: 'flex', alignItems: 'center' }}>
+            {/* Content Overlay - Maintaining relative positioning */}
+            <div className="container" style={{
+                position: 'relative',
+                zIndex: 1,
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                // Force left alignment even on mobile if space permits to match desktop "position"
+                textAlign: 'left',
+                paddingLeft: isMobile ? '1.5rem' : '2rem'
+            }}>
                 <motion.div
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: false, amount: 0.3 }} // Repeat animation on scroll
+                    viewport={{ once: true }}
                     variants={fadeInUp}
-                    transition={{ duration: 0.8 }}
                     style={{ maxWidth: '800px' }}
                 >
                     <h1 style={{
-                        fontSize: 'clamp(3rem, 6vw, 5.5rem)',
+                        fontSize: 'clamp(2.5rem, 6vw, 5.5rem)',
                         fontWeight: 500,
                         color: COLORS.opticalWhite,
-                        lineHeight: 1.2,
+                        lineHeight: 1.1,
                         letterSpacing: '-0.02em',
                         marginBottom: '1.5rem',
                         paddingBottom: '0.2rem',
@@ -76,7 +89,7 @@ const EthosHero = () => {
                         Protecting the Product. Optimizing the <span style={{ color: COLORS.bronze }}>Process.</span>
                     </h1>
                     <p style={{
-                        fontSize: 'clamp(1.1rem, 2vw, 1.35rem)',
+                        fontSize: isMobile ? '1.05rem' : 'clamp(1.1rem, 2vw, 1.35rem)',
                         color: 'rgba(255,255,255,0.85)',
                         maxWidth: '600px',
                         lineHeight: 1.6,
@@ -95,27 +108,28 @@ const EthosHero = () => {
 // 2. HOW WE CREATE IMPACT
 // ============================================
 const HowWeCreateImpact = () => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
     return (
         <section style={{
             background: COLORS.opticalWhite,
-            padding: '6rem 0'
+            padding: isMobile ? '6rem 2rem' : '6rem 0'
         }}>
             <div className="container">
                 <motion.div
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: false, amount: 0.3 }}
+                    viewport={{ once: false, amount: 0.2 }}
                     variants={fadeInUp}
                     transition={{ duration: 0.7 }}
                     style={{
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
-                        gap: '4rem',
+                        gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+                        gap: isMobile ? '3rem' : '4rem',
                         alignItems: 'center'
                     }}
                 >
                     {/* Text Column */}
-                    <div>
+                    <div style={{ textAlign: isMobile ? 'center' : 'left' }}>
                         <h2 style={{
                             fontSize: 'clamp(1.75rem, 3vw, 2.5rem)',
                             fontWeight: 500,
@@ -152,10 +166,11 @@ const HowWeCreateImpact = () => {
                     {/* Visual Column */}
                     <div style={{
                         position: 'relative',
-                        height: '350px',
+                        height: isMobile ? 'auto' : '350px',
                         background: `linear-gradient(135deg, ${COLORS.bronze}10, ${COLORS.gold}05)`,
                         borderRadius: '4px',
-                        overflow: 'hidden'
+                        overflow: 'hidden',
+                        padding: isMobile ? '2rem 0' : '0'
                     }}>
                         <div style={{
                             position: 'absolute',
@@ -173,29 +188,33 @@ const HowWeCreateImpact = () => {
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'center',
-                            padding: '2.5rem'
+                            padding: isMobile ? '1rem' : '2.5rem',
+                            alignItems: isMobile ? 'center' : 'flex-start'
                         }}>
                             {[
-                                { value: '26+', label: 'Partner Factories Across Asia' },
-                                { value: '98%', label: 'On-Time Delivery Performance' },
-                                { value: '15+', label: 'Years of On-Ground Fashion Experience' }
+                                { value: '26+', label: 'Partner Factories' },
+                                { value: '98%', label: 'On-Time Performance' },
+                                { value: '15+', label: 'Years Experience' }
                             ].map((stat, i) => (
                                 <div key={i} style={{
                                     display: 'flex',
+                                    flexDirection: isMobile ? 'column' : 'row',
                                     alignItems: 'baseline',
-                                    gap: '1rem',
-                                    marginBottom: i < 2 ? '1.5rem' : 0
+                                    gap: isMobile ? '0.25rem' : '1rem',
+                                    marginBottom: i < 2 ? '1.5rem' : 0,
+                                    textAlign: isMobile ? 'center' : 'left'
                                 }}>
                                     <span style={{
-                                        fontSize: '2.5rem',
+                                        fontSize: isMobile ? '2.2rem' : '2.5rem',
                                         fontWeight: 600,
                                         color: COLORS.bronze,
                                         fontFamily: 'Outfit, sans-serif'
                                     }}>{stat.value}</span>
                                     <span style={{
-                                        fontSize: '0.95rem',
+                                        fontSize: '0.9rem',
                                         color: COLORS.text,
-                                        fontFamily: 'Inter, sans-serif'
+                                        fontFamily: 'Inter, sans-serif',
+                                        textTransform: isMobile ? 'uppercase' : 'none'
                                     }}>{stat.label}</span>
                                 </div>
                             ))}
@@ -234,10 +253,11 @@ const methodologySteps = [
 ];
 
 const OurMethodology = () => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
     return (
         <section style={{
             background: COLORS.darkCharcoal,
-            padding: '5rem 0'
+            padding: isMobile ? '6rem 2rem' : '5rem 0'
         }}>
             <div className="container">
                 {/* Section Header */}
@@ -247,7 +267,7 @@ const OurMethodology = () => {
                     viewport={{ once: false }}
                     variants={fadeIn}
                     transition={{ duration: 0.6 }}
-                    style={{ marginBottom: '3rem' }}
+                    style={{ marginBottom: '3rem', textAlign: isMobile ? 'center' : 'left' }}
                 >
                     <h2 style={{
                         fontSize: 'clamp(1.75rem, 3vw, 2.5rem)',
@@ -270,8 +290,8 @@ const OurMethodology = () => {
                 {/* Steps Grid - Horizontal Layout */}
                 <div style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(4, 1fr)',
-                    gap: '1px',
+                    gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
+                    gap: isMobile ? '1px' : '1px',
                     background: 'rgba(255,255,255,0.1)'
                 }}>
                     {methodologySteps.map((item, index) => (
@@ -281,10 +301,12 @@ const OurMethodology = () => {
                             whileInView="visible"
                             viewport={{ once: false }}
                             variants={fadeInUp}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            transition={{ duration: 0.5, delay: isMobile ? 0 : index * 0.1 }}
                             style={{
                                 background: COLORS.darkCharcoal,
-                                padding: '2rem'
+                                padding: isMobile ? '1.5rem' : '2rem',
+                                // Keep border logic clean for grid
+                                textAlign: 'left'
                             }}
                         >
                             {/* Title */}
@@ -311,21 +333,7 @@ const OurMethodology = () => {
                     ))}
                 </div>
             </div>
-
-            {/* Mobile Layout Styles */}
-            <style>{`
-                @media (max-width: 900px) {
-                    .container > div:last-child {
-                        grid-template-columns: repeat(2, 1fr) !important;
-                    }
-                }
-                @media (max-width: 600px) {
-                    .container > div:last-child {
-                        grid-template-columns: 1fr !important;
-                    }
-                }
-            `}</style>
-        </section>
+        </section >
     );
 };
 
@@ -352,9 +360,10 @@ const differentiators = [
 ];
 
 const WhatSetsUsApart = () => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
     const sectionRef = useRef(null);
     const videoRef = useRef(null);
-    const isInView = useInView(sectionRef, { margin: "0px 0px -10% 0px" }); // Play when 10% visible
+    const isInView = useInView(sectionRef, { margin: "0px 0px -10% 0px" });
 
     useEffect(() => {
         if (videoRef.current) {
@@ -362,7 +371,7 @@ const WhatSetsUsApart = () => {
                 const playPromise = videoRef.current.play();
                 if (playPromise !== undefined) {
                     playPromise.catch(error => {
-                        console.log("Auto-play prevented (User interaction needed?):", error);
+                        console.log("Auto-play prevented:", error);
                     });
                 }
             } else {
@@ -374,7 +383,7 @@ const WhatSetsUsApart = () => {
     return (
         <section ref={sectionRef} style={{
             background: COLORS.lightBg,
-            padding: '6rem 0',
+            padding: isMobile ? '6rem 2rem' : '6rem 0',
             position: 'relative',
             overflow: 'hidden'
         }}>
@@ -383,7 +392,7 @@ const WhatSetsUsApart = () => {
                 position: 'absolute',
                 inset: 0,
                 zIndex: 0,
-                opacity: 0.5, // Adjusted to user preference
+                opacity: isMobile ? 0.3 : 0.5,
                 pointerEvents: 'none'
             }}>
                 <video
@@ -396,8 +405,8 @@ const WhatSetsUsApart = () => {
                         width: '100%',
                         height: '100%',
                         objectFit: 'cover',
-                        filter: 'blur(4px)', // Kept blur for text readability, removed grayscale
-                        transform: 'scale(1.05)' // Slight scale to hide blurred edges
+                        filter: 'blur(4px)',
+                        transform: 'scale(1.05)'
                     }}
                 >
                     <source src="/videos/sets-us-apart-bg.mp4" type="video/mp4" />
@@ -408,7 +417,7 @@ const WhatSetsUsApart = () => {
             <div style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'rgba(255,255,255,0.4)', // Reduced overlay so video shows through
+                background: isMobile ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.4)',
                 pointerEvents: 'none',
                 zIndex: 1
             }} />
@@ -417,7 +426,7 @@ const WhatSetsUsApart = () => {
                 <div style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '4rem'
+                    gap: isMobile ? '2.5rem' : '4rem'
                 }}>
                     {/* Title - Top Aligned */}
                     <motion.div
@@ -426,16 +435,16 @@ const WhatSetsUsApart = () => {
                         viewport={{ once: false }}
                         variants={fadeInUp}
                         transition={{ duration: 0.6 }}
-                        style={{ maxWidth: '800px' }}
+                        style={{ maxWidth: '800px', textAlign: 'left' }}
                     >
                         <h2 style={{
-                            fontSize: 'clamp(3rem, 6vw, 4rem)', // Adjusted to 4rem max
+                            fontSize: 'clamp(2.5rem, 6vw, 4rem)',
                             fontWeight: 600,
                             color: COLORS.text,
                             fontFamily: 'Outfit, sans-serif',
-                            lineHeight: 1.2, // Increased from 1.1
-                            paddingBottom: '0.2rem', // Added padding
-                            textShadow: '0 2px 20px rgba(255,255,255,0.8)' // Highlight text against video
+                            lineHeight: 1.2,
+                            paddingBottom: '0.2rem',
+                            textShadow: '0 2px 20px rgba(255,255,255,0.8)'
                         }}>
                             What Sets <span style={{ color: COLORS.bronze }}>Us Apart</span>
                         </h2>
@@ -444,20 +453,20 @@ const WhatSetsUsApart = () => {
                     {/* Grid List */}
                     <div style={{
                         display: 'grid',
-                        gridTemplateColumns: window.innerWidth < 768 ? '1fr' : '1fr 1fr', // Force 2 columns on desktop
-                        gap: '3rem',
-                        columnGap: '6rem', // Increased gap to cover more horizontal space
+                        gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+                        rowGap: isMobile ? '1.25rem' : '3rem',
+                        columnGap: isMobile ? '0' : '6rem',
                         width: '100%'
                     }}>
                         {differentiators.map((item, index) => (
                             <motion.div
                                 key={index}
-                                initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }} // Even from Left, Odd from Right
+                                initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: false, amount: 0.2 }}
-                                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: index * 0.2 }} // Slow cinematic eased
+                                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: index * 0.1 }}
                                 style={{
-                                    padding: '2rem', // Reduced from 2.5rem
+                                    padding: '2rem',
                                     background: 'rgba(255, 255, 255, 0.7)',
                                     backdropFilter: 'blur(12px)',
                                     borderRadius: '16px',
@@ -466,25 +475,26 @@ const WhatSetsUsApart = () => {
                                     height: '100%',
                                     display: 'flex',
                                     flexDirection: 'column',
-                                    justifyContent: 'center'
+                                    justifyContent: 'center',
+                                    textAlign: 'left'
                                 }}
                             >
                                 <h3 style={{
-                                    fontSize: '1.6rem', // Adjusted to 1.6rem
+                                    fontSize: '1.5rem',
                                     fontWeight: 600,
                                     color: COLORS.text,
                                     fontFamily: 'Outfit, sans-serif',
-                                    marginBottom: '1.25rem',
-                                    textShadow: '0 2px 15px rgba(255,255,255,0.8)' // Highlight
+                                    marginBottom: '1rem',
+                                    textShadow: isMobile ? 'none' : '0 2px 15px rgba(255,255,255,0.8)'
                                 }}>
                                     {item.title}
                                 </h3>
                                 <p style={{
-                                    fontSize: '1.1rem', // Adjusted to 1.1rem
+                                    fontSize: '1rem',
                                     color: 'rgba(17, 17, 17, 0.85)',
                                     lineHeight: 1.6,
-                                    textShadow: '0 1px 1px rgba(255,255,255,0.5)', // Subtle lift
-                                    maxWidth: '90%'
+                                    maxWidth: isMobile ? '100%' : '90%',
+                                    margin: isMobile ? '0 auto' : '0'
                                 }}>
                                     {item.description}
                                 </p>
@@ -493,16 +503,6 @@ const WhatSetsUsApart = () => {
                     </div>
                 </div>
             </div>
-
-            {/* Mobile Layout */}
-            <style>{`
-                @media (max-width: 768px) {
-                    .container > div {
-                        grid-template-columns: 1fr !important;
-                        gap: 2rem !important;
-                    }
-                }
-            `}</style>
         </section>
     );
 };
@@ -511,16 +511,18 @@ const WhatSetsUsApart = () => {
 // 5. FOUNDER'S PERSPECTIVE
 // ============================================
 const FounderPerspective = () => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
     return (
         <section style={{
             background: COLORS.opticalWhite,
-            minHeight: '100vh', // Full Screen
+            minHeight: isMobile ? 'auto' : '100vh',
             display: 'flex',
-            alignItems: 'flex-end', // Anchor image to bottom
+            alignItems: 'flex-end',
             position: 'relative',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            padding: isMobile ? '6rem 2rem 0 2rem' : '0'
         }}>
-            {/* 1. Large Watermark Text to fill void */}
+            {/* 1. Large Watermark Text */}
             <div style={{
                 position: 'absolute',
                 top: '50%',
@@ -528,7 +530,7 @@ const FounderPerspective = () => {
                 transform: 'translate(-50%, -50%)',
                 fontSize: 'clamp(10rem, 25vw, 30rem)',
                 fontWeight: 900,
-                color: 'rgba(0,0,0,0.02)', // Very subtle
+                color: 'rgba(0,0,0,0.015)',
                 fontFamily: 'Inter, sans-serif',
                 whiteSpace: 'nowrap',
                 zIndex: 0,
@@ -548,28 +550,26 @@ const FounderPerspective = () => {
                 pointerEvents: 'none'
             }} />
 
-            {/* Subtle Gradient Overlay for depth */}
+            {/* Subtle Gradient Overlay */}
             <div style={{
                 position: 'absolute',
                 inset: 0,
-                background: `radial-gradient(circle at 70% 80%, transparent 20%, ${COLORS.opticalWhite} 100%)`, // Fade edges
+                background: `radial-gradient(circle at 70% 80%, transparent 20%, ${COLORS.opticalWhite} 100%)`,
                 zIndex: 1
             }} />
 
             <div className="container" style={{ position: 'relative', zIndex: 10 }}>
                 <div style={{
                     display: 'grid',
-                    gridTemplateColumns: '1.5fr 1fr', // Adjusted balance
-                    gap: '4rem',
-                    alignItems: 'stretch', // Stretch to control vertical alignment independently
+                    gridTemplateColumns: isMobile ? '1fr' : '1.5fr 1fr',
+                    gap: isMobile ? '0' : '4rem',
+                    alignItems: isMobile ? 'center' : 'stretch',
                     maxWidth: '1200px',
                     margin: '0 auto',
-                    height: '100vh', // Full height grid
-                    paddingBottom: 0 // No bottom padding for image flush
+                    height: isMobile ? 'auto' : '100vh'
                 }}>
-                    {/* Quote Column - Vertically Centered */}
-                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '4rem' }}>
-                        {/* Label Animation */}
+                    {/* Quote Column */}
+                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: isMobile ? '3rem' : '4rem', textAlign: 'left' }}>
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -588,20 +588,19 @@ const FounderPerspective = () => {
                             FOUNDER'S PERSPECTIVE
                         </motion.div>
 
-                        {/* Quote Text Animation */}
                         <motion.blockquote
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: false, amount: 0.3 }}
                             transition={{ duration: 0.8, delay: 0.1 }}
                             style={{
-                                fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+                                fontSize: isMobile ? '1.25rem' : 'clamp(1.5rem, 3vw, 2.2rem)',
                                 fontWeight: 400,
                                 color: COLORS.text,
                                 fontFamily: 'Outfit, sans-serif',
                                 lineHeight: 1.4,
                                 margin: 0,
-                                marginBottom: '2rem',
+                                marginBottom: '2.5rem',
                                 fontStyle: 'normal'
                             }}
                         >
@@ -610,7 +609,6 @@ const FounderPerspective = () => {
                             Excellence is our only metric."
                         </motion.blockquote>
 
-                        {/* Name & Title Animation */}
                         <motion.div
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
@@ -619,14 +617,11 @@ const FounderPerspective = () => {
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: '1rem'
+                                gap: '1rem',
+                                justifyContent: 'flex-start'
                             }}
                         >
-                            <div style={{
-                                width: '40px',
-                                height: '1px',
-                                background: COLORS.bronze
-                            }} />
+                            <div style={{ width: '40px', height: '1px', background: COLORS.bronze }} />
                             <div>
                                 <div style={{
                                     fontSize: '1rem',
@@ -646,22 +641,22 @@ const FounderPerspective = () => {
                         </motion.div>
                     </div>
 
-                    {/* Founder Image Animation - Anchored Bottom */}
+                    {/* Founder Image */}
                     <motion.div
-                        initial={{ opacity: 0, y: 50 }}
+                        initial={{ opacity: 0, y: isMobile ? 30 : 50 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: false, amount: 0.3 }}
                         transition={{ duration: 1, ease: "easeOut" }}
                         style={{
                             display: 'flex',
-                            alignItems: 'flex-end', // Anchor Bottom
-                            height: '100%',
+                            alignItems: 'flex-end',
+                            height: isMobile ? '400px' : '100%',
                             position: 'relative'
                         }}
                     >
                         <div style={{
                             width: '100%',
-                            height: '90%', // Occupy most of height
+                            height: isMobile ? '100%' : '90%',
                             position: 'relative'
                         }}>
                             <img
@@ -671,7 +666,7 @@ const FounderPerspective = () => {
                                     width: '100%',
                                     height: '100%',
                                     objectFit: 'contain',
-                                    objectPosition: 'bottom center', // Sit on bottom
+                                    objectPosition: 'bottom center',
                                     filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.1))'
                                 }}
                             />
@@ -679,15 +674,6 @@ const FounderPerspective = () => {
                     </motion.div>
                 </div>
             </div>
-
-            {/* Mobile Layout */}
-            <style>{`
-                @media (max-width: 768px) {
-                    .container > div > div {
-                        grid-template-columns: 1fr !important;
-                    }
-                }
-            `}</style>
         </section>
     );
 };
@@ -696,10 +682,11 @@ const FounderPerspective = () => {
 // 6. CLOSING STATEMENT
 // ============================================
 const ClosingStatement = () => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
     return (
         <section style={{
             background: COLORS.darkCharcoal,
-            padding: '5rem 0'
+            padding: isMobile ? '6rem 2rem' : '5rem 0'
         }}>
             <div className="container">
                 <motion.div
@@ -727,7 +714,7 @@ const ClosingStatement = () => {
                     </h2>
 
                     <p style={{
-                        fontSize: '1.1rem',
+                        fontSize: isMobile ? '1rem' : '1.1rem',
                         color: 'rgba(255,255,255,0.6)',
                         lineHeight: 1.7,
                         marginBottom: '2.5rem'
@@ -738,22 +725,17 @@ const ClosingStatement = () => {
 
                     <a
                         href="/contact"
+                        className="btn btn-primary"
                         style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '0.75rem',
-                            padding: '1rem 2rem',
+                            borderRadius: '2rem',
+                            padding: isMobile ? '1rem 2.8rem' : '1rem 2rem',
                             background: COLORS.bronze,
                             color: COLORS.darkCharcoal,
-                            textDecoration: 'none',
-                            fontSize: '0.95rem',
-                            fontWeight: 500,
-                            borderRadius: '2rem',
-                            transition: 'all 0.3s'
+                            border: `1px solid ${COLORS.bronze}`,
+                            width: isMobile ? '100%' : 'auto'
                         }}
                     >
                         Request Advisory Call
-                        <span>→</span>
                     </a>
                 </motion.div>
             </div>

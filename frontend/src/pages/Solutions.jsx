@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import useMediaQuery from '../hooks/useMediaQuery';
 
 // --- Monochrome Fashion Palette ---
 const COLORS = {
@@ -101,16 +102,17 @@ const TIMELINE_STEPS = [
 
 // --- 1.0 Hero Section ---
 const SolutionsHero = () => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
     const containerRef = useRef(null);
     const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] });
 
     const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-    const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
-    const y = useTransform(scrollYProgress, [0, 0.5], [0, -100]);
+    const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.98]);
+    const y = useTransform(scrollYProgress, [0, 0.5], [0, isMobile ? -30 : -100]);
 
     return (
         <section ref={containerRef} style={{
-            height: '100vh',
+            height: isMobile ? '80svh' : '100vh',
             background: COLORS.darkCharcoal,
             position: 'relative',
             display: 'flex',
@@ -120,7 +122,7 @@ const SolutionsHero = () => {
         }}>
             {/* Cinematic Animated Background */}
             <style>{`
-                @key frames solutionsZoom {
+                @keyframes solutionsZoom {
                     0%, 100% { transform: scale(1); }
                     50% { transform: scale(1.08); }
                 }
@@ -131,8 +133,8 @@ const SolutionsHero = () => {
                 inset: 0,
                 backgroundImage: 'url(https://images.unsplash.com/photo-1558769132-cb1aea56c2e2?auto=format&fit=crop&q=80&w=2574)',
                 backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                filter: 'brightness(0.55) saturate(1.15)',
+                backgroundPosition: isMobile ? 'center 30%' : 'center',
+                filter: isMobile ? 'brightness(0.35) saturate(1.1)' : 'brightness(0.55) saturate(1.15)',
                 animation: 'solutionsZoom 25s ease-in-out infinite',
                 zIndex: 0
             }} />
@@ -141,42 +143,43 @@ const SolutionsHero = () => {
             <div style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'radial-gradient(circle at center, transparent 0%, rgba(17,17,17,0.8) 100%)',
+                background: isMobile ? 'rgba(17,17,17,0.7)' : 'radial-gradient(circle at center, transparent 0%, rgba(17,17,17,0.8) 100%)',
                 zIndex: 1
             }} />
 
 
-            <motion.div style={{ opacity, scale, y, textAlign: 'left', zIndex: 10, padding: '0 4rem', maxWidth: '1400px', width: '100%' }}>
+            <motion.div style={{ opacity, scale, y, textAlign: 'left', zIndex: 10, padding: isMobile ? '0 1.5rem' : '0 4rem', maxWidth: '1400px', width: '100%' }}>
                 <motion.h1
                     initial={{ opacity: 0, y: 50, scale: 0.97 }}
                     whileInView={{ opacity: 1, y: 0, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
                     style={{
-                        fontSize: 'clamp(4rem, 12vw, 10rem)',
+                        fontSize: 'clamp(3.5rem, 12vw, 10rem)',
                         fontWeight: 600,
                         color: COLORS.opticalWhite,
                         letterSpacing: '-0.03em',
-                        lineHeight: 1.1,
+                        lineHeight: 1,
                         marginBottom: '2rem',
                         fontFamily: 'Outfit, sans-serif'
                     }}
                 >
-                    Strategic<br />Execution.
+                    Strategic<br />Execution
                 </motion.h1>
 
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.7, delay: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
                     style={{
                         display: 'inline-flex',
                         padding: '0.75rem 1.5rem',
-                        background: 'rgba(254, 255, 255, 0.1)',
-                        border: `1px solid ${COLORS.bronze}`,
+                        background: 'rgba(255, 255, 255, 0.1)',
                         borderRadius: '2rem',
-                        backdropFilter: 'blur(10px)'
+                        backdropFilter: 'blur(20px)',
+                        WebkitBackdropFilter: 'blur(20px)',
+                        boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)'
                     }}
                 >
                     <span style={{
@@ -204,6 +207,7 @@ const BentoGrid = () => {
 };
 
 const SolutionSlide = ({ solution, index }) => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
     const containerRef = useRef(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -211,16 +215,11 @@ const SolutionSlide = ({ solution, index }) => {
     });
 
     // Smooth scale and fade effects
-    const scale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.9, 1.05, 1.05, 0.9]);
-    const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+    const scale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [isMobile ? 1 : 0.9, 1.05, 1.05, isMobile ? 1 : 0.9]);
+    const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [isMobile ? 0.3 : 0, 1, 1, isMobile ? 0.3 : 0]);
 
     // Multi-layer parallax
-    const bgY = useTransform(scrollYProgress, [0, 1], ['-20%', '20%']);
-    const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-5%']);
-
-    // Subtle icon animations
-    const iconScale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.8, 1.1, 1.1, 0.8]);
-    const iconY = useTransform(scrollYProgress, [0, 0.5, 1], [20, -10, 20]);
+    const bgY = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
 
     // Mask Reveal Animations (Staggered)
     const subtitleY = useTransform(scrollYProgress, [0.1, 0.35], ['100%', '0%']);
@@ -232,7 +231,7 @@ const SolutionSlide = ({ solution, index }) => {
         <section
             ref={containerRef}
             style={{
-                minHeight: '100vh',
+                minHeight: isMobile ? '90vh' : '100vh',
                 position: 'relative',
                 display: 'flex',
                 alignItems: 'center',
@@ -250,8 +249,8 @@ const SolutionSlide = ({ solution, index }) => {
                     height: '100%',
                     backgroundImage: `url(${solution.bgImage})`,
                     backgroundSize: 'cover',
-                    backgroundPosition: 'center center',
-                    filter: 'brightness(0.85) saturate(1.15)',
+                    backgroundPosition: isMobile ? 'center 20%' : 'center center',
+                    filter: isMobile ? 'brightness(0.5) saturate(1.1)' : 'brightness(0.85) saturate(1.15)',
                     y: bgY,
                     scale
                 }}
@@ -261,43 +260,37 @@ const SolutionSlide = ({ solution, index }) => {
             <div style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'linear-gradient(to bottom, rgba(17,17,17,0.5), rgba(17,17,17,0.8))',
+                background: 'linear-gradient(to bottom, rgba(17,17,17,0.3), rgba(17,17,17,0.85))',
                 zIndex: 1
             }} />
 
-
-
-
-
-
-
-            {/* Main Content - Editorial Layout (Bottom Left) */}
+            {/* Main Content - Editorial Layout */}
             <motion.div
                 style={{
                     position: 'relative',
                     zIndex: 10,
                     width: '100%',
                     height: '100%',
-                    padding: '6rem 4rem',
+                    padding: isMobile ? '10svh 2rem 8svh 2rem' : '6rem 4rem',
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'flex-end', // Align to bottom
-                    alignItems: 'flex-start', // Align to left
-                    textAlign: 'left' // text-left
+                    justifyContent: 'flex-end',
+                    alignItems: 'flex-start',
+                    textAlign: 'left'
                 }}
             >
                 <div style={{
                     width: '100%',
-                    maxWidth: '1400px', // Wider container
+                    maxWidth: '1400px',
                     margin: '0 auto',
                     display: 'flex',
+                    flexDirection: isMobile ? 'column' : 'row',
                     justifyContent: 'space-between',
-                    alignItems: 'flex-end',
-                    flexWrap: 'wrap',
-                    gap: '4rem'
+                    alignItems: isMobile ? 'flex-start' : 'flex-end',
+                    gap: isMobile ? '2.5rem' : '4rem'
                 }}>
                     {/* Left Block: Text */}
-                    <div style={{ flex: 1, minWidth: '300px', opacity: 1, transform: 'translateY(0)' }}>
+                    <div style={{ flex: 1, minWidth: isMobile ? '100%' : '300px', opacity: 1, transform: 'translateY(0)' }}>
                         {/* Subtitle Badge */}
                         <motion.div style={{
                             display: 'inline-block',
@@ -306,11 +299,11 @@ const SolutionSlide = ({ solution, index }) => {
                             borderRadius: '2rem',
                             background: 'rgba(17, 17, 17, 0.4)',
                             backdropFilter: 'blur(10px)',
-                            marginBottom: '2rem',
+                            marginBottom: isMobile ? '1.5rem' : '2rem',
                             y: subtitleY
                         }}>
                             <span style={{
-                                fontSize: '0.8rem',
+                                fontSize: '0.75rem',
                                 color: COLORS.bronze,
                                 fontFamily: 'monospace',
                                 letterSpacing: '0.15em',
@@ -321,13 +314,13 @@ const SolutionSlide = ({ solution, index }) => {
                         </motion.div>
 
                         {/* Title */}
-                        <div style={{ overflow: 'hidden', marginBottom: '2rem', paddingBottom: '0.5rem' }}> {/* Added padding for descenders */}
+                        <div style={{ overflow: 'hidden', marginBottom: isMobile ? '1.25rem' : '2rem', paddingBottom: '0.5rem' }}>
                             <motion.h2 style={{
-                                fontSize: 'clamp(4rem, 9vw, 8rem)',
+                                fontSize: isMobile ? '3.2rem' : 'clamp(4rem, 9vw, 8rem)',
                                 fontWeight: 600,
                                 color: COLORS.opticalWhite,
-                                letterSpacing: '-0.03em',
-                                lineHeight: 1.1, // Increased line-height
+                                letterSpacing: '-0.02em',
+                                lineHeight: 1,
                                 fontFamily: 'Outfit, sans-serif',
                                 margin: 0,
                                 y: titleY
@@ -337,10 +330,10 @@ const SolutionSlide = ({ solution, index }) => {
                         </div>
 
                         {/* Description - Compact */}
-                        <div style={{ overflow: 'hidden', maxWidth: '600px', paddingBottom: '0.5rem' }}>
+                        <div style={{ overflow: 'hidden', maxWidth: '600px', paddingBottom: '0.5rem', margin: '0' }}>
                             <motion.p style={{
                                 color: 'rgba(255,255,255,0.85)',
-                                fontSize: '1.2rem',
+                                fontSize: isMobile ? '1rem' : '1.2rem',
                                 lineHeight: 1.6,
                                 fontWeight: 300,
                                 y: descY
@@ -355,12 +348,12 @@ const SolutionSlide = ({ solution, index }) => {
                         <motion.div style={{
                             display: 'flex',
                             flexDirection: 'column',
-                            alignItems: 'flex-end', // Right align metric
+                            alignItems: isMobile ? 'flex-start' : 'flex-end',
                             y: metricsY
                         }}>
                             <motion.div
                                 style={{
-                                    fontSize: 'clamp(5rem, 10vw, 9rem)', // Huge Metric
+                                    fontSize: 'clamp(4.5rem, 10vw, 9rem)',
                                     fontWeight: 800,
                                     color: COLORS.opticalWhite,
                                     letterSpacing: '-0.04em',
@@ -370,12 +363,12 @@ const SolutionSlide = ({ solution, index }) => {
                                 {solution.metrics.value}
                             </motion.div>
                             <div style={{
-                                fontSize: '1rem',
+                                fontSize: '0.85rem',
                                 color: COLORS.bronze,
                                 textTransform: 'uppercase',
                                 letterSpacing: '0.2em',
                                 fontFamily: 'monospace',
-                                marginTop: '1rem'
+                                marginTop: '0.5rem'
                             }}>
                                 {solution.metrics.label}
                             </div>
@@ -391,79 +384,61 @@ const SolutionSlide = ({ solution, index }) => {
                 background: 'linear-gradient(to top, rgba(17,17,17,0.9) 0%, rgba(17,17,17,0.4) 50%, transparent 100%)',
                 zIndex: 1
             }} />
-
-
         </section>
     );
 };
 
 // --- 3.0 Timeline ---
 const EngagementTimeline = () => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
     const containerRef = useRef(null);
     const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
 
-
+    // Move all useTransform hooks to the top level
+    const galleryOpacity = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
+    const progressWidth = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
 
     return (
-        <section ref={containerRef} style={{ height: '400vh', background: COLORS.opticalWhite, position: 'relative' }}>
+        <section ref={containerRef} style={{ height: isMobile ? '300vh' : '400vh', background: COLORS.opticalWhite, position: 'relative' }}>
             <div style={{ position: 'sticky', top: 0, height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-                {/* Premium Checkered Pattern Background */}
+                {/* Pattern Background */}
                 <motion.div style={{
                     position: 'absolute',
                     inset: 0,
                     backgroundImage: `
-                        repeating-linear-gradient(
-                            0deg,
-                            transparent,
-                            transparent 19px,
-                            rgba(17, 17, 17, 0.015) 19px,
-                            rgba(17, 17, 17, 0.015) 20px
-                        ),
-                        repeating-linear-gradient(
-                            90deg,
-                            transparent,
-                            transparent 19px,
-                            rgba(17, 17, 17, 0.015) 19px,
-                            rgba(17, 17, 17, 0.015) 20px
-                        ),
-                        repeating-linear-gradient(
-                            45deg,
-                            transparent,
-                            transparent 39px,
-                            rgba(197, 160, 89, 0.008) 39px,
-                            rgba(197, 160, 89, 0.008) 40px
-                        )
+                        repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(17, 17, 17, 0.015) 19px, rgba(17, 17, 17, 0.015) 20px),
+                        repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(17, 17, 17, 0.015) 19px, rgba(17, 17, 17, 0.015) 20px)
                     `,
-                    backgroundSize: '20px 20px, 20px 20px, 40px 40px',
+                    backgroundSize: '20px 20px',
                     opacity: 1
                 }} />
 
-                <div style={{ maxWidth: '1400px', width: '100%', padding: '0 4rem', zIndex: 10, display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'center' }}>
+                <div style={{ maxWidth: '1400px', width: '100%', padding: isMobile ? '0 1.5rem' : '0 4rem', zIndex: 10, display: 'flex', flexDirection: 'column', height: '100%', justifyContent: isMobile ? 'flex-start' : 'center', paddingTop: isMobile ? '6rem' : '0' }}>
 
-                    {/* Top Row: Header + Dynamic Image (The implementation user asked for) */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem', gap: '4rem' }}>
+                    {/* Top Row: Header + Dynamic Image */}
+                    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: isMobile ? '2rem' : '4rem', gap: isMobile ? '2rem' : '4rem' }}>
 
                         {/* Left: Header Text */}
                         <motion.div
-                            initial={{ opacity: 0, y: 40, scale: 0.97 }}
-                            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+                            transition={{ duration: 0.8 }}
                             style={{
-                                // opacity: useTransform(scrollYProgress, [0, 0.1], [0, 1]), // REMOVED: Title should be visible via whileInView
-                                maxWidth: '600px'
+                                maxWidth: '600px',
+                                textAlign: 'left'
                             }}
                         >
                             <div style={{
                                 display: 'inline-flex',
-                                padding: '0.5rem 1.5rem',
+                                padding: '0.4rem 1.2rem',
                                 background: 'rgba(17, 17, 17, 0.05)',
                                 border: '1px solid rgba(17, 17, 17, 0.1)',
                                 borderRadius: '2rem',
                                 marginBottom: '2rem'
                             }}>
                                 <span style={{
-                                    fontSize: '0.75rem',
+                                    fontSize: '0.7rem',
                                     color: COLORS.bronze,
                                     fontFamily: 'monospace',
                                     letterSpacing: '0.15em',
@@ -472,12 +447,8 @@ const EngagementTimeline = () => {
                             </div>
 
                             <motion.h2
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.7, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
                                 style={{
-                                    fontSize: 'clamp(3rem, 6vw, 5rem)',
+                                    fontSize: 'clamp(2.5rem, 6vw, 5rem)',
                                     fontWeight: 500,
                                     color: COLORS.text,
                                     lineHeight: 1.1,
@@ -489,47 +460,48 @@ const EngagementTimeline = () => {
                             </motion.h2>
                         </motion.div>
 
-                        {/* Right: Dynamic Image Display (Targeted Area) */}
+                        {/* Right: Dynamic Image Display */}
                         <motion.div
                             style={{
-                                width: '350px',
-                                height: '350px',
+                                width: isMobile ? '280px' : '350px',
+                                height: isMobile ? '280px' : '350px',
                                 position: 'relative',
                                 borderRadius: '50%',
                                 overflow: 'hidden',
                                 boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
-                                opacity: useTransform(scrollYProgress, [0, 0.1], [0, 1]), // Fade in container
-                                marginRight: '4rem', // Nudge left
-                                marginTop: '2rem' // Nudge down slightly
+                                opacity: galleryOpacity,
+                                marginTop: isMobile ? '2.5rem' : '0'
                             }}
                         >
-                            <TimelineGallery scrollYProgress={scrollYProgress} />
+                            <TimelineGallery scrollYProgress={scrollYProgress} isMobile={isMobile} />
                         </motion.div>
                     </div>
 
                     {/* Bottom Row: Timeline Steps */}
-                    <div style={{ display: 'flex', gap: '3rem', alignItems: 'flex-start', position: 'relative' }}>
+                    <div style={{ display: 'flex', gap: isMobile ? '1rem' : '3rem', alignItems: 'flex-start', position: 'relative', width: '100%' }}>
                         {TIMELINE_STEPS.map((step, idx) => (
-                            <TimelineStep key={step.phase} step={step} index={idx} scrollProgress={scrollYProgress} />
+                            <TimelineStep key={step.phase} step={step} index={idx} scrollProgress={scrollYProgress} isMobile={isMobile} />
                         ))}
 
                         {/* Progress Line */}
-                        <motion.div style={{
-                            position: 'absolute',
-                            top: '25px', // Center of 50px badge
-                            left: '25px',
-                            right: '0',
-                            width: '100%',
-                            height: '1px',
-                            background: 'rgba(197, 160, 89, 0.2)',
-                            zIndex: 0
-                        }}>
+                        {!isMobile && (
                             <motion.div style={{
-                                height: '100%',
-                                background: COLORS.bronze,
-                                width: useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
-                            }} />
-                        </motion.div>
+                                position: 'absolute',
+                                top: '25px',
+                                left: '25px',
+                                right: '0',
+                                width: '100%',
+                                height: '1px',
+                                background: 'rgba(197, 160, 89, 0.2)',
+                                zIndex: 0
+                            }}>
+                                <motion.div style={{
+                                    height: '100%',
+                                    background: COLORS.bronze,
+                                    width: progressWidth
+                                }} />
+                            </motion.div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -537,43 +509,58 @@ const EngagementTimeline = () => {
     );
 };
 
-const TimelineStep = ({ step, index, scrollProgress }) => {
-    // Ranges matched to 400vh logic & new offset
-    // 0: 0-0.25, 1: 0.25-0.5, etc.
-    const start = index * 0.25;
+const TimelineStep = ({ step, index, scrollProgress, isMobile }) => {
+    // Dynamic logic for mobile/desktop
+    const stepCount = TIMELINE_STEPS.length;
+    const start = index * (1 / stepCount);
+    const end = (index + 1) * (1 / stepCount);
 
-    // Fade in: [start, start + 0.1]
-    const opacity = useTransform(scrollProgress, [start, start + 0.15], [0, 1]);
-    const y = useTransform(scrollProgress, [start, start + 0.15], [50, 0]);
+    const opacity = useTransform(scrollProgress, [start, start + 0.1, end - 0.1, end], [0, 1, 1, isMobile ? 0 : 1]);
+    const y = useTransform(scrollProgress, [start, start + 0.1], [30, 0]);
 
     return (
-        <motion.div style={{ opacity, y, flex: 1, position: 'relative', zIndex: 10 }}>
+        <motion.div style={{
+            opacity,
+            y,
+            flex: isMobile ? 'none' : 1,
+            position: isMobile ? 'absolute' : 'relative',
+            inset: isMobile ? '0' : 'auto',
+            display: isMobile ? 'flex' : 'block',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            justifyContent: 'flex-start',
+            textAlign: 'left',
+            zIndex: 10,
+            pointerEvents: isMobile ? 'none' : 'auto',
+            paddingTop: isMobile ? '2rem' : '0'
+        }}>
             {/* Phase Number Badge */}
-            <motion.div style={{
-                width: '50px',
-                height: '50px',
+            <div style={{
+                width: isMobile ? '44px' : '50px',
+                height: isMobile ? '44px' : '50px',
                 borderRadius: '50%',
                 background: COLORS.opticalWhite,
                 border: `1px solid ${COLORS.bronze}`,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1.2rem',
+                fontSize: isMobile ? '1.1rem' : '1.2rem',
                 fontWeight: 500,
                 color: COLORS.bronze,
-                marginBottom: '1.5rem',
+                marginBottom: isMobile ? '1.75rem' : '1.5rem',
                 fontFamily: 'Outfit, sans-serif'
             }}>
                 {step.phase}
-            </motion.div>
+            </div>
 
             {/* Title */}
             <h3 style={{
-                fontSize: '1.5rem',
+                fontSize: isMobile ? '1.5rem' : '1.5rem',
                 fontWeight: 500,
                 color: COLORS.text,
-                marginBottom: '1rem',
-                fontFamily: 'Outfit, sans-serif'
+                marginBottom: isMobile ? '1.25rem' : '1rem',
+                fontFamily: 'Outfit, sans-serif',
+                letterSpacing: '-0.02em'
             }}>
                 {step.title}
             </h3>
@@ -582,8 +569,10 @@ const TimelineStep = ({ step, index, scrollProgress }) => {
             <p style={{
                 color: COLORS.textSecondary,
                 lineHeight: 1.7,
-                fontSize: '0.95rem',
-                fontFamily: 'Inter, sans-serif'
+                fontSize: isMobile ? '0.95rem' : '0.95rem',
+                fontFamily: 'Inter, sans-serif',
+                maxWidth: isMobile ? '300px' : 'none',
+                margin: '0'
             }}>
                 {step.desc}
             </p>
@@ -591,27 +580,19 @@ const TimelineStep = ({ step, index, scrollProgress }) => {
     );
 };
 
-const TimelineGallery = ({ scrollYProgress }) => {
-    // Optimized Ranges with PLATEAUS (Hold opacity 1) so images are clearly visible
-    // Image 0 START: Opacity 1 immediately (0-0.2). Parent container handles the "Fade In".
+const TimelineGallery = ({ scrollYProgress, isMobile }) => {
     const op0 = useTransform(scrollYProgress, [0, 0.2, 0.25], [1, 1, 0]);
-
-    // Image 1: FadeIn 0.2-0.25, Hold 0.25-0.45, FadeOut 0.45-0.5
     const op1 = useTransform(scrollYProgress, [0.25, 0.3, 0.5, 0.55], [0, 1, 1, 0]);
-
-    // Image 2: FadeIn 0.45-0.5, Hold 0.5-0.7, FadeOut 0.7-0.75
     const op2 = useTransform(scrollYProgress, [0.5, 0.55, 0.75, 0.8], [0, 1, 1, 0]);
-
-    // Image 3: FadeIn 0.7-0.75, Hold 0.75-1.0
     const op3 = useTransform(scrollYProgress, [0.75, 0.8, 1], [0, 1, 1]);
 
     const imageOpacities = [op0, op1, op2, op3];
 
     const STEP_IMAGES = [
-        'https://images.pexels.com/photos/4614119/pexels-photo-4614119.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', // Diagnostic: Inspection/Check (Clear Audit)
-        'https://images.pexels.com/photos/461035/pexels-photo-461035.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', // Strategy: Yarn Spools
-        'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',   // Execution: Industrial Production (Kept)
-        'https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'    // Optimization: Clean Retail Display (Kept)
+        'https://images.pexels.com/photos/4614119/pexels-photo-4614119.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        'https://images.pexels.com/photos/461035/pexels-photo-461035.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        'https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
     ];
 
     return (
@@ -624,9 +605,9 @@ const TimelineGallery = ({ scrollYProgress }) => {
                         inset: 0,
                         backgroundImage: `url(${imgSrc})`,
                         backgroundSize: 'cover',
-                        backgroundPosition: 'center',
+                        backgroundPosition: isMobile ? 'center 20%' : 'center',
                         opacity: imageOpacities[idx],
-                        filter: 'grayscale(30%) contrast(1.1)'
+                        filter: isMobile ? 'grayscale(0%) contrast(1.05) brightness(0.9)' : 'grayscale(30%) contrast(1.1)'
                     }}
                 />
             ))}
@@ -635,13 +616,14 @@ const TimelineGallery = ({ scrollYProgress }) => {
 };
 
 const Solutions = () => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
     return (
         <main style={{ background: COLORS.obsidian }}>
             <SolutionsHero />
 
-            {/* Editorial Break - Fashion Mood Moment */}
+            {/* Editorial Break */}
             <section style={{
-                height: '100vh',
+                height: isMobile ? '60vh' : '100vh',
                 position: 'relative',
                 overflow: 'hidden'
             }}>
@@ -649,17 +631,16 @@ const Solutions = () => {
                     style={{
                         position: 'absolute',
                         inset: 0,
-                        backgroundImage: 'url(https://images.pexels.com/photos/2249290/pexels-photo-2249290.jpeg?auto=compress&cs=tinysrgb&w=1600)', // Pexels: Industrial Warehouse
+                        backgroundImage: 'url(https://images.pexels.com/photos/2249290/pexels-photo-2249290.jpeg?auto=compress&cs=tinysrgb&w=1600)',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center center',
-                        filter: 'brightness(0.5) saturate(0)' // Grayscale for industrial execution feel
+                        filter: isMobile ? 'brightness(0.4) saturate(0)' : 'brightness(0.5) saturate(0)'
                     }}
                     initial={{ scale: 1.05 }}
                     whileInView={{ scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 1.5, ease: [0.25, 0.1, 0.25, 1] }}
                 />
-                {/* Grain Overlay */}
                 <div style={{
                     position: 'absolute',
                     inset: 0,
@@ -669,22 +650,21 @@ const Solutions = () => {
                     mixBlendMode: 'overlay',
                     zIndex: 2
                 }} />
-                {/* Minimal Caption */}
                 <motion.div
-                    initial={{ opacity: 0, y: 40 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.9, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
                     style={{
                         position: 'absolute',
-                        bottom: '15%',
-                        right: '5%',
+                        bottom: isMobile ? '10%' : '15%',
+                        right: isMobile ? '5%' : '5%',
                         zIndex: 3,
                         textAlign: 'right'
                     }}
                 >
                     <p style={{
-                        fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
+                        fontSize: isMobile ? '1.5rem' : 'clamp(1.5rem, 3vw, 2.5rem)',
                         color: '#fff',
                         fontFamily: 'Outfit, sans-serif',
                         fontWeight: 300,
@@ -692,7 +672,7 @@ const Solutions = () => {
                         lineHeight: 1.3,
                         maxWidth: '500px'
                     }}>
-                        From blueprint<br />to reality.
+                        From blueprint<br />to reality
                     </p>
                 </motion.div>
             </section>

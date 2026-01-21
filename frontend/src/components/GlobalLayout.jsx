@@ -8,6 +8,7 @@ import Preloader from './Preloader';
 import CallToAction from './CallToAction';
 import { ThemeTransitionProvider } from './ThemeTransitionContext';
 import useScrollTheme from '../hooks/useScrollTheme';
+import ScrollToTop from './ScrollToTop';
 
 // Component that activates the scroll theme observer
 const ThemeObserver = () => {
@@ -19,6 +20,7 @@ const GlobalLayout = () => {
     return (
         <ThemeTransitionProvider>
             <SmoothScroll>
+                <ScrollToTop />
                 <ThemeObserver />
                 <Preloader />
                 <CustomCursor />

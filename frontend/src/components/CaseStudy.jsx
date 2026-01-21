@@ -44,7 +44,8 @@ const CaseStudy = ({
             style={{
                 opacity,
                 scale,
-                marginBottom: '6rem'
+                marginBottom: '6rem',
+                position: 'relative'
             }}
         >
             <div style={{

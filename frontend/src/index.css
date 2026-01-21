@@ -10,6 +10,8 @@
   /* Brand Accent Colors (Subtle Use Only) */
   --color-heritage-bronze: #C5A059;
   --color-cashmere-gold: #D4AF37;
+  --color-obsidian-slate: #0C0E11;
+  --color-dark-charcoal: #111111;
 
   /* Derived Grays from Dark Charcoal */
   --color-text-primary: #111111;
@@ -303,6 +305,71 @@ img {
   }
 }
 
+@media (max-width: 768px) {
+  :root {
+    --space-xl: 5rem;
+    --space-xxl: 7rem;
+  }
+
+  /* Layout & Spacing */
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  .section {
+    padding: var(--space-xl) 0;
+  }
+
+  /* Typography centering for mobile */
+  .mobile-center {
+    text-align: center !important;
+  }
+
+  .mobile-center-flex {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  /* Buttons - Full Width & Thumb Friendly */
+  .btn {
+    width: 100%;
+    margin-bottom: 0.75rem;
+    padding: 1.25rem 2rem;
+    /* Larger touch target */
+    font-size: 1rem;
+  }
+
+  /* Grid to Single Column */
+  .mobile-stack {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+  }
+
+  /* Performance: Lighter Animations Hint */
+  .motion-div {
+    will-change: opacity, transform;
+  }
+
+  /* Optimization: Hide background grain if performance is low (optional, but keep for now as user said keep visuals) */
+  body::after {
+    opacity: 0.03;
+    /* Slightly more subtle on mobile */
+  }
+
+  /* Hero adjustments */
+  h1 {
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+
+  p {
+    font-size: 1rem !important;
+  }
+}
+
 .desktop-only {
   display: none !important;
 }
@@ -311,7 +378,7 @@ img {
   display: block !important;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
   .desktop-only {
     display: flex !important;
   }
@@ -322,8 +389,12 @@ img {
 }
 
 @media (max-width: 768px) {
-  .container {
-    padding: 0 var(--space-sm);
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: block !important;
   }
 
   .strategic-split-container {
