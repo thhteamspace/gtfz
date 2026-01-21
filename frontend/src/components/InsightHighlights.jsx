@@ -86,7 +86,7 @@ const InsightHighlights = () => {
         <section style={{
             minHeight: isMobile ? 'auto' : '100vh',
             background: '#0a0a0a', // Dark Theme from reference
-            padding: isMobile ? '6rem 2rem' : '6rem 0',
+            padding: isMobile ? '4rem 1.5rem' : '6rem 0',
             position: 'relative',
             color: '#ffffff',
             overflow: 'hidden'
@@ -95,13 +95,15 @@ const InsightHighlights = () => {
                 {/* Header Section */}
                 <div style={{
                     display: 'flex',
-                    justifyContent: 'space-between',
+                    flexDirection: isMobile ? 'column' : 'row',
+                    justifyContent: isMobile ? 'center' : 'space-between',
                     alignItems: isMobile ? 'center' : 'flex-end',
-                    marginBottom: isMobile ? '2.5rem' : '4rem',
+                    marginBottom: isMobile ? '1.5rem' : '4rem',
                     flexWrap: 'wrap',
-                    gap: isMobile ? '1.5rem' : '2rem'
+                    gap: isMobile ? '1.5rem' : '2rem',
+                    textAlign: isMobile ? 'center' : 'left'
                 }}>
-                    <div style={{ maxWidth: '600px' }}>
+                    <div style={{ maxWidth: '600px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: isMobile ? 'center' : 'flex-start' }}>
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -161,8 +163,7 @@ const InsightHighlights = () => {
                             display: 'flex',
                             alignItems: 'center',
                             gap: '0.5rem',
-                            fontFamily: 'Inter, sans-serif',
-                            margin: isMobile ? '0 auto' : '0'
+                            fontFamily: 'Inter, sans-serif'
                         }}
                     >
                         View All
@@ -178,12 +179,16 @@ const InsightHighlights = () => {
                     ref={scrollContainerRef}
                     style={{
                         display: 'flex',
-                        gap: isMobile ? '1.5rem' : '2rem',
+                        width: isMobile ? '100vw' : '100%',
+                        marginLeft: isMobile ? 'calc(50% - 50vw)' : '0',
+                        marginRight: isMobile ? 'calc(50% - 50vw)' : '0',
+                        gap: isMobile ? '1rem' : '2rem',
                         overflowX: 'auto',
-                        paddingBottom: isMobile ? '1rem' : '2rem',
+                        paddingBottom: isMobile ? '2rem' : '2rem',
                         scrollBehavior: 'smooth',
                         scrollbarWidth: 'none',
-                        msOverflowStyle: 'none'
+                        msOverflowStyle: 'none',
+                        scrollSnapType: isMobile ? 'x mandatory' : 'none'
                     }}
                     className="hide-scrollbar"
                 >
@@ -194,8 +199,12 @@ const InsightHighlights = () => {
                     `}</style>
 
                     {insights.map((item, i) => (
-                        <div key={i} style={{ flexShrink: 0, width: 'min(100%, 400px)' }}>
-                            <BlogCard {...item} />
+                        <div key={i} style={{
+                            flexShrink: 0,
+                            width: isMobile ? '100vw' : 'min(100%, 400px)',
+                            scrollSnapAlign: 'center'
+                        }}>
+                            <BlogCard {...item} isMobile={isMobile} />
                         </div>
                     ))}
                 </div>
@@ -215,23 +224,24 @@ const InsightHighlights = () => {
     );
 };
 
-const BlogCard = ({ category, date, title, image, link, description }) => {
+const BlogCard = ({ category, date, title, image, link, description, isMobile }) => {
     const navigate = useNavigate();
 
     return (
         <motion.div
-            onClick={() => navigate(link)}
-            whileHover={{ y: -10 }}
+            onClick={!isMobile ? () => navigate(link) : undefined}
+            whileHover={!isMobile ? { y: -10 } : {}}
             style={{
-                cursor: 'pointer',
-                group: 'card'
+                cursor: isMobile ? 'default' : 'pointer',
+                group: 'card',
+                padding: isMobile ? '0' : '0' // Ensure full bleed
             }}
         >
             {/* Image Container */}
             <div style={{
-                borderRadius: '32px', // Highly rounded per reference
+                borderRadius: isMobile ? '0' : '32px', // Full bleed usually means sharp edges or less round on mobile? Let's keep 0 for truly full bleed edge-to-edge
                 overflow: 'hidden',
-                marginBottom: '1.5rem',
+                marginBottom: '2rem',
                 aspectRatio: '1 / 1', // Square per reference
                 background: '#1a1a1a', // Placeholder bg
                 position: 'relative'
@@ -256,7 +266,8 @@ const BlogCard = ({ category, date, title, image, link, description }) => {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 marginBottom: '1rem',
-                fontSize: '0.85rem'
+                fontSize: '0.85rem',
+                padding: isMobile ? '0 1.5rem' : '0'
             }}>
                 <span style={{
                     padding: '0.4rem 1rem',
@@ -280,7 +291,8 @@ const BlogCard = ({ category, date, title, image, link, description }) => {
                 fontFamily: 'Outfit, sans-serif',
                 fontWeight: 500,
                 lineHeight: 1.3,
-                marginBottom: '0.75rem'
+                marginBottom: '0.75rem',
+                padding: isMobile ? '0 1.5rem' : '0'
             }}>
                 {title}
             </h3>
@@ -293,21 +305,30 @@ const BlogCard = ({ category, date, title, image, link, description }) => {
                 display: '-webkit-box',
                 WebkitLineClamp: 2,
                 WebkitBoxOrient: 'vertical',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                padding: isMobile ? '0 1.5rem' : '0'
             }}>
                 {description}
             </p>
 
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                marginTop: '1.25rem',
-                color: '#C5A059',
-                fontSize: '0.9rem',
-                fontFamily: 'Inter, sans-serif',
-                fontWeight: 500
-            }}>
+            <div
+                onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(link);
+                }}
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                    gap: '0.5rem',
+                    marginTop: '1.25rem',
+                    color: '#C5A059',
+                    fontSize: '0.9rem',
+                    fontFamily: 'Inter, sans-serif',
+                    fontWeight: 500,
+                    padding: isMobile ? '0 1.5rem' : '0',
+                    cursor: 'pointer'
+                }}>
                 Read Article
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>

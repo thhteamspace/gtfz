@@ -112,7 +112,7 @@ const HowWeCreateImpact = () => {
     return (
         <section style={{
             background: COLORS.opticalWhite,
-            padding: isMobile ? '6rem 2rem' : '6rem 0'
+            padding: isMobile ? '4rem 1rem' : '6rem 0'
         }}>
             <div className="container">
                 <motion.div
@@ -185,11 +185,13 @@ const HowWeCreateImpact = () => {
                         <div style={{
                             position: 'relative',
                             height: '100%',
-                            display: 'flex',
-                            flexDirection: 'column',
+                            display: isMobile ? 'grid' : 'flex', // Grid for mobile row
+                            gridTemplateColumns: isMobile ? 'repeat(3, 1fr)' : '1fr',
+                            flexDirection: isMobile ? 'row' : 'column',
                             justifyContent: 'center',
-                            padding: isMobile ? '1rem' : '2.5rem',
-                            alignItems: isMobile ? 'center' : 'flex-start'
+                            padding: isMobile ? '1.5rem 0.5rem' : '2.5rem',
+                            alignItems: isMobile ? 'start' : 'flex-start',
+                            gap: isMobile ? '0' : '0'
                         }}>
                             {[
                                 { value: '26+', label: 'Partner Factories' },
@@ -199,22 +201,25 @@ const HowWeCreateImpact = () => {
                                 <div key={i} style={{
                                     display: 'flex',
                                     flexDirection: isMobile ? 'column' : 'row',
-                                    alignItems: 'baseline',
+                                    alignItems: isMobile ? 'center' : 'baseline',
+                                    justifyContent: isMobile ? 'flex-start' : 'flex-start',
                                     gap: isMobile ? '0.25rem' : '1rem',
-                                    marginBottom: i < 2 ? '1.5rem' : 0,
-                                    textAlign: isMobile ? 'center' : 'left'
+                                    marginBottom: !isMobile && i < 2 ? '1.5rem' : 0,
+                                    textAlign: isMobile ? 'center' : 'left',
+                                    borderRight: isMobile && i < 2 ? '1px solid rgba(197, 160, 89, 0.2)' : 'none'
                                 }}>
                                     <span style={{
-                                        fontSize: isMobile ? '2.2rem' : '2.5rem',
+                                        fontSize: isMobile ? '1.6rem' : '2.5rem',
                                         fontWeight: 600,
                                         color: COLORS.bronze,
                                         fontFamily: 'Outfit, sans-serif'
                                     }}>{stat.value}</span>
                                     <span style={{
-                                        fontSize: '0.9rem',
+                                        fontSize: isMobile ? '0.75rem' : '0.9rem',
                                         color: COLORS.text,
                                         fontFamily: 'Inter, sans-serif',
-                                        textTransform: isMobile ? 'uppercase' : 'none'
+                                        textTransform: isMobile ? 'uppercase' : 'none',
+                                        lineHeight: 1.2
                                     }}>{stat.label}</span>
                                 </div>
                             ))}

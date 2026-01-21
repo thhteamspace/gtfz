@@ -84,7 +84,7 @@ const HorizontalScroll = () => {
         <section style={{
             background: '#0a0a0a',
             position: 'relative',
-            padding: isMobile ? '4rem 0' : '8rem 0',
+            padding: isMobile ? '2rem 0' : '8rem 0',
             overflow: 'hidden'
         }}>
             <div className="container">
@@ -93,7 +93,7 @@ const HorizontalScroll = () => {
                     marginBottom: '3rem',
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'flex-start',
+                    alignItems: isMobile ? 'center' : 'flex-start',
                     position: 'relative' // Ensure relative here just in case
                 }}>
                     <motion.span
@@ -115,11 +115,12 @@ const HorizontalScroll = () => {
 
                     <div style={{
                         display: 'flex',
-                        justifyContent: 'space-between',
+                        justifyContent: isMobile ? 'center' : 'space-between',
                         alignItems: 'flex-end',
                         width: '100%',
                         flexWrap: 'wrap',
-                        gap: '2rem'
+                        gap: '2rem',
+                        textAlign: isMobile ? 'center' : 'left'
                     }}>
                         <motion.h2
                             initial={{ opacity: 0, y: 30 }}
@@ -142,10 +143,15 @@ const HorizontalScroll = () => {
                 </div>
 
                 {/* Relative Wrapper for Cards + Arrows */}
-                <div style={{ position: 'relative' }}>
+                <div style={{
+                    position: 'relative',
+                    width: isMobile ? '100vw' : '100%',
+                    marginLeft: isMobile ? 'calc(50% - 50vw)' : '0',
+                    marginRight: isMobile ? 'calc(50% - 50vw)' : '0'
+                }}>
 
                     {/* Left Navigation Button */}
-                    {!isMobile && canScrollLeft && (
+                    {canScrollLeft && (
                         <motion.button
                             onClick={() => handleScroll('left')}
                             whileHover={{ scale: 1.1, backgroundColor: '#C5A059', color: '#000' }}
@@ -156,11 +162,12 @@ const HorizontalScroll = () => {
                             transition={{ duration: 0.4 }}
                             style={{
                                 position: 'absolute',
-                                left: '-40px',
-                                top: '40%',
-                                transform: 'translateY(-50%)',
-                                width: '80px',
-                                height: '80px',
+                                left: isMobile ? '1rem' : '-40px',
+                                top: isMobile ? 'auto' : '40%',
+                                bottom: isMobile ? '120px' : 'auto', // Position over image area on mobile
+                                transform: isMobile ? 'none' : 'translateY(-50%)',
+                                width: isMobile ? '44px' : '80px',
+                                height: isMobile ? '44px' : '80px',
                                 borderRadius: '50%',
                                 border: '1px solid rgba(255,255,255,0.2)',
                                 background: '#0a0a0a',
@@ -174,7 +181,7 @@ const HorizontalScroll = () => {
                                 boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
                             }}
                         >
-                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <svg width={isMobile ? "20" : "30"} height={isMobile ? "20" : "30"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <line x1="19" y1="12" x2="5" y2="12"></line>
                                 <polyline points="12 19 5 12 12 5"></polyline>
                             </svg>
@@ -188,14 +195,15 @@ const HorizontalScroll = () => {
                         style={{
                             display: 'grid',
                             gridAutoFlow: 'column',
-                            gridAutoColumns: isMobile ? '85vw' : 'minmax(370px, 1fr)',
-                            gap: isMobile ? '1rem' : '2.5rem',
+                            gridAutoColumns: isMobile ? '100vw' : 'minmax(370px, 1fr)',
+                            gap: isMobile ? '1.5rem' : '2.5rem',
                             overflowX: 'auto',
                             paddingBottom: '2rem', // Space for potential scrollbar (hidden but interactable)
                             scrollBehavior: 'smooth',
                             width: '100%',
-                            paddingRight: isMobile ? '1.5rem' : '60px',
-                            paddingLeft: isMobile ? '1.5rem' : '60px'
+                            paddingRight: isMobile ? '0' : '60px',
+                            paddingLeft: isMobile ? '0' : '60px',
+                            scrollSnapType: isMobile ? 'x mandatory' : 'none'
                         }}
                     >
                         {/* Inline style to hide scrollbar */}
@@ -210,12 +218,14 @@ const HorizontalScroll = () => {
                         `}</style>
 
                         {cards.map((card, index) => (
-                            <Card key={card.id} card={card} index={index} />
+                            <div key={card.id} style={{ scrollSnapAlign: 'center', width: '100%', height: '100%' }}>
+                                <Card card={card} index={index} isMobile={isMobile} />
+                            </div>
                         ))}
                     </div>
 
                     {/* Right Navigation Button */}
-                    {!isMobile && canScrollRight && (
+                    {canScrollRight && (
                         <motion.button
                             onClick={() => handleScroll('right')}
                             whileHover={{ scale: 1.1, backgroundColor: '#C5A059', color: '#000' }}
@@ -226,11 +236,12 @@ const HorizontalScroll = () => {
                             transition={{ duration: 0.4 }}
                             style={{
                                 position: 'absolute',
-                                right: '-40px',
-                                top: '40%',
-                                transform: 'translateY(-50%)',
-                                width: '80px',
-                                height: '80px',
+                                right: isMobile ? '1rem' : '-40px',
+                                top: isMobile ? 'auto' : '40%',
+                                bottom: isMobile ? '120px' : 'auto', // Position over image area on mobile
+                                transform: isMobile ? 'none' : 'translateY(-50%)',
+                                width: isMobile ? '44px' : '80px',
+                                height: isMobile ? '44px' : '80px',
                                 borderRadius: '50%',
                                 border: '1px solid rgba(255,255,255,0.2)',
                                 background: '#0a0a0a',
@@ -244,7 +255,7 @@ const HorizontalScroll = () => {
                                 boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
                             }}
                         >
-                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <svg width={isMobile ? "20" : "30"} height={isMobile ? "20" : "30"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                                 <polyline points="12 5 19 12 12 19"></polyline>
                             </svg>
@@ -257,7 +268,7 @@ const HorizontalScroll = () => {
 };
 
 // Extracted Card Component matching the 'Arched Image' design
-const Card = ({ card, index }) => {
+const Card = ({ card, index, isMobile }) => {
     return (
         <motion.div
             initial={{ opacity: 0, scale: 0.85, y: 100 }}
@@ -274,7 +285,7 @@ const Card = ({ card, index }) => {
                 flexDirection: 'column',
                 position: 'relative',
                 overflow: 'hidden',
-                height: '550px',
+                height: isMobile ? '620px' : '550px',
                 cursor: 'pointer'
             }}
         >
@@ -297,7 +308,7 @@ const Card = ({ card, index }) => {
             />
 
             {/* Card Content Top - Padded Container */}
-            <div style={{ zIndex: 2, padding: '2.5rem 2.5rem 0 2.5rem', display: 'flex', flexDirection: 'column', height: '100%' }}>
+            <div style={{ zIndex: 2, padding: isMobile ? '2rem 1.5rem 0 1.5rem' : '2.5rem 2.5rem 0 2.5rem', display: 'flex', flexDirection: 'column', height: '100%' }}>
                 <div style={{
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -305,7 +316,7 @@ const Card = ({ card, index }) => {
                     marginBottom: '1rem'
                 }}>
                     <h3 style={{
-                        fontSize: '2rem',
+                        fontSize: isMobile ? '1.75rem' : '2rem',
                         color: '#FEFFFF',
                         fontFamily: 'Outfit, sans-serif',
                         lineHeight: 1.1,
@@ -318,7 +329,7 @@ const Card = ({ card, index }) => {
                 <p style={{
                     color: 'rgba(255,255,255,0.6)',
                     lineHeight: 1.6,
-                    fontSize: '1rem',
+                    fontSize: isMobile ? '0.95rem' : '1rem',
                     maxWidth: '90%',
                     fontFamily: 'Inter, sans-serif',
                     marginBottom: '2rem'
@@ -329,8 +340,8 @@ const Card = ({ card, index }) => {
                     marginTop: 'auto',
                     flex: 1,
                     // Use negative margin to pull image to edges of the parent container
-                    marginLeft: '-2.5rem',
-                    marginRight: '-2.5rem',
+                    marginLeft: isMobile ? '-1.5rem' : '-2.5rem',
+                    marginRight: isMobile ? '-1.5rem' : '-2.5rem',
                     marginBottom: '0',
                     minHeight: '280px',
                     display: 'flex',
@@ -361,6 +372,7 @@ const Card = ({ card, index }) => {
                         pointerEvents: 'none',
                         borderRadius: '40px 40px 0 0'
                     }} />
+
                 </div>
             </div>
         </motion.div>

@@ -45,7 +45,7 @@ const Services = () => {
         <section id="services" ref={containerRef} style={{
             minHeight: 'auto',
             background: '#FEFFFF',
-            padding: isMobile ? '6rem 2rem' : '4rem 0',
+            padding: isMobile ? '6rem 0' : '4rem 0', // Remove side padding for full width grid
             position: 'relative'
         }}>
             <div className="container">
@@ -55,7 +55,8 @@ const Services = () => {
                     flexDirection: 'column',
                     alignItems: 'center',
                     marginBottom: '3rem',
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    padding: isMobile ? '0 1.5rem' : '0' // Add padding to header only
                 }}>
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -121,11 +122,12 @@ const Services = () => {
                 <div style={{
                     display: 'grid',
                     gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
-                    gridTemplateRows: isMobile ? 'repeat(3, 240px)' : '300px 300px',
-                    gap: isMobile ? '1rem' : '1.5rem',
+                    gridTemplateRows: isMobile ? '220px 340px 340px' : '300px 300px', // Mobile: 1 Row Small, 2 Rows Wide (Taller)
+                    gap: isMobile ? '0.5rem' : '1.5rem', // Tighter gap
                     width: '100%',
                     maxWidth: '1200px',
-                    margin: '0 auto'
+                    margin: '0 auto',
+                    padding: isMobile ? '0 0.5rem' : '0' // Minimal edge padding
                 }}>
                     {/* Item 1: Top Left */}
                     <div style={{
@@ -135,26 +137,26 @@ const Services = () => {
                         <ServiceCard {...services[0]} height="100%" isMobile={isMobile} />
                     </div>
 
-                    {/* Item 2: Center Tall (Desktop) / Right Tall (Mobile) */}
+                    {/* Item 2: Center Tall (Desktop) / Full Width Middle (Mobile) */}
                     <div style={{
-                        gridColumn: '2 / 3',
-                        gridRow: '1 / 3'
+                        gridColumn: isMobile ? '1 / 3' : '2 / 3',
+                        gridRow: isMobile ? '2 / 3' : '1 / 3'
                     }}>
                         <ServiceCard {...services[1]} height="100%" isMobile={isMobile} />
                     </div>
 
-                    {/* Item 3: Right Tall (Desktop) / Left Tall (Mobile) */}
+                    {/* Item 3: Right Tall (Desktop) / Full Width Bottom (Mobile) */}
                     <div style={{
-                        gridColumn: isMobile ? '1 / 2' : '3 / 4',
-                        gridRow: isMobile ? '2 / 4' : '1 / 3'
+                        gridColumn: isMobile ? '1 / 3' : '3 / 4',
+                        gridRow: isMobile ? '3 / 4' : '1 / 3'
                     }}>
                         <ServiceCard {...services[2]} height="100%" isMobile={isMobile} />
                     </div>
 
-                    {/* Item 4: Bottom Left (Desktop) / Bottom Right (Mobile) */}
+                    {/* Item 4: Bottom Left (Desktop) / Top Right (Mobile) */}
                     <div style={{
                         gridColumn: isMobile ? '2 / 3' : '1 / 2',
-                        gridRow: isMobile ? '3 / 4' : '2 / 3'
+                        gridRow: isMobile ? '1 / 2' : '2 / 3'
                     }}>
                         <ServiceCard {...services[3]} height="100%" isMobile={isMobile} />
                     </div>
@@ -217,7 +219,7 @@ const ServiceCard = ({ variant, title, description, stat, statLabel, image, heig
                     position: 'absolute',
                     inset: 0,
                     background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, transparent 100%)',
-                    padding: isMobile ? '2.5rem 1.5rem' : '2.5rem',
+                    padding: isMobile ? '1.5rem 1rem' : '2.5rem',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'flex-end',

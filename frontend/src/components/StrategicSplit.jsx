@@ -216,7 +216,7 @@ const StrategicSplit = () => {
                         flexDirection: 'column',
                         gap: isMobile ? '4rem' : '25vh',
                         justifyContent: 'flex-start',
-                        paddingTop: isMobile ? '0' : '15vh'
+                        paddingTop: isMobile ? '3rem' : '15vh'
                     }}>
                         {contentSections.map((section, index) => (
                             <motion.div
