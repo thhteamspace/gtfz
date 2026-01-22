@@ -63,13 +63,13 @@ const CallToAction = () => {
                             color: '#333'
                         }}
                     >
-                        <span style={{ marginRight: '0.5rem', color: '#B8860B' }}>✦</span> Join Us
+                        <span style={{ marginRight: '0.5rem', color: '#B8860B' }}>✦</span> Contact Us
                     </motion.div>
 
                     {/* Headline */}
                     <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 5rem)', lineHeight: 1.1, marginBottom: '1.5rem', fontWeight: 700, color: '#1a1a1a' }}>
-                        <RevealText>Ready to strengthen your</RevealText>
-                        <RevealText delay={0.2}>supply chain execution?</RevealText>
+                        <RevealText>Change to Seeking to strengthen execution </RevealText>
+                        <RevealText delay={0.2}>across your operations?</RevealText>
                     </h2>
 
                     <motion.p
@@ -97,7 +97,7 @@ const CallToAction = () => {
                             cursor: 'pointer'
                         }}
                     >
-                        Request Advisory Call
+                        Talk to Our Experts
                     </motion.button>
                 </motion.div>
             </div>

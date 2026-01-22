@@ -153,7 +153,7 @@ const Header = () => {
                                 borderColor: location.pathname === '/contact' ? 'white' : 'currentColor'
                             }}
                         >
-                            Contact
+                            Let's Talk
                         </Link>
                     </nav>
 
@@ -225,7 +225,7 @@ const Header = () => {
                             className="btn btn-primary"
                             style={{ borderRadius: '50px' }}
                         >
-                            Get Started
+                            Let's Talk
                         </Link>
                     </motion.div>
                 </div>

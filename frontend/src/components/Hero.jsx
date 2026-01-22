@@ -93,43 +93,6 @@ const Hero = () => {
                     padding: isMobile ? '0 2rem' : '0'
                 }}
             >
-                {/* Small Badge */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    whileHover="hover"
-                    transition={{ duration: isMobile ? 0.4 : 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-                    style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        marginBottom: isMobile ? '1.5rem' : '2.5rem',
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        backdropFilter: 'blur(10px)',
-                        WebkitBackdropFilter: 'blur(10px)',
-                        padding: isMobile ? '0.5rem 1rem' : '0.75rem 1.5rem',
-                        borderRadius: '50px'
-                    }}
-                >
-                    <motion.div
-                        whileHover={{ scale: 1.2 }}
-                        style={{
-                            width: '6px',
-                            height: '6px',
-                            borderRadius: '50%',
-                            backgroundColor: '#C5A059',
-                            marginRight: '1rem'
-                        }}
-                    />
-
-                    <span style={{
-                        fontSize: isMobile ? '0.65rem' : '0.75rem',
-                        color: '#C5A059',
-                        fontFamily: 'monospace',
-                        letterSpacing: '0.2em',
-                        textTransform: 'uppercase',
-                        fontWeight: 500
-                    }}>Fashion Supply-Chain Consultancy</span>
-                </motion.div>
 
                 {/* Main Headline */}
                 <motion.h1

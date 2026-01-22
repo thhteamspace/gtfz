@@ -9,6 +9,7 @@ const Solutions = lazy(() => import('./pages/Solutions'));
 const Impact = lazy(() => import('./pages/Impact'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const CaseStudyDetail = lazy(() => import('./pages/CaseStudyDetail'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
       {
         path: "contact",
         element: <Suspense fallback={<PageLoader />}><ContactPage /></Suspense>,
+      },
+      {
+        path: "privacy-policy",
+        element: <Suspense fallback={<PageLoader />}><PrivacyPolicy /></Suspense>,
       },
     ],
   },

@@ -146,19 +146,48 @@ const HowWeCreateImpact = () => {
                             lineHeight: 1.8,
                             marginBottom: '1.5rem'
                         }}>
-                            At Global Thread FZ, we combine deep industry expertise with hands-on execution.
-                            Our team embeds directly into your supply chain operations—identifying inefficiencies,
-                            resolving quality issues, and building systems that scale with your growth.
+                            We partner with fashion and lifestyle brands to solve complex sourcing,
+                            operational, and execution challenges. Our approach blends strategic
+                            thinking with hands-on execution—ensuring ideas don’t just look good on
+                            paper, but work seamlessly on the ground.
                         </p>
+
+                        <p style={{
+                            fontSize: '1.05rem',
+                            color: COLORS.textSecondary,
+                            lineHeight: 1.8,
+                            marginBottom: '1.5rem'
+                        }}>
+                            We operate at the intersection of procurement excellence, operational
+                            performance, integrated systems, and pragmatic advisory—helping brands
+                            build supply chains that are resilient, transparent, and ready to scale.
+                        </p>
+
+                        <h3 style={{
+                            fontSize: '1.1rem',
+                            fontWeight: 500,
+                            marginBottom: '0.75rem',
+                            color: COLORS.text
+                        }}>
+                            Our Solutions
+                        </h3>
 
                         <p style={{
                             fontSize: '1.05rem',
                             color: COLORS.textSecondary,
                             lineHeight: 1.8
                         }}>
-                            We don't just advise—we execute. From factory floor to final shipment,
-                            we take ownership of the details that matter, so you can focus on
-                            building your brand.
+                            We support clients across strategic sourcing, operational excellence,
+                            connected operations, and decision & governance advisory. Our work spans
+                            designing resilient sourcing strategies, onboarding the right suppliers
+                            globally, streamlining factory and end-to-end workflows, and enabling
+                            seamless information flow across suppliers, production, and internal
+                            teams. We bring together cost discipline, quality assurance, compliance,
+                            and delivery reliability—ensuring decisions are data-driven and executable
+                            on the ground. We also work closely with leadership teams to navigate
+                            regulatory complexity, manage risk, and scale with confidence. For a
+                            deeper view of our methodologies, tools, and detailed service offerings,
+                            please explore our Solutions page.
                         </p>
                     </div>
 
@@ -237,24 +266,25 @@ const methodologySteps = [
     {
         step: '01',
         title: 'Diagnose',
-        description: 'We audit your supply chain to identify bottlenecks, compliance gaps, and production inefficiencies.'
+        description: 'We begin with a rigorous, fact-based assessment of your procurement landscape, operating processes, systems, and decision structures—surfacing root-cause bottlenecks, risk exposures, inefficiencies, and value leakage across the end-to-end supply chain.'
     },
     {
         step: '02',
         title: 'Design',
-        description: 'We engineer sourcing strategies and quality frameworks aligned with your product goals.'
+        description: 'We co-design practical, scalable solutions that align strategy with execution, re-architecting sourcing models, workflows, systems, controls, and governance frameworks tailored to your business model, growth ambitions, and risk profile.'
     },
     {
         step: '03',
         title: 'Deploy',
-        description: 'We embed on the factory floor to train teams, standardize workflows, and oversee pilot runs.'
+        description: 'We move decisively from plan to action, working alongside your teams to implement solutions on the ground—embedding SOPs, enabling system integrations, training teams, and aligning stakeholders across functions, partners, and geographies.'
     },
     {
         step: '04',
         title: 'Sustain',
-        description: 'We maintain oversight through continuous monitoring and real-time issue resolution.'
+        description: 'We institutionalize performance through clear KPIs, operating rhythms, dashboards, and decision rights—ensuring improvements are embedded into daily operations, sustained over time, and continuously improved.'
     }
 ];
+
 
 const OurMethodology = () => {
     const isMobile = useMediaQuery('(max-width: 768px)');
@@ -378,22 +408,23 @@ const OurMethodology = () => {
 // ============================================
 const differentiators = [
     {
-        title: 'Embedded Expertise',
-        description: "We don't operate from boardrooms. Our teams work on the factory floor to solve production issues in real-time."
+        title: 'Hands-On Industry Expertise',
+        description: 'Deep, hands-on experience across branded and private-label businesses, spanning product development, sourcing, compliance, and go-to-market execution.'
     },
     {
-        title: 'End-to-End Ownership',
-        description: 'We take responsibility beyond isolated checkpoints. From raw material to final shipment, we own the outcome.'
+        title: 'Strategy Grounded in Reality',
+        description: 'A rare balance of strategic rigor and operational pragmatism, translating boardroom intent into decisions that work on the factory floor and in real supply chains.'
     },
     {
-        title: 'Fashion-Specific Focus',
-        description: 'We speak the language of apparel. Our processes catch quality nuances that generalist firms miss.'
+        title: 'Global Perspective, Local Precision',
+        description: 'A truly global sourcing outlook combined with local execution sensitivity—navigating regions, regulations, cultures, and on-ground realities with equal confidence.'
     },
     {
-        title: 'Relationship-Driven Approach',
-        description: 'We build leverage with factories through respect and long-term partnership, ensuring your production gets priority.'
+        title: 'Relentless Focus on Results',
+        description: 'A disciplined emphasis on measurable outcomes over presentations, prioritising speed, clarity, and impact rather than theory.'
     }
 ];
+
 
 const WhatSetsUsApart = () => {
     const isMobile = useMediaQuery('(max-width: 768px)');
@@ -640,10 +671,18 @@ const FounderPerspective = () => {
                                 fontStyle: 'normal'
                             }}
                         >
-                            "We treat every brand as our own—owning every deadline,
-                            every stitch, and every quality standard.
-                            Excellence is our only metric."
+                            “Strong supply chains are built on clarity, discipline, and trust.
+                            Our role is to bring structure where there is complexity,
+                            and confidence where decisions feel uncertain.”
+
+                            <br /><br />
+
+
+
+                            Strategy with intent. Execution with precision.
+                            Partnerships built to last.
                         </motion.blockquote>
+
 
                         <motion.div
                             initial={{ opacity: 0 }}

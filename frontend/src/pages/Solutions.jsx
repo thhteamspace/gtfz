@@ -48,39 +48,101 @@ const SolutionIcons = {
 const SOLUTIONS = [
     {
         id: 'procurement',
-        title: 'Procurement',
-        subtitle: 'Cost Optimization',
-        description: 'Strategic sourcing & vendor negotiation to reduce material costs across production runs.',
+        title: 'Intelligent Supply Enablement',
+        subtitle: 'Sourcing & Cost Optimization',
+        description: 'Optimize sourcing, reduce costs, and strengthen supplier performance without compromising on quality or compliance.',
         metrics: { value: 'Up to 30%', label: 'Cost Reduction' },
         icon: 'Procurement',
-        bgImage: 'https://images.pexels.com/photos/5710046/pexels-photo-5710046.jpeg?auto=compress&cs=tinysrgb&w=1600' // Pexels: Fabric Rolls in Factory
+        bgImage: 'https://images.pexels.com/photos/5710046/pexels-photo-5710046.jpeg?auto=compress&cs=tinysrgb&w=1600',
+        whatWeDo: [
+            { title: 'Supply Chain Design & Optimization', desc: 'Redesign sourcing and supply flows to improve lead times, resilience, and total landed cost.' },
+            { title: 'Global Supplier Identification & Integration', desc: 'Find, qualify, and onboard international suppliers; while ensuring they can meet your specs, timelines, and compliance needs.' },
+            { title: 'Strategic Procurement Negotiations', desc: 'Secure better pricing, payment terms, MOQs, and service levels with risk and quality clauses built in.' },
+            { title: 'Supplier Capacity Assessment', desc: 'Validate whether suppliers can truly scale (labor, machinery, quality systems, throughput) before you commit.' }
+        ],
+        problemsWeSolve: [
+            'Costs rising but pricing pressure from customers is increasing',
+            'Supplier delays, missed shipments, or inconsistent capacity during peak demand',
+            'Over-dependence on a few vendors / limited geographic sourcing options',
+            'Contracts that look good on paper but fail during execution'
+        ],
+        keyBenefits: [
+            'Lower total procurement cost (not just unit price)',
+            'Faster supplier onboarding and fewer sourcing surprises',
+            'More reliable delivery performance and fewer escalations'
+        ]
     },
     {
         id: 'process',
-        title: 'Process Engineering',
-        subtitle: 'Lean Six Sigma',
-        description: 'Eliminating waste and optimizing workflows for maximum operational output.',
+        title: 'Performance & Process Transformation',
+        subtitle: 'Operational Excellence',
+        description: 'Streamline operations, eliminate waste, and improve throughput with practical process improvements that stick.',
         metrics: { value: '45%', label: 'Efficiency Gain (Avg)' },
         icon: 'Process',
-        bgImage: 'https://images.pexels.com/photos/3738088/pexels-photo-3738088.jpeg?auto=compress&cs=tinysrgb&w=1600' // Working: Sewing Machine
+        bgImage: 'https://images.pexels.com/photos/3738088/pexels-photo-3738088.jpeg?auto=compress&cs=tinysrgb&w=1600',
+        whatWeDo: [
+            { title: 'Operational Excellence', desc: 'Improve efficiency and cost-effectiveness across functions with SOPs, controls, and performance routines.' },
+            { title: 'Factory Layout & Workflow Optimization', desc: 'Reorganize layouts, motion, line balance, and handoffs to reduce rework, waiting time, and bottlenecks.' }
+        ],
+        problemsWeSolve: [
+            'Productivity is inconsistent across lines/sites/teams',
+            'High rework/defects, firefighting culture, unclear ownership',
+            'Long cycle times, frequent bottlenecks, and "hidden factories"',
+            'Processes exist but are not followed (because they\'re not workable)'
+        ],
+        keyBenefits: [
+            'Measurable improvements in throughput, quality, and labor efficiency',
+            'Standardized SOPs along with practical governance to sustain gains',
+            'Better predictability in daily/weekly performance'
+        ]
     },
     {
         id: 'integration',
-        title: 'Supplier Integration',
-        subtitle: 'Network Optimization',
-        description: 'Comprehensive vetting, onboarding, and performance management modules.',
+        title: 'Enterprise Connectivity & Traceability',
+        subtitle: 'Data & Systems Harmony',
+        description: 'Connect systems, standardize data, and create operational harmony across procurement, production, and compliance.',
         metrics: { value: '99.2%', label: 'Compliance (Global)' },
         icon: 'Integration',
-        bgImage: 'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=1600' // Working: Clothing Rack
+        bgImage: 'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=1600',
+        whatWeDo: [
+            { title: 'Product Traceability Solutions', desc: 'Implement traceability across the supply chain to track materials/products end-to-end for transparency and faster issue resolution.' },
+            { title: 'Supplier Onboarding & Data Integration', desc: 'Create consistent supplier master data, documentation workflows, and connectivity so purchasing and operations run cleanly.' }
+        ],
+        problemsWeSolve: [
+            'Data mismatch across teams',
+            'Traceability gaps causing recalls, compliance issues, or customer disputes',
+            'Slow approvals and fragmented workflows across procurement and operations',
+            'Limited visibility into supplier performance and production status'
+        ],
+        keyBenefits: [
+            'Cleaner master data and fewer operational errors',
+            'Faster root-cause analysis when issues occur',
+            'Better reporting, accountability, and audit readiness'
+        ]
     },
     {
         id: 'advisory',
-        title: 'Risk Advisory',
-        subtitle: 'Compliance & Mitigation',
-        description: 'Proactive risk identification and regulatory compliance assurance.',
+        title: 'Risk, Compliance & Growth Advisory',
+        subtitle: 'Expert Strategic Guidance',
+        description: 'Make confident decisions with expert guidance that is grounded in execution realities and market dynamics.',
         metrics: { value: '100%', label: 'Audit Success (Cases)' },
         icon: 'Advisory',
-        bgImage: 'https://images.pexels.com/photos/6214476/pexels-photo-6214476.jpeg?auto=compress&cs=tinysrgb&w=1600' // Pexels: Quality Inspection
+        bgImage: 'https://images.pexels.com/photos/6214476/pexels-photo-6214476.jpeg?auto=compress&cs=tinysrgb&w=1600',
+        whatWeDo: [
+            { title: 'Regulatory Compliance Advisory', desc: 'Translate standards into practical controls and workflows so teams comply without slowing the business.' },
+            { title: 'Sourcing, Operations & Risk Advisory', desc: 'Strategy support for market shifts, supplier risk, cost pressures, expansion, and operational scaling.' }
+        ],
+        problemsWeSolve: [
+            'Failing audits or unclear compliance requirements',
+            'Policies exist, but controls aren\'t embedded into day-to-day operations',
+            'Leadership decisions lack reliable data, benchmarks, or scenario clarity',
+            'Expansion introduces new regulatory, supplier, and execution risks'
+        ],
+        keyBenefits: [
+            'Audit preparedness and reduced compliance risk',
+            'Clear roadmaps with "who-does-what-by-when" execution plans',
+            'Stronger governance and decision-making confidence'
+        ]
     }
 ];
 
@@ -195,9 +257,286 @@ const SolutionsHero = () => {
 };
 
 // --- 2.0 Solutions Slides - Simple Scrolling ---
+
+// --- Solution Detail Modal ---
+const SolutionDetailModal = ({ solution, onClose }) => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
+
+    // Lock body scroll when modal is open
+    React.useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, []);
+
+    if (!solution) return null;
+
+    return (
+        <AnimatePresence>
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={onClose}
+                onWheel={(e) => e.stopPropagation()}
+                onTouchMove={(e) => e.stopPropagation()}
+                style={{
+                    position: 'fixed',
+                    inset: 0,
+                    backgroundColor: 'rgba(0,0,0,0.95)',
+                    zIndex: 10000,
+                    overflowY: 'auto',
+                    overflowX: 'hidden',
+                    padding: isMobile ? '2rem 1rem' : '4rem 2rem',
+                    WebkitOverflowScrolling: 'touch', // Smooth scrolling on iOS
+                    cursor: 'default' // Ensure cursor is always visible
+                }}
+            >
+                <motion.div
+                    initial={{ scale: 0.9, y: 50 }}
+                    animate={{ scale: 1, y: 0 }}
+                    exit={{ scale: 0.9, y: 50 }}
+                    onClick={(e) => e.stopPropagation()}
+                    style={{
+                        maxWidth: '1200px',
+                        margin: '0 auto',
+                        background: '#0f0f0f',
+                        borderRadius: '24px',
+                        overflow: 'hidden',
+                        border: `1px solid ${COLORS.bronze}`,
+                        cursor: 'auto' // Ensure cursor is visible on content
+                    }}
+                >
+                    {/* Header with Background Image */}
+                    <div style={{
+                        position: 'relative',
+                        height: isMobile ? '200px' : '300px',
+                        backgroundImage: `url(${solution.bgImage})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center'
+                    }}>
+                        <div style={{
+                            position: 'absolute',
+                            inset: 0,
+                            background: 'linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(15,15,15,1))'
+                        }} />
+
+                        {/* Close Button */}
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onClose();
+                            }}
+                            style={{
+                                position: 'absolute',
+                                top: '1.5rem',
+                                right: '1.5rem',
+                                background: 'rgba(0,0,0,0.6)',
+                                border: `2px solid ${COLORS.bronze}`,
+                                borderRadius: '50%',
+                                width: '48px',
+                                height: '48px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer',
+                                color: COLORS.opticalWhite,
+                                fontSize: '1.75rem',
+                                fontWeight: 300,
+                                backdropFilter: 'blur(10px)',
+                                zIndex: 1000,
+                                transition: 'all 0.2s ease'
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.background = COLORS.bronze;
+                                e.currentTarget.style.color = '#0a0a0a';
+                                e.currentTarget.style.transform = 'scale(1.1)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.background = 'rgba(0,0,0,0.6)';
+                                e.currentTarget.style.color = COLORS.opticalWhite;
+                                e.currentTarget.style.transform = 'scale(1)';
+                            }}
+                        >
+                            ×
+                        </button>
+
+                        {/* Title Section */}
+                        <div style={{
+                            position: 'absolute',
+                            bottom: '2rem',
+                            left: isMobile ? '1.5rem' : '3rem',
+                            right: isMobile ? '1.5rem' : '3rem'
+                        }}>
+                            <div style={{
+                                display: 'inline-block',
+                                padding: '0.5rem 1rem',
+                                background: 'rgba(184, 134, 11, 0.15)',
+                                border: `1px solid ${COLORS.bronze}`,
+                                borderRadius: '50px',
+                                fontSize: '0.75rem',
+                                fontWeight: 500,
+                                letterSpacing: '0.1em',
+                                textTransform: 'uppercase',
+                                color: COLORS.bronze,
+                                marginBottom: '1rem',
+                                fontFamily: 'monospace'
+                            }}>
+                                {solution.subtitle}
+                            </div>
+                            <h2 style={{
+                                fontSize: isMobile ? '1.75rem' : '2.5rem',
+                                fontWeight: 600,
+                                color: COLORS.opticalWhite,
+                                margin: 0,
+                                fontFamily: 'Outfit, sans-serif'
+                            }}>
+                                {solution.title}
+                            </h2>
+                        </div>
+                    </div>
+
+                    {/* Content */}
+                    <div style={{
+                        padding: isMobile ? '2rem 1.5rem' : '3rem'
+                    }}>
+                        {/* Description */}
+                        <p style={{
+                            fontSize: '1.1rem',
+                            lineHeight: 1.7,
+                            color: 'rgba(255,255,255,0.8)',
+                            marginBottom: '3rem',
+                            fontFamily: 'Inter, sans-serif'
+                        }}>
+                            {solution.description}
+                        </p>
+
+                        {/* What We Do */}
+                        <section style={{ marginBottom: '3rem' }}>
+                            <h3 style={{
+                                fontSize: '1.5rem',
+                                fontWeight: 600,
+                                color: COLORS.bronze,
+                                marginBottom: '1.5rem',
+                                fontFamily: 'Outfit, sans-serif'
+                            }}>
+                                What We Do
+                            </h3>
+                            <div style={{
+                                display: 'grid',
+                                gap: '1.5rem'
+                            }}>
+                                {solution.whatWeDo.map((item, idx) => (
+                                    <div key={idx} style={{
+                                        padding: '1.5rem',
+                                        background: 'rgba(255,255,255,0.03)',
+                                        borderRadius: '12px',
+                                        border: '1px solid rgba(255,255,255,0.1)'
+                                    }}>
+                                        <h4 style={{
+                                            fontSize: '1.1rem',
+                                            fontWeight: 600,
+                                            color: COLORS.opticalWhite,
+                                            marginBottom: '0.75rem',
+                                            fontFamily: 'Outfit, sans-serif'
+                                        }}>
+                                            {item.title}
+                                        </h4>
+                                        <p style={{
+                                            fontSize: '0.95rem',
+                                            lineHeight: 1.6,
+                                            color: 'rgba(255,255,255,0.7)',
+                                            margin: 0,
+                                            fontFamily: 'Inter, sans-serif'
+                                        }}>
+                                            {item.desc}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+
+                        {/* Problems We Solve */}
+                        <section style={{ marginBottom: '3rem' }}>
+                            <h3 style={{
+                                fontSize: '1.5rem',
+                                fontWeight: 600,
+                                color: COLORS.bronze,
+                                marginBottom: '1.5rem',
+                                fontFamily: 'Outfit, sans-serif'
+                            }}>
+                                Problems We Solve
+                            </h3>
+                            <ul style={{
+                                listStyle: 'none',
+                                padding: 0,
+                                margin: 0,
+                                display: 'grid',
+                                gap: '1rem'
+                            }}>
+                                {solution.problemsWeSolve.map((problem, idx) => (
+                                    <li key={idx} style={{
+                                        display: 'flex',
+                                        alignItems: 'flex-start',
+                                        gap: '1rem',
+                                        fontSize: '1rem',
+                                        lineHeight: 1.6,
+                                        color: 'rgba(255,255,255,0.8)',
+                                        fontFamily: 'Inter, sans-serif'
+                                    }}>
+                                        <span style={{ color: COLORS.bronze, fontSize: '1.5rem', lineHeight: 1 }}>•</span>
+                                        {problem}
+                                    </li>
+                                ))}
+                            </ul>
+                        </section>
+
+                        {/* Key Benefits */}
+                        <section>
+                            <h3 style={{
+                                fontSize: '1.5rem',
+                                fontWeight: 600,
+                                color: COLORS.bronze,
+                                marginBottom: '1.5rem',
+                                fontFamily: 'Outfit, sans-serif'
+                            }}>
+                                Key Benefits
+                            </h3>
+                            <ul style={{
+                                listStyle: 'none',
+                                padding: 0,
+                                margin: 0,
+                                display: 'grid',
+                                gap: '1rem'
+                            }}>
+                                {solution.keyBenefits.map((benefit, idx) => (
+                                    <li key={idx} style={{
+                                        display: 'flex',
+                                        alignItems: 'flex-start',
+                                        gap: '1rem',
+                                        fontSize: '1rem',
+                                        lineHeight: 1.6,
+                                        color: 'rgba(255,255,255,0.8)',
+                                        fontFamily: 'Inter, sans-serif'
+                                    }}>
+                                        <span style={{ color: COLORS.bronze, fontSize: '1.5rem', lineHeight: 1 }}>✓</span>
+                                        {benefit}
+                                    </li>
+                                ))}
+                            </ul>
+                        </section>
+                    </div>
+                </motion.div>
+            </motion.div>
+        </AnimatePresence>
+    );
+};
+
 // --- Mobile Stacked Layout (Accordion) ---
 const MobileSolutionStack = () => {
     const [activeId, setActiveId] = useState(SOLUTIONS[0].id);
+    const [selectedSolution, setSelectedSolution] = useState(null);
 
     return (
         <section style={{ padding: '6rem 1rem', background: '#0a0a0a' }}>
@@ -293,14 +632,28 @@ const MobileSolutionStack = () => {
                                                 }}>
                                                     {solution.description}
                                                 </p>
-                                                <div style={{ borderTop: '1px solid rgba(255,255,255,0.2)', paddingTop: '1rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                                    <div style={{ fontSize: '2.5rem', fontWeight: 700, color: COLORS.opticalWhite, fontFamily: 'Outfit, sans-serif' }}>
-                                                        {solution.metrics.value}
-                                                    </div>
-                                                    <div style={{ fontSize: '0.8rem', color: COLORS.textSecondary, color: 'rgba(255,255,255,0.6)' }}>
-                                                        {solution.metrics.label}
-                                                    </div>
-                                                </div>
+
+                                                {/* View Details Button */}
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setSelectedSolution(solution);
+                                                    }}
+                                                    style={{
+                                                        padding: '0.75rem 1.5rem',
+                                                        background: COLORS.bronze,
+                                                        color: '#0a0a0a',
+                                                        border: 'none',
+                                                        borderRadius: '50px',
+                                                        fontSize: '0.9rem',
+                                                        fontWeight: 600,
+                                                        cursor: 'pointer',
+                                                        fontFamily: 'Outfit, sans-serif',
+                                                        width: '100%'
+                                                    }}
+                                                >
+                                                    View Details →
+                                                </button>
                                             </motion.div>
                                         )}
                                     </AnimatePresence>
@@ -310,7 +663,228 @@ const MobileSolutionStack = () => {
                     })}
                 </div>
             </div>
+
+            {/* Render Detail Modal */}
+            {selectedSolution && (
+                <SolutionDetailModal
+                    solution={selectedSolution}
+                    onClose={() => setSelectedSolution(null)}
+                />
+            )}
         </section>
+    );
+};
+
+// Desktop Stacked Scroll Component
+const DesktopStackedScroll = () => {
+    const targetRef = useRef(null);
+    const [selectedSolution, setSelectedSolution] = useState(null);
+    const { scrollYProgress } = useScroll({
+        target: targetRef,
+        offset: ["start start", "end end"]
+    });
+
+    return (
+        <>
+            <section
+                ref={targetRef}
+                style={{
+                    position: 'relative',
+                    height: `${100 + (SOLUTIONS.length - 1) * 100}vh`, // Total scroll height
+                    background: '#0a0a0a'
+                }}
+            >
+                <div style={{
+                    position: 'sticky',
+                    top: 0,
+                    height: '100vh',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    overflow: 'hidden'
+                }}>
+                    {SOLUTIONS.map((solution, index) => (
+                        <StackedCard
+                            key={solution.id}
+                            solution={solution}
+                            index={index}
+                            progress={scrollYProgress}
+                            totalCards={SOLUTIONS.length}
+                            onClick={() => setSelectedSolution(solution)}
+                        />
+                    ))}
+                </div>
+            </section>
+
+            {/* Render Detail Modal */}
+            {selectedSolution && (
+                <SolutionDetailModal
+                    solution={selectedSolution}
+                    onClose={() => setSelectedSolution(null)}
+                />
+            )}
+        </>
+    );
+};
+
+const StackedCard = ({ solution, index, progress, totalCards, onClick }) => {
+    const cardStart = index / totalCards;
+    const cardEnd = (index + 1) / totalCards;
+
+    // Scale: Cards scale down slightly as new ones stack on top
+    const scale = useTransform(
+        progress,
+        [cardStart, cardEnd],
+        [1, 0.94] // Subtle scale down when a new card appears
+    );
+
+    // Y Position: All cards slide to center (Y=0) creating stacked effect
+    const y = useTransform(
+        progress,
+        [cardStart, cardEnd],
+        [index === 0 ? '0%' : '100%', '0%'] // All cards end at same position
+    );
+
+    // Opacity: Cards remain visible when stacked
+    const opacity = useTransform(
+        progress,
+        [cardStart - 0.05, cardStart, cardEnd],
+        [index === 0 ? 1 : 0, 1, 1] // Fade in and stay visible
+    );
+
+    return (
+        <motion.div
+            onClick={onClick}
+            style={{
+                position: 'absolute',
+                width: 'min(90%, 1100px)',
+                height: '75vh',
+                maxHeight: '650px',
+                borderRadius: '24px',
+                overflow: 'hidden',
+                boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+                backgroundColor: '#0a0a0a',
+                scale,
+                y,
+                opacity,
+                zIndex: index, // Later cards stack on top (index 1 > index 0)
+                cursor: 'pointer',
+                willChange: 'transform, opacity'
+            }}
+        >
+            {/* Background Image */}
+            <div style={{
+                position: 'absolute',
+                inset: 0,
+                backgroundImage: `url(${solution.bgImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                filter: 'brightness(0.5) saturate(1.1)'
+            }} />
+
+            {/* Darker Gradient Overlay for full opacity */}
+            <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.65) 100%)'
+            }} />
+
+            {/* Content */}
+            <div style={{
+                position: 'relative',
+                zIndex: 10,
+                height: '100%',
+                padding: '3rem',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                color: COLORS.opticalWhite
+            }}>
+                {/* Top Section: Badge + Title */}
+                <div>
+                    {/* Subtitle Badge */}
+                    <div style={{
+                        display: 'inline-block',
+                        padding: '0.4rem 1rem',
+                        background: 'rgba(184, 134, 11, 0.12)',
+                        border: `1px solid ${COLORS.bronze}`,
+                        borderRadius: '50px',
+                        fontSize: '0.7rem',
+                        fontWeight: 600,
+                        letterSpacing: '0.12em',
+                        textTransform: 'uppercase',
+                        color: COLORS.bronze,
+                        marginBottom: '2rem',
+                        fontFamily: 'monospace'
+                    }}>
+                        {solution.subtitle}
+                    </div>
+
+                    {/* Title */}
+                    <h2 style={{
+                        fontSize: 'clamp(2.5rem, 4.5vw, 4rem)',
+                        fontWeight: 600,
+                        lineHeight: 1,
+                        marginBottom: '0',
+                        fontFamily: 'Outfit, sans-serif',
+                        letterSpacing: '-0.02em'
+                    }}>
+                        {solution.title}
+                    </h2>
+                </div>
+
+
+                {/* Bottom Section: Description + Button */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxWidth: '70%' }}>
+                    {/* Description */}
+                    <p style={{
+                        fontSize: '1.1rem',
+                        lineHeight: 1.7,
+                        color: 'rgba(255,255,255,0.85)',
+                        margin: 0,
+                        fontFamily: 'Inter, sans-serif',
+                        fontWeight: 300
+                    }}>
+                        {solution.description}
+                    </p>
+
+                    {/* Learn More Button */}
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onClick();
+                        }}
+                        style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                            padding: '0.875rem 1.75rem',
+                            background: COLORS.bronze,
+                            color: '#0a0a0a',
+                            border: 'none',
+                            borderRadius: '50px',
+                            fontSize: '0.95rem',
+                            fontWeight: 600,
+                            cursor: 'pointer',
+                            fontFamily: 'Outfit, sans-serif',
+                            alignSelf: 'flex-start',
+                            transition: 'all 0.3s ease',
+                            boxShadow: '0 4px 15px rgba(197, 160, 89, 0.3)'
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = 'translateY(-2px)';
+                            e.currentTarget.style.boxShadow = '0 6px 20px rgba(197, 160, 89, 0.4)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'translateY(0)';
+                            e.currentTarget.style.boxShadow = '0 4px 15px rgba(197, 160, 89, 0.3)';
+                        }}
+                    >
+                        Learn More →
+                    </button>
+                </div>
+            </div>
+        </motion.div>
     );
 };
 
@@ -321,13 +895,7 @@ const BentoGrid = () => {
         return <MobileSolutionStack />;
     }
 
-    return (
-        <div style={{ background: COLORS.opticalWhite }}>
-            {SOLUTIONS.map((solution, idx) => (
-                <SolutionSlide key={solution.id} solution={solution} index={idx} />
-            ))}
-        </div>
-    );
+    return <DesktopStackedScroll />;
 };
 
 const SolutionSlide = ({ solution, index }) => {
@@ -750,65 +1318,6 @@ const Solutions = () => {
     return (
         <main style={{ background: COLORS.obsidian }}>
             <SolutionsHero />
-
-            {/* Editorial Break */}
-            {/* Editorial Break - Hidden on Mobile */}
-            {!isMobile && (
-                <section style={{
-                    height: '100vh',
-                    position: 'relative',
-                    overflow: 'hidden'
-                }}>
-                    <motion.div
-                        style={{
-                            position: 'absolute',
-                            inset: 0,
-                            backgroundImage: 'url(https://images.pexels.com/photos/2249290/pexels-photo-2249290.jpeg?auto=compress&cs=tinysrgb&w=1600)',
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center center',
-                            filter: 'brightness(0.5) saturate(0)'
-                        }}
-                        initial={{ scale: 1.05 }}
-                        whileInView={{ scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1.5, ease: [0.25, 0.1, 0.25, 1] }}
-                    />
-                    <div style={{
-                        position: 'absolute',
-                        inset: 0,
-                        backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")',
-                        opacity: 0.05,
-                        pointerEvents: 'none',
-                        mixBlendMode: 'overlay',
-                        zIndex: 2
-                    }} />
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.9, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                        style={{
-                            position: 'absolute',
-                            bottom: '15%',
-                            right: '5%',
-                            zIndex: 3,
-                            textAlign: 'right'
-                        }}
-                    >
-                        <p style={{
-                            fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
-                            color: '#fff',
-                            fontFamily: 'Outfit, sans-serif',
-                            fontWeight: 300,
-                            letterSpacing: '-0.02em',
-                            lineHeight: 1.3,
-                            maxWidth: '500px'
-                        }}>
-                            From blueprint<br />to reality
-                        </p>
-                    </motion.div>
-                </section>
-            )}
 
             <BentoGrid />
             <EngagementTimeline />
