@@ -23,12 +23,15 @@ const ImpactHero = () => {
 
     return (
         <section ref={containerRef} style={{
-            minHeight: isMobile ? '90vh' : '100vh',
+            minHeight: isMobile ? '100svh' : '100vh',
             background: COLORS.darkCharcoal,
             display: 'flex',
             alignItems: 'center',
             position: 'relative',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            marginTop: 'calc(-1 * var(--header-height))',
+            paddingTop: 'var(--header-height)',
+            justifyContent: 'center'
         }}>
             {/* Cinematic Animated Background */}
             <style>{`
@@ -49,11 +52,19 @@ const ImpactHero = () => {
                 zIndex: 0
             }} />
 
-            <motion.div className="container" style={{ position: 'relative', zIndex: 2, opacity, y, textAlign: 'left' }}>
+            <motion.div className="container" style={{
+                position: 'relative',
+                zIndex: 2,
+                opacity,
+                y,
+                textAlign: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+            }}>
                 <motion.div
                     initial={{ opacity: 0, y: 40, scale: 0.97 }}
-                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    viewport={{ once: true }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
                 >
                     <motion.div
@@ -81,8 +92,7 @@ const ImpactHero = () => {
 
                     <motion.h1
                         initial={{ opacity: 0, y: 50, scale: 0.97 }}
-                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                        viewport={{ once: true }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
                         transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
                         style={{
                             fontSize: 'clamp(3.5rem, 11vw, 10rem)',
@@ -98,8 +108,8 @@ const ImpactHero = () => {
                     </motion.h1>
 
                     <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, y: 40 }}
+                        animate={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.7, delay: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
                         style={{
@@ -132,35 +142,37 @@ const KeyMetrics = () => {
     return (
         <section style={{
             background: COLORS.opticalWhite,
-            padding: isMobile ? '6rem 2rem' : 'var(--space-xl) 0'
+            padding: isMobile ? '6rem 1rem' : 'var(--space-xl) 0', // Reduced mobile side padding to wider cards
+            overflow: 'hidden' // Prevent horizontal scroll from animations
         }}>
             <div className="container">
                 <div style={{
                     display: 'grid',
                     gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
-                    gap: isMobile ? '1px' : '3rem',
-                    background: isMobile ? 'rgba(17,17,17,0.1)' : 'transparent' // Subtle border separation on mobile
+                    gap: isMobile ? '1rem' : '3rem', // Increased mobile gap slightly
+                    background: 'transparent'
                 }}>
                     {metrics.map((metric, index) => (
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: index * 0.1, ease: [0.4, 0, 0.2, 1] }}
+                            initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: false, amount: 0.2 }}
+                            transition={{ duration: 0.5, ease: "easeOut" }}
                             style={{
                                 textAlign: 'left', // Strict Left Align
-                                padding: '2rem',
-                                border: isMobile ? 'none' : `1px solid ${COLORS.borderLight}`,
-                                background: index % 2 === 0 ? COLORS.opticalWhite : 'rgba(17, 17, 17, 0.02)'
+                                padding: isMobile ? '1.25rem 1rem' : '2rem',
+                                border: isMobile ? '1px solid rgba(0,0,0,0.06)' : `1px solid ${COLORS.borderLight}`,
+                                background: isMobile ? '#F5F5F3' : (index % 2 === 0 ? COLORS.opticalWhite : 'rgba(17, 17, 17, 0.02)'),
+                                borderRadius: isMobile ? '16px' : '0'
                             }}
                         >
                             <div style={{
-                                fontSize: 'clamp(2rem, 5vw, 5rem)',
-                                fontWeight: 500,
-                                color: index % 2 === 0 ? COLORS.bronze : COLORS.text,
+                                fontSize: isMobile ? '2rem' : 'clamp(2rem, 5vw, 5rem)',
+                                fontWeight: 600,
+                                color: isMobile ? COLORS.bronze : (index % 2 === 0 ? COLORS.bronze : COLORS.text), // Consistent color on mobile
                                 lineHeight: 1,
-                                marginBottom: '1rem',
+                                marginBottom: '0.75rem',
                                 fontFamily: 'Outfit, sans-serif'
                             }}>
                                 {metric.value}
@@ -470,7 +482,7 @@ const EditorialCaseStudies = () => {
 
 const Impact = () => {
     return (
-        <main style={{ background: COLORS.opticalWhite }}>
+        <main style={{ background: COLORS.opticalWhite, overflowX: 'hidden' }}>
             <ImpactHero />
             <EditorialCaseStudies />
             <KeyMetrics />

@@ -3,7 +3,7 @@ import { motion, useMotionValue, useSpring } from 'framer-motion';
 import RevealText from './motion/RevealText';
 import useMediaQuery from '../hooks/useMediaQuery';
 
-const AnimatedInput = ({ type, placeholder, rows }) => {
+const AnimatedInput = ({ type, placeholder, rows, isMobile }) => {
     const [focused, setFocused] = useState(false);
     return (
         <div style={{ position: 'relative', overflow: 'hidden' }}>
@@ -19,7 +19,7 @@ const AnimatedInput = ({ type, placeholder, rows }) => {
                         borderBottom: '1px solid rgba(0,0,0,0.4)',
                         padding: '1.5rem 0',
                         color: '#333',
-                        fontSize: '1.5rem',
+                        fontSize: isMobile ? '1.2rem' : '1.5rem',
                         fontFamily: 'inherit',
                         resize: 'none',
                         outline: 'none',
@@ -39,7 +39,7 @@ const AnimatedInput = ({ type, placeholder, rows }) => {
                         borderBottom: '1px solid rgba(0,0,0,0.4)',
                         padding: '1.5rem 0',
                         color: '#333',
-                        fontSize: '1.5rem',
+                        fontSize: isMobile ? '1.2rem' : '1.5rem',
                         fontFamily: 'inherit',
                         outline: 'none',
                         position: 'relative',
@@ -61,8 +61,11 @@ const AnimatedInput = ({ type, placeholder, rows }) => {
                     top: '1.5rem',
                     left: 0,
                     pointerEvents: 'none',
-                    fontSize: '1.5rem',
-                    color: '#333'
+                    fontSize: isMobile ? '1.1rem' : '1.5rem',
+                    color: '#333',
+                    width: '100%', // Ensure it can wrap if needed, but width helps
+                    whiteSpace: 'pre-wrap', // Allow wrapping
+                    lineHeight: 1.2
                 }}
             >
                 {placeholder}
@@ -109,9 +112,9 @@ const Contact = () => {
 
                     {/* Form Side */}
                     <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        <AnimatedInput type="text" placeholder="What's your name?" />
-                        <AnimatedInput type="email" placeholder="Your email address" />
-                        <AnimatedInput type="textarea" placeholder="Describe your current sourcing or production challenge" rows={1} />
+                        <AnimatedInput type="text" placeholder="What's your name?" isMobile={isMobile} />
+                        <AnimatedInput type="email" placeholder="Your email address" isMobile={isMobile} />
+                        <AnimatedInput type="textarea" placeholder="Describe your current sourcing or production challenge" rows={1} isMobile={isMobile} />
 
                         <div style={{ marginTop: isMobile ? '2rem' : '3rem' }}>
                             <button className="btn btn-primary" style={{ fontSize: isMobile ? '1rem' : '1.2rem', padding: isMobile ? '1rem 2rem' : '1.5rem 3rem', width: isMobile ? '100%' : 'auto' }}>

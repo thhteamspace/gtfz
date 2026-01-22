@@ -9,7 +9,9 @@ const Services = () => {
     const services = [
         {
             title: "Sourcing Strategy",
-            description: "We don't just find factories; we architect supply ecosystems. Identifing specialized manufacturers in niche markets.",
+            description: isMobile
+                ? "Architecting global supply ecosystems."
+                : "We don't just find factories; we architect supply ecosystems. Identifying specialized manufacturers in niche markets.",
             stat: "Global",
             statLabel: "Strategic Partners",
             image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=1200",
@@ -122,7 +124,7 @@ const Services = () => {
                 <div style={{
                     display: 'grid',
                     gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
-                    gridTemplateRows: isMobile ? '220px 340px 340px' : '300px 300px', // Mobile: 1 Row Small, 2 Rows Wide (Taller)
+                    gridTemplateRows: isMobile ? '340px 220px 340px' : '300px 300px', // Mobile: Big, Small Row, Big
                     gap: isMobile ? '0.5rem' : '1.5rem', // Tighter gap
                     width: '100%',
                     maxWidth: '1200px',
@@ -132,20 +134,20 @@ const Services = () => {
                     {/* Item 1: Top Left */}
                     <div style={{
                         gridColumn: '1 / 2',
-                        gridRow: '1 / 2'
+                        gridRow: isMobile ? '2 / 3' : '1 / 2'
                     }}>
                         <ServiceCard {...services[0]} height="100%" isMobile={isMobile} />
                     </div>
 
-                    {/* Item 2: Center Tall (Desktop) / Full Width Middle (Mobile) */}
+                    {/* Item 2: Center Tall (Desktop) / Top Wide (Mobile) */}
                     <div style={{
                         gridColumn: isMobile ? '1 / 3' : '2 / 3',
-                        gridRow: isMobile ? '2 / 3' : '1 / 3'
+                        gridRow: isMobile ? '1 / 2' : '1 / 3'
                     }}>
                         <ServiceCard {...services[1]} height="100%" isMobile={isMobile} />
                     </div>
 
-                    {/* Item 3: Right Tall (Desktop) / Full Width Bottom (Mobile) */}
+                    {/* Item 3: Right Tall (Desktop) / Bottom Wide (Mobile) */}
                     <div style={{
                         gridColumn: isMobile ? '1 / 3' : '3 / 4',
                         gridRow: isMobile ? '3 / 4' : '1 / 3'
@@ -153,10 +155,10 @@ const Services = () => {
                         <ServiceCard {...services[2]} height="100%" isMobile={isMobile} />
                     </div>
 
-                    {/* Item 4: Bottom Left (Desktop) / Top Right (Mobile) */}
+                    {/* Item 4: Bottom Left (Desktop) / Middle Right (Mobile) */}
                     <div style={{
                         gridColumn: isMobile ? '2 / 3' : '1 / 2',
-                        gridRow: isMobile ? '1 / 2' : '2 / 3'
+                        gridRow: isMobile ? '2 / 3' : '2 / 3'
                     }}>
                         <ServiceCard {...services[3]} height="100%" isMobile={isMobile} />
                     </div>
@@ -179,7 +181,7 @@ const ServiceCard = ({ variant, title, description, stat, statLabel, image, heig
                     height: height,
                     background: '#F0EFEA',
                     borderRadius: cardRadius,
-                    padding: '2rem',
+                    padding: isMobile ? '1.25rem 1rem' : '2rem', // Tighther mobile padding
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
@@ -188,12 +190,12 @@ const ServiceCard = ({ variant, title, description, stat, statLabel, image, heig
                 }}
             >
                 <div>
-                    <div style={{ fontSize: '2.5rem', fontWeight: 600, color: '#111', fontFamily: 'Outfit, sans-serif', lineHeight: 1 }}>{stat}</div>
-                    <div style={{ color: '#666', fontSize: '0.85rem', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{statLabel}</div>
+                    <div style={{ fontSize: isMobile ? '1.8rem' : '2.5rem', fontWeight: 600, color: '#111', fontFamily: 'Outfit, sans-serif', lineHeight: 1 }}>{stat}</div>
+                    <div style={{ color: '#666', fontSize: isMobile ? '0.75rem' : '0.85rem', marginBottom: isMobile ? '0.25rem' : '1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{statLabel}</div>
                 </div>
                 <div>
-                    <h3 style={{ fontSize: '1.2rem', fontWeight: 500, marginBottom: '0.5rem', color: '#111' }}>{title}</h3>
-                    <p style={{ fontSize: '0.9rem', color: '#555', lineHeight: 1.4, margin: 0 }}>
+                    <h3 style={{ fontSize: isMobile ? '1rem' : '1.2rem', fontWeight: 500, marginBottom: isMobile ? '0.25rem' : '0.5rem', color: '#111' }}>{title}</h3>
+                    <p style={{ fontSize: isMobile ? '0.85rem' : '0.9rem', color: '#555', lineHeight: 1.4, margin: 0 }}>
                         {description}
                     </p>
                 </div>

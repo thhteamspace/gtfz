@@ -71,8 +71,7 @@ const EthosHero = () => {
             }}>
                 <motion.div
                     initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
+                    animate="visible"
                     variants={fadeInUp}
                     style={{ maxWidth: '800px' }}
                 >
@@ -293,12 +292,19 @@ const OurMethodology = () => {
                 </motion.div>
 
                 {/* Steps Grid - Horizontal Layout */}
+                {/* Steps Grid - Horizontal Layout */}
                 <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
-                    gap: isMobile ? '1px' : '1px',
-                    background: 'rgba(255,255,255,0.1)'
-                }}>
+                    display: isMobile ? 'flex' : 'grid',
+                    gridTemplateColumns: isMobile ? 'none' : 'repeat(4, 1fr)',
+                    gap: isMobile ? '1rem' : '1px',
+                    background: isMobile ? 'transparent' : 'rgba(255,255,255,0.1)',
+                    overflowX: isMobile ? 'auto' : 'visible',
+                    scrollSnapType: isMobile ? 'x mandatory' : 'none',
+                    width: isMobile ? '100vw' : '100%',
+                    marginLeft: isMobile ? 'calc(50% - 50vw)' : 0,
+                    padding: isMobile ? '0 1.5rem 2rem 1.5rem' : 0,
+                    scrollbarWidth: 'none' // Hide scrollbar Firefox
+                }} className="hide-scrollbar">
                     {methodologySteps.map((item, index) => (
                         <motion.div
                             key={item.step}
@@ -308,29 +314,54 @@ const OurMethodology = () => {
                             variants={fadeInUp}
                             transition={{ duration: 0.5, delay: isMobile ? 0 : index * 0.1 }}
                             style={{
-                                background: COLORS.darkCharcoal,
-                                padding: isMobile ? '1.5rem' : '2rem',
-                                // Keep border logic clean for grid
-                                textAlign: 'left'
+                                background: isMobile ? '#161616' : COLORS.darkCharcoal,
+                                padding: isMobile ? '2.5rem 2rem' : '2rem',
+                                minWidth: isMobile ? '85vw' : 'auto',
+                                scrollSnapAlign: isMobile ? 'center' : 'none',
+                                borderRadius: isMobile ? '24px' : '0',
+                                border: isMobile ? '1px solid rgba(255,255,255,0.08)' : 'none',
+                                textAlign: 'left',
+                                position: 'relative',
+                                overflow: 'hidden'
                             }}
                         >
+                            {/* Decorative Step Number BG */}
+                            <div style={{
+                                position: 'absolute',
+                                top: isMobile ? '-10px' : '1rem',
+                                right: isMobile ? '10px' : '1rem',
+                                fontSize: isMobile ? '5rem' : '1rem',
+                                fontWeight: 800,
+                                color: isMobile ? 'rgba(255,255,255,0.04)' : COLORS.bronze,
+                                fontFamily: 'Outfit, sans-serif',
+                                lineHeight: 1,
+                                pointerEvents: 'none'
+                            }}>
+                                {item.step}
+                            </div>
+
                             {/* Title */}
                             <h3 style={{
                                 fontSize: '1.5rem',
                                 fontWeight: 500,
                                 color: COLORS.opticalWhite,
                                 fontFamily: 'Outfit, sans-serif',
-                                marginBottom: '1rem'
+                                marginBottom: '1rem',
+                                position: 'relative',
+                                zIndex: 1
                             }}>
                                 {item.title}
                             </h3>
 
                             {/* Description */}
                             <p style={{
-                                fontSize: '0.9rem',
+                                fontSize: '0.95rem',
                                 color: 'rgba(255,255,255,0.6)',
                                 lineHeight: 1.6,
-                                fontFamily: 'Inter, sans-serif'
+                                fontFamily: 'Inter, sans-serif',
+                                position: 'relative',
+                                zIndex: 1,
+                                maxWidth: '90%'
                             }}>
                                 {item.description}
                             </p>

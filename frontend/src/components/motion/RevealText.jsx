@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 
-const RevealText = ({ children, width = "fit-content", delay = 0.2 }) => {
+const RevealText = ({ children, width = "fit-content", delay = 0.2, forceVisible = false }) => {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: false, margin: "0px 0px -20% 0px", amount: 0.5 });
 
@@ -13,7 +13,7 @@ const RevealText = ({ children, width = "fit-content", delay = 0.2 }) => {
                     visible: { opacity: 1, y: 0 },
                 }}
                 initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
+                animate={forceVisible || isInView ? "visible" : "hidden"}
                 transition={{ duration: 0.8, delay: delay, ease: [0.25, 1, 0.5, 1] }}
             >
                 {children}

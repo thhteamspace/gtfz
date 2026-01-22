@@ -200,10 +200,15 @@ const HorizontalScroll = () => {
                             overflowX: 'auto',
                             paddingBottom: '2rem', // Space for potential scrollbar (hidden but interactable)
                             scrollBehavior: 'smooth',
-                            width: '100%',
+                            width: isMobile ? '100vw' : '100%',
+                            marginLeft: isMobile ? 'calc(50% - 50vw)' : '0',
+                            marginRight: isMobile ? 'calc(50% - 50vw)' : '0',
                             paddingRight: isMobile ? '0' : '60px',
                             paddingLeft: isMobile ? '0' : '60px',
-                            scrollSnapType: isMobile ? 'x mandatory' : 'none'
+                            scrollSnapType: isMobile ? 'x mandatory' : 'none',
+                            touchAction: 'pan-x', // Lock vertical scroll while interacting with carousel
+                            overflowY: 'hidden', // Ensure no internal vertical scroll
+                            overscrollBehaviorX: 'contain'
                         }}
                     >
                         {/* Inline style to hide scrollbar */}

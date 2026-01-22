@@ -77,7 +77,7 @@ const ContactHero = () => {
                         display: 'flex',
                         justifyContent: 'center'
                     }}>
-                        <RevealText>Let's Talk</RevealText>
+                        <RevealText forceVisible={true}>Let's Talk</RevealText>
                     </h1>
 
                     <div style={{
@@ -91,8 +91,8 @@ const ContactHero = () => {
                         flexDirection: 'column',
                         alignItems: 'center'
                     }}>
-                        <RevealText delay={0.5}>A focused conversation on sourcing, production, and compliance</RevealText>
-                        <RevealText delay={0.6}>Discreet. Strategic. Execution-driven.</RevealText>
+                        <RevealText delay={0.5} forceVisible={true}>A focused conversation on sourcing, production, and compliance</RevealText>
+                        <RevealText delay={0.6} forceVisible={true}>Discreet. Strategic. Execution-driven.</RevealText>
                     </div>
                 </div>
             </div>

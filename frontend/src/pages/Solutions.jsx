@@ -151,8 +151,7 @@ const SolutionsHero = () => {
             <motion.div style={{ opacity, scale, y, textAlign: 'left', zIndex: 10, padding: isMobile ? '0 1.5rem' : '0 4rem', maxWidth: '1400px', width: '100%' }}>
                 <motion.h1
                     initial={{ opacity: 0, y: 50, scale: 0.97 }}
-                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    viewport={{ once: true }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
                     style={{
                         fontSize: 'clamp(3.5rem, 12vw, 10rem)',
@@ -169,8 +168,7 @@ const SolutionsHero = () => {
 
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, delay: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
                     style={{
                         display: 'inline-flex',
