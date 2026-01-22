@@ -133,7 +133,7 @@ const InsightHighlights = () => {
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 }}
-                            viewport={{ once: true }}
+                            viewport={{ once: false, amount: 0.3 }}
                             style={{
                                 fontSize: isMobile ? '2.5rem' : 'clamp(2.5rem, 5vw, 4rem)',
                                 fontWeight: 500,
@@ -229,6 +229,10 @@ const BlogCard = ({ category, date, title, image, link, description, isMobile })
 
     return (
         <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.8 }}
             onClick={!isMobile ? () => navigate(link) : undefined}
             whileHover={!isMobile ? { y: -10 } : {}}
             style={{

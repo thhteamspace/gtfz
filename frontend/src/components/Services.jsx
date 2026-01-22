@@ -88,7 +88,7 @@ const Services = () => {
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: false, amount: 0.3 }}
                         style={{
                             fontSize: 'clamp(2.5rem, 4vw, 3.5rem)',
                             fontWeight: 500,
@@ -124,44 +124,68 @@ const Services = () => {
                 <div style={{
                     display: 'grid',
                     gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
-                    gridTemplateRows: isMobile ? '340px 220px 340px' : '300px 300px', // Mobile: Big, Small Row, Big
-                    gap: isMobile ? '0.5rem' : '1.5rem', // Tighter gap
+                    gridTemplateRows: isMobile ? '340px 220px 340px' : '300px 300px',
+                    gap: isMobile ? '0.5rem' : '1.5rem',
                     width: '100%',
                     maxWidth: '1200px',
                     margin: '0 auto',
-                    padding: isMobile ? '0 0.5rem' : '0' // Minimal edge padding
+                    padding: isMobile ? '0 0.5rem' : '0'
                 }}>
                     {/* Item 1: Top Left */}
-                    <div style={{
-                        gridColumn: '1 / 2',
-                        gridRow: isMobile ? '2 / 3' : '1 / 2'
-                    }}>
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: false, amount: 0.2 }}
+                        transition={{ duration: 0.6 }}
+                        style={{
+                            gridColumn: '1 / 2',
+                            gridRow: isMobile ? '2 / 3' : '1 / 2'
+                        }}
+                    >
                         <ServiceCard {...services[0]} height="100%" isMobile={isMobile} />
-                    </div>
+                    </motion.div>
 
-                    {/* Item 2: Center Tall (Desktop) / Top Wide (Mobile) */}
-                    <div style={{
-                        gridColumn: isMobile ? '1 / 3' : '2 / 3',
-                        gridRow: isMobile ? '1 / 2' : '1 / 3'
-                    }}>
+                    {/* Item 2: Center Tall */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: false, amount: 0.2 }}
+                        transition={{ duration: 0.6, delay: 0.1 }}
+                        style={{
+                            gridColumn: isMobile ? '1 / 3' : '2 / 3',
+                            gridRow: isMobile ? '1 / 2' : '1 / 3'
+                        }}
+                    >
                         <ServiceCard {...services[1]} height="100%" isMobile={isMobile} />
-                    </div>
+                    </motion.div>
 
-                    {/* Item 3: Right Tall (Desktop) / Bottom Wide (Mobile) */}
-                    <div style={{
-                        gridColumn: isMobile ? '1 / 3' : '3 / 4',
-                        gridRow: isMobile ? '3 / 4' : '1 / 3'
-                    }}>
+                    {/* Item 3: Right Tall */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: false, amount: 0.2 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        style={{
+                            gridColumn: isMobile ? '1 / 3' : '3 / 4',
+                            gridRow: isMobile ? '3 / 4' : '1 / 3'
+                        }}
+                    >
                         <ServiceCard {...services[2]} height="100%" isMobile={isMobile} />
-                    </div>
+                    </motion.div>
 
-                    {/* Item 4: Bottom Left (Desktop) / Middle Right (Mobile) */}
-                    <div style={{
-                        gridColumn: isMobile ? '2 / 3' : '1 / 2',
-                        gridRow: isMobile ? '2 / 3' : '2 / 3'
-                    }}>
+                    {/* Item 4: Bottom Left */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: false, amount: 0.2 }}
+                        transition={{ duration: 0.6, delay: 0.3 }}
+                        style={{
+                            gridColumn: isMobile ? '2 / 3' : '1 / 2',
+                            gridRow: isMobile ? '2 / 3' : '2 / 3'
+                        }}
+                    >
                         <ServiceCard {...services[3]} height="100%" isMobile={isMobile} />
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </section>

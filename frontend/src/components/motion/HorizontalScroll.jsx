@@ -125,7 +125,7 @@ const HorizontalScroll = () => {
                         <motion.h2
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
+                            viewport={{ once: false, amount: 0.3 }}
                             transition={{ duration: 0.6 }}
                             style={{
                                 fontSize: 'clamp(3rem, 5vw, 5rem)',
@@ -206,7 +206,7 @@ const HorizontalScroll = () => {
                             paddingRight: isMobile ? '0' : '60px',
                             paddingLeft: isMobile ? '0' : '60px',
                             scrollSnapType: isMobile ? 'x mandatory' : 'none',
-                            touchAction: 'pan-x', // Lock vertical scroll while interacting with carousel
+                            touchAction: 'pan-x pan-y', // Allow both horizontal (carousel) and vertical (page) scrolling
                             overflowY: 'hidden', // Ensure no internal vertical scroll
                             overscrollBehaviorX: 'contain'
                         }}
@@ -278,7 +278,7 @@ const Card = ({ card, index, isMobile }) => {
         <motion.div
             initial={{ opacity: 0, scale: 0.85, y: 100 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.8, delay: (index % 2) * 0.1, ease: [0.25, 0.1, 0.25, 1] }}
             whileHover="hover"
             style={{

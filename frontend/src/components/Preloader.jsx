@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Preloader = () => {
-    const [count, setCount] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -10,7 +9,6 @@ const Preloader = () => {
         const hasSeenPreloader = sessionStorage.getItem('gtfz_preloader_shown');
 
         if (hasSeenPreloader) {
-            // User has already seen preloader in this session, skip it
             setIsLoading(false);
             return;
         }
@@ -18,22 +16,14 @@ const Preloader = () => {
         // First time loading - show preloader
         setIsLoading(true);
 
-        const timer = setInterval(() => {
-            setCount((prev) => {
-                if (prev >= 100) {
-                    clearInterval(timer);
-                    setTimeout(() => {
-                        setIsLoading(false);
-                        // Mark preloader as shown in sessionStorage
-                        sessionStorage.setItem('gtfz_preloader_shown', 'true');
-                    }, 500);
-                    return 100;
-                }
-                return prev + 1;
-            });
-        }, 20); // Speed of counter
+        // Wait for 3 seconds then dismiss
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+            // Mark preloader as shown in sessionStorage
+            sessionStorage.setItem('gtfz_preloader_shown', 'true');
+        }, 3000);
 
-        return () => clearInterval(timer);
+        return () => clearTimeout(timer);
     }, []);
 
     return (
@@ -45,29 +35,28 @@ const Preloader = () => {
                     style={{
                         position: 'fixed',
                         top: 0, left: 0, width: '100%', height: '100vh',
-                        background: '#000',
+                        background: '#000000', // Pure Black
                         zIndex: 9999,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        color: 'var(--color-heritage-bronze)'
                     }}
                 >
-                    <div style={{ display: 'flex', alignItems: 'flex-end', overflow: 'hidden' }}>
-                        <h1 style={{ fontSize: '15vw', lineHeight: 0.8, fontWeight: 900 }}>
-                            {count}
-                        </h1>
-                        <span style={{ fontSize: '5vw', marginBottom: '2vw' }}>%</span>
-                    </div>
-
-                    {/* Flashing words/images could go here */}
                     <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: [0, 1, 0] }}
-                        transition={{ repeat: Infinity, duration: 0.5 }}
-                        style={{ position: 'absolute', bottom: '50px', letterSpacing: '0.2em', textTransform: 'uppercase', fontSize: '0.8rem' }}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 1, ease: "easeOut" }}
                     >
-                        Loading Experience
+                        <img
+                            src="/assets/images/gtfz-logo.png"
+                            alt="GTFZ Logo"
+                            style={{
+                                width: 'clamp(120px, 40vw, 300px)',
+                                height: 'auto',
+                                mixBlendMode: 'screen',
+                                filter: 'contrast(1.5) brightness(1.1)'
+                            }}
+                        />
                     </motion.div>
                 </motion.div>
             )}

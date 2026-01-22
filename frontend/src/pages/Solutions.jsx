@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import useMediaQuery from '../hooks/useMediaQuery';
 
 // --- Monochrome Fashion Palette ---
@@ -131,10 +131,10 @@ const SolutionsHero = () => {
             <div style={{
                 position: 'absolute',
                 inset: 0,
-                backgroundImage: 'url(https://images.unsplash.com/photo-1558769132-cb1aea56c2e2?auto=format&fit=crop&q=80&w=2574)',
+                backgroundImage: 'url(https://images.unsplash.com/photo-1470309864661-68328b2cd0a5?auto=format&fit=crop&q=80&w=2574)',
                 backgroundSize: 'cover',
-                backgroundPosition: isMobile ? 'center 30%' : 'center',
-                filter: isMobile ? 'brightness(0.35) saturate(1.1)' : 'brightness(0.55) saturate(1.15)',
+                backgroundPosition: isMobile ? 'center center' : 'center 30%',
+                filter: isMobile ? 'brightness(0.5) contrast(1.1)' : 'brightness(0.6) contrast(1.1)',
                 animation: 'solutionsZoom 25s ease-in-out infinite',
                 zIndex: 0
             }} />
@@ -173,7 +173,7 @@ const SolutionsHero = () => {
                     style={{
                         display: 'inline-flex',
                         padding: '0.75rem 1.5rem',
-                        background: 'rgba(255, 255, 255, 0.1)',
+                        background: 'rgba(255, 255, 255, 0.15)',
                         borderRadius: '2rem',
                         backdropFilter: 'blur(20px)',
                         WebkitBackdropFilter: 'blur(20px)',
@@ -182,8 +182,9 @@ const SolutionsHero = () => {
                 >
                     <span style={{
                         fontSize: '0.9rem',
-                        color: COLORS.bronze,
+                        color: '#EBCB8B', // Lighter bronze/gold for contrast
                         fontFamily: 'monospace',
+                        fontWeight: 600,
                         letterSpacing: '0.1em',
                         textTransform: 'uppercase'
                     }}>Fashion Supply-Chain Consultancy</span>
@@ -194,7 +195,132 @@ const SolutionsHero = () => {
 };
 
 // --- 2.0 Solutions Slides - Simple Scrolling ---
+// --- Mobile Stacked Layout (Accordion) ---
+const MobileSolutionStack = () => {
+    const [activeId, setActiveId] = useState(SOLUTIONS[0].id);
+
+    return (
+        <section style={{ padding: '6rem 1rem', background: '#0a0a0a' }}>
+            <div className="container">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    {SOLUTIONS.map((solution) => {
+                        const isActive = activeId === solution.id;
+                        return (
+                            <motion.div
+                                key={solution.id}
+                                layout
+                                onClick={() => setActiveId(solution.id)}
+                                style={{
+                                    position: 'relative',
+                                    borderRadius: '24px',
+                                    overflow: 'hidden',
+                                    cursor: 'pointer',
+                                    height: isActive ? '500px' : '100px', // Collapsed vs Expanded
+                                    border: isActive ? `1px solid ${COLORS.bronze}` : '1px solid rgba(255,255,255,0.1)'
+                                }}
+                                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                            >
+                                {/* Background Image */}
+                                <div style={{
+                                    position: 'absolute',
+                                    inset: 0,
+                                    backgroundImage: `url(${solution.bgImage})`,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                    filter: isActive ? 'brightness(0.6)' : 'brightness(0.3)',
+                                    transition: 'filter 0.5s ease'
+                                }} />
+
+                                {/* Content Overlay */}
+                                <div style={{
+                                    position: 'absolute',
+                                    inset: 0,
+                                    padding: '1.5rem',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: isActive ? 'flex-end' : 'center',
+                                    background: isActive
+                                        ? 'linear-gradient(to top, rgba(0,0,0,0.9), transparent)'
+                                        : 'rgba(0,0,0,0.4)'
+                                }}>
+                                    {/* Header (Title + Subtitle) */}
+                                    <motion.div layout="position" style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                        width: '100%',
+                                        marginBottom: isActive ? '1rem' : '0'
+                                    }}>
+                                        <h3 style={{
+                                            margin: 0,
+                                            fontSize: isActive ? '2rem' : '1.25rem',
+                                            color: COLORS.opticalWhite,
+                                            fontFamily: 'Outfit, sans-serif',
+                                            fontWeight: 500
+                                        }}>
+                                            {solution.title}
+                                        </h3>
+                                        {!isActive && (
+                                            <span style={{ fontSize: '1.5rem', color: COLORS.bronze }}>+</span>
+                                        )}
+                                    </motion.div>
+
+                                    {/* Expanded Content (Description + Metrics) */}
+                                    <AnimatePresence>
+                                        {isActive && (
+                                            <motion.div
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                exit={{ opacity: 0 }}
+                                                transition={{ duration: 0.3 }}
+                                            >
+                                                <div style={{
+                                                    fontSize: '0.75rem',
+                                                    color: COLORS.bronze,
+                                                    textTransform: 'uppercase',
+                                                    letterSpacing: '0.1em',
+                                                    marginBottom: '1rem',
+                                                    fontFamily: 'monospace'
+                                                }}>
+                                                    {solution.subtitle}
+                                                </div>
+                                                <p style={{
+                                                    color: 'rgba(255,255,255,0.8)',
+                                                    fontSize: '1rem',
+                                                    lineHeight: 1.5,
+                                                    marginBottom: '1.5rem',
+                                                    fontFamily: 'Inter, sans-serif'
+                                                }}>
+                                                    {solution.description}
+                                                </p>
+                                                <div style={{ borderTop: '1px solid rgba(255,255,255,0.2)', paddingTop: '1rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                                    <div style={{ fontSize: '2.5rem', fontWeight: 700, color: COLORS.opticalWhite, fontFamily: 'Outfit, sans-serif' }}>
+                                                        {solution.metrics.value}
+                                                    </div>
+                                                    <div style={{ fontSize: '0.8rem', color: COLORS.textSecondary, color: 'rgba(255,255,255,0.6)' }}>
+                                                        {solution.metrics.label}
+                                                    </div>
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            </motion.div>
+                        );
+                    })}
+                </div>
+            </div>
+        </section>
+    );
+};
+
 const BentoGrid = () => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
+
+    if (isMobile) {
+        return <MobileSolutionStack />;
+    }
+
     return (
         <div style={{ background: COLORS.opticalWhite }}>
             {SOLUTIONS.map((solution, idx) => (
@@ -424,7 +550,10 @@ const EngagementTimeline = () => {
                             transition={{ duration: 0.8 }}
                             style={{
                                 maxWidth: '600px',
-                                textAlign: 'left'
+                                textAlign: isMobile ? 'center' : 'left',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: isMobile ? 'center' : 'flex-start'
                             }}
                         >
                             <div style={{
@@ -525,38 +654,41 @@ const TimelineStep = ({ step, index, scrollProgress, isMobile }) => {
             inset: isMobile ? '0' : 'auto',
             display: isMobile ? 'flex' : 'block',
             flexDirection: 'column',
-            alignItems: 'flex-start',
+            alignItems: isMobile ? 'center' : 'flex-start',
             justifyContent: 'flex-start',
-            textAlign: 'left',
+            textAlign: isMobile ? 'center' : 'left',
             zIndex: 10,
             pointerEvents: isMobile ? 'none' : 'auto',
-            paddingTop: isMobile ? '2rem' : '0'
+            paddingTop: isMobile ? '2rem' : '0',
+            width: isMobile ? '100%' : 'auto'
         }}>
-            {/* Phase Number Badge */}
-            <div style={{
-                width: isMobile ? '44px' : '50px',
-                height: isMobile ? '44px' : '50px',
-                borderRadius: '50%',
-                background: COLORS.opticalWhite,
-                border: `1px solid ${COLORS.bronze}`,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: isMobile ? '1.1rem' : '1.2rem',
-                fontWeight: 500,
-                color: COLORS.bronze,
-                marginBottom: isMobile ? '1.75rem' : '1.5rem',
-                fontFamily: 'Outfit, sans-serif'
-            }}>
-                {step.phase}
-            </div>
+            {/* Phase Number Badge - Hidden on mobile */}
+            {!isMobile && (
+                <div style={{
+                    width: '50px',
+                    height: '50px',
+                    borderRadius: '50%',
+                    background: COLORS.opticalWhite,
+                    border: `1px solid ${COLORS.bronze}`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1.2rem',
+                    fontWeight: 500,
+                    color: COLORS.bronze,
+                    marginBottom: '1.5rem',
+                    fontFamily: 'Outfit, sans-serif'
+                }}>
+                    {step.phase}
+                </div>
+            )}
 
             {/* Title */}
             <h3 style={{
-                fontSize: isMobile ? '1.5rem' : '1.5rem',
+                fontSize: isMobile ? '2rem' : '1.5rem',
                 fontWeight: 500,
                 color: COLORS.text,
-                marginBottom: isMobile ? '1.25rem' : '1rem',
+                marginBottom: isMobile ? '1rem' : '1rem',
                 fontFamily: 'Outfit, sans-serif',
                 letterSpacing: '-0.02em'
             }}>
@@ -567,10 +699,10 @@ const TimelineStep = ({ step, index, scrollProgress, isMobile }) => {
             <p style={{
                 color: COLORS.textSecondary,
                 lineHeight: 1.7,
-                fontSize: isMobile ? '0.95rem' : '0.95rem',
+                fontSize: isMobile ? '1rem' : '0.95rem',
                 fontFamily: 'Inter, sans-serif',
-                maxWidth: isMobile ? '300px' : 'none',
-                margin: '0'
+                maxWidth: isMobile ? '320px' : 'none',
+                margin: isMobile ? '0 auto' : '0'
             }}>
                 {step.desc}
             </p>
@@ -620,60 +752,63 @@ const Solutions = () => {
             <SolutionsHero />
 
             {/* Editorial Break */}
-            <section style={{
-                height: isMobile ? '60vh' : '100vh',
-                position: 'relative',
-                overflow: 'hidden'
-            }}>
-                <motion.div
-                    style={{
+            {/* Editorial Break - Hidden on Mobile */}
+            {!isMobile && (
+                <section style={{
+                    height: '100vh',
+                    position: 'relative',
+                    overflow: 'hidden'
+                }}>
+                    <motion.div
+                        style={{
+                            position: 'absolute',
+                            inset: 0,
+                            backgroundImage: 'url(https://images.pexels.com/photos/2249290/pexels-photo-2249290.jpeg?auto=compress&cs=tinysrgb&w=1600)',
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center center',
+                            filter: 'brightness(0.5) saturate(0)'
+                        }}
+                        initial={{ scale: 1.05 }}
+                        whileInView={{ scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1.5, ease: [0.25, 0.1, 0.25, 1] }}
+                    />
+                    <div style={{
                         position: 'absolute',
                         inset: 0,
-                        backgroundImage: 'url(https://images.pexels.com/photos/2249290/pexels-photo-2249290.jpeg?auto=compress&cs=tinysrgb&w=1600)',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center center',
-                        filter: isMobile ? 'brightness(0.4) saturate(0)' : 'brightness(0.5) saturate(0)'
-                    }}
-                    initial={{ scale: 1.05 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1.5, ease: [0.25, 0.1, 0.25, 1] }}
-                />
-                <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")',
-                    opacity: 0.05,
-                    pointerEvents: 'none',
-                    mixBlendMode: 'overlay',
-                    zIndex: 2
-                }} />
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.9, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                    style={{
-                        position: 'absolute',
-                        bottom: isMobile ? '10%' : '15%',
-                        right: isMobile ? '5%' : '5%',
-                        zIndex: 3,
-                        textAlign: 'right'
-                    }}
-                >
-                    <p style={{
-                        fontSize: isMobile ? '1.5rem' : 'clamp(1.5rem, 3vw, 2.5rem)',
-                        color: '#fff',
-                        fontFamily: 'Outfit, sans-serif',
-                        fontWeight: 300,
-                        letterSpacing: '-0.02em',
-                        lineHeight: 1.3,
-                        maxWidth: '500px'
-                    }}>
-                        From blueprint<br />to reality
-                    </p>
-                </motion.div>
-            </section>
+                        backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")',
+                        opacity: 0.05,
+                        pointerEvents: 'none',
+                        mixBlendMode: 'overlay',
+                        zIndex: 2
+                    }} />
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.9, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                        style={{
+                            position: 'absolute',
+                            bottom: '15%',
+                            right: '5%',
+                            zIndex: 3,
+                            textAlign: 'right'
+                        }}
+                    >
+                        <p style={{
+                            fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
+                            color: '#fff',
+                            fontFamily: 'Outfit, sans-serif',
+                            fontWeight: 300,
+                            letterSpacing: '-0.02em',
+                            lineHeight: 1.3,
+                            maxWidth: '500px'
+                        }}>
+                            From blueprint<br />to reality
+                        </p>
+                    </motion.div>
+                </section>
+            )}
 
             <BentoGrid />
             <EngagementTimeline />
