@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F5D061;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#E1B64F;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#C39434;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#E1B64F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F5D061;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect x="0" y="0" width="512" height="512" rx="100" fill="#0a0a0a"/>
+  
+  <!-- Stylized G -->
+  <path d="M256 120c-75.1 0-136 60.9-136 136 0 75.1 60.9 136 136 136 55.2 0 102.8-33.1 123.5-80h-63.5c-15.3 22.1-40.8 36-60 36-46.4 0-84-37.6-84-84s37.6-84 84-84c24 0 45.4 10.3 60 26.5l38.2-38.2C331.4 141.6 295.6 120 256 120z" fill="url(#goldGradient)"/>
+  <path d="M366 236v40h-80v-40h80z" fill="url(#goldGradient)"/>
+</svg>

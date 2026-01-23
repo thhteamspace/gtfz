@@ -73,6 +73,43 @@ const Header = () => {
 
     return (
         <>
+            {/* LOGO - Separate from header to avoid mixBlendMode: difference effect */}
+            <motion.div
+                initial={{ y: -100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    height: 'var(--header-height)',
+                    zIndex: 10000,
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '0 var(--space-md)',
+                    pointerEvents: 'auto'
+                }}
+            >
+                <Link to="/" onClick={() => setMobileMenuOpen(false)} style={{
+                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center'
+                }}>
+                    <motion.img
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 1.2, ease: "easeOut" }}
+                        src="/assets/images/gtfz-logo-transparent.png"
+                        alt="GTFZ Logo"
+                        style={{
+                            height: 'clamp(42px, 6vw, 65px)',
+                            width: 'auto'
+                        }}
+                    />
+                </Link>
+            </motion.div>
+
             <motion.header
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
@@ -97,31 +134,11 @@ const Header = () => {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     width: '100%',
-                    position: 'relative', // Ensure relative positioning context
-                    zIndex: 1002 // Ensure logo and clutter stay above menu background if needed
+                    position: 'relative',
+                    zIndex: 1002
                 }}>
-                    {/* LOGO */}
-                    <Link to="/" onClick={() => setMobileMenuOpen(false)} style={{
-                        textDecoration: 'none',
-                        zIndex: 1003, // Higher than menu background
-                        display: 'flex',
-                        alignItems: 'center'
-                    }}>
-                        <motion.img
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            whileHover={{ scale: 1.05 }}
-                            transition={{ duration: 1.2, ease: "easeOut" }}
-                            src="/assets/images/gtfz-logo.png"
-                            alt="GTFZ Logo"
-                            style={{
-                                height: 'clamp(24px, 4vw, 36px)',
-                                width: 'auto',
-                                mixBlendMode: 'screen',
-                                filter: 'contrast(1.5) brightness(1.1)'
-                            }}
-                        />
-                    </Link>
+                    {/* Empty space where logo was - keeps layout balanced */}
+                    <div style={{ width: 'clamp(60px, 8vw, 100px)' }}></div>
 
                     {/* DESKTOP NAVIGATION */}
                     <nav className="desktop-only" style={{ gap: '1rem', alignItems: 'center' }}>
