@@ -117,8 +117,7 @@ const CustomCursor = () => {
                     left: 0,
                     borderRadius: getBorderRadius(),
                     pointerEvents: 'none',
-                    zIndex: 9999,
-                    mixBlendMode: 'difference'
+                    zIndex: 9999
                 }}
                 variants={variants}
                 animate={hoveredElement ? "button" : "default"}
