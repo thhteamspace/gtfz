@@ -68,7 +68,7 @@ const CallToAction = () => {
 
                     {/* Headline */}
                     <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 5rem)', lineHeight: 1.1, marginBottom: '1.5rem', fontWeight: 700, color: '#1a1a1a' }}>
-                        <RevealText>Change to Seeking to strengthen execution </RevealText>
+                        <RevealText>Seeking to strengthen execution </RevealText>
                         <RevealText delay={0.2}>across your operations?</RevealText>
                     </h2>
 
