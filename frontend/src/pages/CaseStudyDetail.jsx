@@ -124,7 +124,7 @@ export const CASE_STUDIES_FULL = [
     },
     {
         id: 'local-support',
-        title: "Addressing Supply Chain Delays Through Local Support",
+        title: "Addressing Supply Chain Delays Through Local, On-Ground Support",
         category: "Operational Excellence",
         image: imgLogistics,
         metric: "30%",

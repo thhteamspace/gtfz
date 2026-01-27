@@ -225,7 +225,7 @@ const SolutionsHero = () => {
                         fontFamily: 'Outfit, sans-serif'
                     }}
                 >
-                    Strategic<br />Execution
+                    Strategic<br />Precision
                 </motion.h1>
 
                 <motion.div
@@ -253,6 +253,133 @@ const SolutionsHero = () => {
                 </motion.div>
             </motion.div>
         </section >
+    );
+};
+
+// --- Categories Component ---
+const Categories = () => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
+    const categories = [
+        // Kidswear: Stylish child model
+        { name: "Kidswear", img: "https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&q=80&w=600" },
+        // Activewear: Yoga/Gym aesthetic
+        { name: "Activewear", img: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&q=80&w=600" },
+        // Intimates: Soft, silk/texture vibe - NEW IMAGE
+        { name: "Intimates", img: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&q=80&w=600" },
+        // Swimwear: Pool/Beach editorial - NEW IMAGE
+        { name: "Swimwear", img: "https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?auto=format&fit=crop&q=80&w=600" },
+        // Sportswear: Outdoor/Performance
+        { name: "Sportswear", img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=600" },
+        // Outerwear: Coat/Winter fashion
+        { name: "Outerwear", img: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?auto=format&fit=crop&q=80&w=600" }
+    ];
+
+    return (
+        <section style={{
+            background: COLORS.darkCharcoal,
+            padding: isMobile ? '4rem 1rem' : '8rem 4rem',
+            paddingBottom: '0'
+        }}>
+            <div className="container" style={{ maxWidth: '1400px' }}>
+                <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: false, amount: 0.2 }}
+                    transition={{ duration: 0.8 }}
+                    style={{ textAlign: 'center', marginBottom: '5rem' }}
+                >
+                    <h2 style={{
+                        fontSize: 'clamp(2.5rem, 4vw, 3.5rem)',
+                        fontFamily: 'Playfair Display, serif',
+                        fontStyle: 'italic',
+                        color: COLORS.opticalWhite,
+                        marginBottom: '1rem'
+                    }}>
+                        Categories We Master
+                    </h2>
+                </motion.div>
+
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(6, 1fr)',
+                    gap: isMobile ? '1rem' : '1.5rem'
+                }}>
+                    {categories.map((cat, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{ opacity: 0, y: 50, rotateX: 10 }}
+                            whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                            viewport={{ once: false, amount: 0.1 }}
+                            transition={{
+                                delay: i * 0.1,
+                                duration: 0.8,
+                                type: "spring",
+                                stiffness: 50
+                            }}
+                            whileHover={{ y: -10, transition: { duration: 0.3 } }}
+                            style={{
+                                position: 'relative',
+                                height: isMobile ? '250px' : '500px',
+                                overflow: 'hidden',
+                                borderRadius: '4px',
+                                cursor: 'default',
+                                boxShadow: '0 10px 30px rgba(0,0,0,0.3)'
+                            }}
+                        >
+                            <motion.img
+                                src={cat.img}
+                                alt={cat.name}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover',
+                                    filter: 'grayscale(100%) brightness(0.9)'
+                                }}
+                                whileHover={{
+                                    scale: 1.1,
+                                    filter: 'grayscale(0%) brightness(1)',
+                                }}
+                                transition={{ duration: 0.5 }}
+                            />
+
+                            {/* Overlay Gradient */}
+                            <div style={{
+                                position: 'absolute',
+                                bottom: 0,
+                                left: 0,
+                                width: '100%',
+                                height: '50%',
+                                background: 'linear-gradient(to top, rgba(0,0,0,0.9), transparent)',
+                                pointerEvents: 'none',
+                                zIndex: 1
+                            }} />
+
+                            <div style={{
+                                position: 'absolute',
+                                bottom: '1.5rem',
+                                left: 0,
+                                width: '100%',
+                                textAlign: 'center',
+                                zIndex: 2,
+                                pointerEvents: 'none'
+                            }}>
+                                <span style={{
+                                    color: '#fff',
+                                    fontFamily: 'Outfit, sans-serif',
+                                    fontSize: isMobile ? '1rem' : '1.2rem',
+                                    fontWeight: 500,
+                                    letterSpacing: '0.15em',
+                                    textTransform: 'uppercase',
+                                    textShadow: '0 2px 10px rgba(0,0,0,0.5)'
+                                }}>
+                                    {cat.name}
+                                </span>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+        </section>
     );
 };
 
@@ -1318,6 +1445,7 @@ const Solutions = () => {
     return (
         <main style={{ background: COLORS.obsidian }}>
             <SolutionsHero />
+            <Categories />
 
             <BentoGrid />
             <EngagementTimeline />

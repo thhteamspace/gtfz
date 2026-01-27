@@ -196,6 +196,121 @@ const KeyMetrics = () => {
                         </motion.div>
                     ))}
                 </div>
+
+                {/* Additional Stats: Customers Split */}
+                {/* Additional Stats: Customers Split */}
+                <div style={{
+                    marginTop: '8rem',
+                    textAlign: 'center'
+                }}>
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: false }}
+                        style={{
+                            fontSize: 'clamp(2rem, 5vw, 2.5rem)',
+                            fontFamily: 'Playfair Display, serif',
+                            fontStyle: 'italic',
+                            color: COLORS.text,
+                            marginBottom: '4rem'
+                        }}
+                    >
+                        Customer Portfolio
+                    </motion.h2>
+
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        gap: isMobile ? '4rem' : '6rem',
+                        flexWrap: 'wrap'
+                    }}>
+                        {[
+                            { val: "60%", label: "Branded" },
+                            { val: "40%", label: "Private Label" }
+                        ].map((stat, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
+                                whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                                viewport={{ once: false, amount: 0.3 }}
+                                transition={{
+                                    duration: 0.8,
+                                    type: "spring",
+                                    bounce: 0.4,
+                                    delay: i * 0.2
+                                }}
+                                style={{ position: 'relative', width: '220px', height: '220px' }}
+                            >
+                                {/* Rotating Outer Ring */}
+                                <motion.div
+                                    animate={{ rotate: 360 }}
+                                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                                    style={{
+                                        position: 'absolute',
+                                        inset: -10,
+                                        borderRadius: '50%',
+                                        border: `1px dashed ${COLORS.bronze}`,
+                                        opacity: 0.3
+                                    }}
+                                />
+
+                                {/* Counter-Rotating Inner Ring */}
+                                <motion.div
+                                    animate={{ rotate: -360 }}
+                                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                                    style={{
+                                        position: 'absolute',
+                                        inset: 0,
+                                        borderRadius: '50%',
+                                        borderTop: `2px solid ${COLORS.bronze}`,
+                                        borderRight: `2px solid transparent`,
+                                        borderBottom: `2px solid ${COLORS.bronze}`,
+                                        borderLeft: `2px solid transparent`,
+                                        opacity: 0.8
+                                    }}
+                                />
+
+                                {/* Floating Content Circle */}
+                                <motion.div
+                                    animate={{ y: [0, -10, 0] }}
+                                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: i * 0.5 }}
+                                    style={{
+                                        position: 'absolute',
+                                        inset: '10px',
+                                        borderRadius: '50%',
+                                        background: COLORS.darkCharcoal,
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        boxShadow: '0 15px 35px rgba(0,0,0,0.2)',
+                                        color: COLORS.opticalWhite
+                                    }}
+                                >
+                                    <span style={{
+                                        fontSize: '3.5rem',
+                                        fontWeight: 700,
+                                        fontFamily: 'Outfit, sans-serif',
+                                        background: `linear-gradient(135deg, ${COLORS.opticalWhite} 0%, ${COLORS.bronze} 100%)`,
+                                        WebkitBackgroundClip: 'text',
+                                        WebkitTextFillColor: 'transparent'
+                                    }}>
+                                        {stat.val}
+                                    </span>
+                                    <span style={{
+                                        fontSize: '0.9rem',
+                                        textTransform: 'uppercase',
+                                        letterSpacing: '0.15em',
+                                        marginTop: '0.5rem',
+                                        opacity: 0.9
+                                    }}>
+                                        {stat.label}
+                                    </span>
+                                </motion.div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
             </div>
         </section>
     );

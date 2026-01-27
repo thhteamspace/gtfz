@@ -260,6 +260,106 @@ const HowWeCreateImpact = () => {
 };
 
 // ============================================
+// 2.b MISSION & VISION
+// ============================================
+const MissionVision = () => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
+    return (
+        <section style={{
+            background: '#F5F5F3',
+            padding: isMobile ? '4rem 2rem' : '6rem 0',
+            borderTop: `1px solid ${COLORS.borderLight}`,
+            overflow: 'hidden' // Added to prevent scrollbar during animation
+        }}>
+            <div className="container">
+                <motion.div
+                    initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    viewport={{ once: false, amount: 0.3 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    style={{ textAlign: 'center', marginBottom: '4rem' }}
+                >
+                    <h2 style={{
+                        fontSize: 'clamp(2rem, 4vw, 3rem)',
+                        fontFamily: 'Playfair Display, serif',
+                        fontStyle: 'italic',
+                        color: COLORS.text
+                    }}>
+                        Mission & Vision
+                    </h2>
+                </motion.div>
+
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+                    gap: isMobile ? '3rem' : '6rem'
+                }}>
+                    {/* Mission Card */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -70, rotateY: 10 }}
+                        whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+                        viewport={{ once: false, amount: 0.2 }}
+                        transition={{ duration: 0.8, type: "spring", stiffness: 60, damping: 20 }}
+                        style={{
+                            background: '#fff',
+                            padding: '3rem',
+                            borderLeft: `4px solid ${COLORS.bronze}`,
+                            boxShadow: '0 20px 40px rgba(0,0,0,0.08)',
+                            perspective: '1000px'
+                        }}
+                    >
+                        <h3 style={{
+                            fontSize: '1.5rem',
+                            fontWeight: 600,
+                            marginBottom: '1rem',
+                            fontFamily: 'Outfit, sans-serif'
+                        }}>Mission</h3>
+                        <p style={{
+                            fontSize: '1.05rem',
+                            lineHeight: 1.7,
+                            color: COLORS.textSecondary,
+                            fontFamily: 'Inter, sans-serif'
+                        }}>
+                            To empower brands to not only reach their goals but to exceed them, fostering a culture of continuous growth and innovation.
+                        </p>
+                    </motion.div>
+
+                    {/* Vision Card */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 70, rotateY: -10 }}
+                        whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+                        viewport={{ once: false, amount: 0.2 }}
+                        transition={{ duration: 0.8, type: "spring", stiffness: 60, damping: 20 }}
+                        style={{
+                            background: '#fff',
+                            padding: '3rem',
+                            borderLeft: `4px solid ${COLORS.bronze}`,
+                            boxShadow: '0 20px 40px rgba(0,0,0,0.08)',
+                            perspective: '1000px'
+                        }}
+                    >
+                        <h3 style={{
+                            fontSize: '1.5rem',
+                            fontWeight: 600,
+                            marginBottom: '1rem',
+                            fontFamily: 'Outfit, sans-serif'
+                        }}>Vision</h3>
+                        <p style={{
+                            fontSize: '1.05rem',
+                            lineHeight: 1.7,
+                            color: COLORS.textSecondary,
+                            fontFamily: 'Inter, sans-serif'
+                        }}>
+                            To transform the future of the fashion industry by blending creativity with strategic excellence. As dedicated collaborators, we invest our passion and expertise into every project.
+                        </p>
+                    </motion.div>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+// ============================================
 // 3. OUR METHODOLOGY — DIAGNOSE TO SUSTAIN
 // ============================================
 const methodologySteps = [
@@ -404,7 +504,94 @@ const OurMethodology = () => {
 };
 
 // ============================================
-// 4. WHAT SETS US APART
+// 4.a OUR VALUES (New Content)
+// ============================================
+const coreValues = [
+    {
+        title: 'Integrity',
+        description: 'We uphold the highest ethical standards in all our dealings. Our commitment to transparency and honesty ensures that our clients can trust us as their dedicated advisors.'
+    },
+    {
+        title: 'Excellence',
+        description: 'We are committed to delivering exceptional quality in every project. Our focus on results drives us to exceed expectations, ensuring that our clients achieve their strategic goals.'
+    },
+    {
+        title: 'Results-Driven',
+        description: 'Our focus is on measurable outcomes. We take our clients\' success to heart, ensuring that every initiative is designed to achieve tangible results and foster long-term growth.'
+    }
+];
+
+const CoreValues = () => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
+    return (
+        <section style={{
+            background: COLORS.opticalWhite,
+            padding: isMobile ? '4rem 1rem' : '6rem 0'
+        }}>
+            <div className="container">
+                <motion.div
+                    initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    viewport={{ once: false, amount: 0.3 }}
+                    transition={{ duration: 0.7, ease: "easeOut" }}
+                    style={{ textAlign: 'center', marginBottom: '4rem' }}
+                >
+                    <h2 style={{
+                        fontSize: 'clamp(2rem, 4vw, 3rem)',
+                        fontFamily: 'Playfair Display, serif',
+                        fontStyle: 'italic',
+                        color: COLORS.text
+                    }}>
+                        Our Values
+                    </h2>
+                </motion.div>
+
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+                    gap: isMobile ? '2rem' : '3rem'
+                }}>
+                    {coreValues.map((val, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{ opacity: 0, y: 50, scale: 0.85 }}
+                            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                            viewport={{ once: false, amount: 0.1 }}
+                            transition={{
+                                delay: i * 0.15,
+                                duration: 0.6,
+                                type: "spring",
+                                stiffness: 50,
+                                damping: 15
+                            }}
+                            whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
+                            style={{
+                                textAlign: 'center',
+                                padding: '2rem 1.5rem',
+                                background: '#fff',
+                                borderRadius: '16px',
+                                boxShadow: '0 4px 20px rgba(0,0,0,0.03)'
+                            }}
+                        >
+                            <h3 style={{ fontFamily: 'Outfit, sans-serif', fontSize: '1.5rem', marginBottom: '1rem', color: COLORS.text }}>{val.title}</h3>
+                            <motion.div
+                                initial={{ width: 0 }}
+                                whileInView={{ width: '40px' }}
+                                viewport={{ once: false }}
+                                transition={{ delay: 0.5 + (i * 0.15), duration: 0.5 }}
+                                style={{ height: '2px', background: COLORS.bronze, margin: '0 auto 1.5rem' }}
+                            />
+                            <p style={{ lineHeight: 1.7, color: COLORS.textSecondary, fontFamily: 'Inter, sans-serif' }}>{val.description}</p>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+};
+
+// ============================================
+// 4.b WHAT SETS US APART (Original Content)
 // ============================================
 const differentiators = [
     {
@@ -655,6 +842,7 @@ const FounderPerspective = () => {
                             FOUNDER'S PERSPECTIVE
                         </motion.div>
 
+                        {/* Original Quote Restored */}
                         <motion.blockquote
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -668,21 +856,53 @@ const FounderPerspective = () => {
                                 lineHeight: 1.4,
                                 margin: 0,
                                 marginBottom: '2.5rem',
-                                fontStyle: 'normal'
+                                fontStyle: 'italic'
                             }}
                         >
                             “Strong supply chains are built on clarity, discipline, and trust.
                             Our role is to bring structure where there is complexity,
                             and confidence where decisions feel uncertain.”
-
-                            <br /><br />
-
-
-
-                            Strategy with intent. Execution with precision.
-                            Partnerships built to last.
                         </motion.blockquote>
 
+                        {/* New Experience Stats & CV Points Added Below */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: false }}
+                            transition={{ duration: 0.6 }}
+                            style={{
+                                marginBottom: '2rem',
+                                padding: '2rem',
+                                background: '#f5f5f5',
+                                borderLeft: `3px solid ${COLORS.bronze}`,
+                                borderRadius: '0 8px 8px 0'
+                            }}
+                        >
+                            <div style={{ display: 'flex', alignItems: 'baseline', gap: '1rem', marginBottom: '1rem' }}>
+                                <span style={{ fontSize: '3rem', fontWeight: 700, color: COLORS.bronze, lineHeight: 1 }}>25+</span>
+                                <span style={{ fontSize: '1rem', fontWeight: 600, color: '#000000' }}>Years of Industry Leadership</span>
+                            </div>
+
+                            <ul style={{
+                                fontSize: '0.95rem',
+                                color: '#000000',
+                                fontFamily: 'Inter, sans-serif',
+                                lineHeight: 1.6,
+                                paddingLeft: '1.2rem',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '0.5rem'
+                            }}>
+                                {[
+                                    "Spearheaded process improvement resulting in significant operational efficiency.",
+                                    "Implemented Lean Six Sigma to streamline workflows/reduce waste.",
+                                    "Strategic sourcing and contract negotiations leading to reduced costs.",
+                                    "Built strong supplier relationships to enhance vendor performance."
+                                ].map((point, i) => (
+                                    <li key={i} style={{ color: '#000000' }}>{point}</li>
+                                ))}
+                            </ul>
+                        </motion.div>
 
                         <motion.div
                             initial={{ opacity: 0 }}
@@ -826,7 +1046,9 @@ const Ethos = () => {
         <main style={{ background: COLORS.opticalWhite }}>
             <EthosHero />
             <HowWeCreateImpact />
+            <MissionVision />
             <OurMethodology />
+            <CoreValues />
             <WhatSetsUsApart />
             <FounderPerspective />
             <ClosingStatement />
