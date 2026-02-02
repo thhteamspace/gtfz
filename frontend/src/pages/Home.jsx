@@ -73,7 +73,7 @@ const Home = () => {
                                 fontFamily: 'Inter, sans-serif'
                             }}
                         >
-                            We act as the operational backbone for global fashion brands. Our approach blends high-level strategy with deep factory-level engagement—ensuring ideas don't just look good on paper, but work seamlessly on the production line.
+                            We act as the operational backbone for global fashion brands, merging strategic vision with a focus on final consumer happiness. Our approach blends high-level strategy with deep focus on final consumer satisfaction - ensuring ideas don't just look good on paper but resonate effectively with the end consumer.
                         </motion.p>
 
                         <motion.div
@@ -90,7 +90,7 @@ const Home = () => {
                             }}
                         >
                             <div style={{ textAlign: isMobile ? 'center' : 'left' }}>
-                                <div style={{ fontSize: isMobile ? '1.75rem' : '2rem', fontWeight: 600, color: '#C5A059', fontFamily: 'Outfit, sans-serif' }}>15+</div>
+                                <div style={{ fontSize: isMobile ? '1.75rem' : '2rem', fontWeight: 600, color: '#C5A059', fontFamily: 'Outfit, sans-serif' }}>25+</div>
                                 <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', marginTop: '0.25rem' }}>Years</div>
                             </div>
                             <div style={{ textAlign: isMobile ? 'center' : 'left' }}>
@@ -112,31 +112,37 @@ const Home = () => {
                         transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
                         style={{
                             position: 'relative',
-                            height: isMobile ? '400px' : '500px',
+                            height: isMobile ? 'auto' : 'auto',
                             borderRadius: isMobile ? '12px' : '8px',
-                            overflow: 'hidden'
+                            overflow: 'hidden',
+                            // Full bleed on mobile to maximize size
+                            margin: isMobile ? '0 -2rem' : '0',
+                            width: isMobile ? 'calc(100% + 4rem)' : '100%',
+                            maxWidth: isMobile ? '100vw' : 'unset'
                         }}
                     >
                         <motion.img
-                            whileHover={isMobile ? {} : { scale: 1.08 }}
+                            whileHover={isMobile ? {} : { scale: 1.05 }}
                             transition={{ duration: 0.5 }}
-                            src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=1200"
-                            alt="Fashion atelier"
+                            src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=1200"
+                            alt="Fashion consumers shopping experience"
                             style={{
                                 width: '100%',
-                                height: '100%',
+                                height: 'auto',
+                                display: 'block',
                                 objectFit: 'cover',
-                                objectPosition: isMobile ? 'center 20%' : 'center center',
+                                objectPosition: 'center center',
                                 filter: 'brightness(0.9) saturate(1.1)',
                                 cursor: 'pointer'
                             }}
                         />
-                        {/* Subtle overlay */}
-                        <div style={{
+                        {/* Subtle overlay only for desktop */}
+                        {!isMobile && <div style={{
                             position: 'absolute',
                             inset: 0,
-                            background: 'linear-gradient(to top, rgba(17,17,17,0.4) 0%, transparent 50%)'
-                        }} />
+                            background: 'linear-gradient(to top, rgba(17,17,17,0.4) 0%, transparent 50%)',
+                            pointerEvents: 'none'
+                        }} />}
                     </motion.div>
                 </div>
             </section>

@@ -16,7 +16,7 @@ const InsightHighlights = () => {
         {
             category: "Material Sourcing",
             date: "Oct 12, 2025 • 5 min read",
-            title: "Reducing Lead Times by 40% Through Strategic Factory Partnerships",
+            title: "Reducing Lead Times by 40% Through Strategic Supplier Partnerships",
             image: imgSourcing,
             link: "/impact/supply-chain-diversification",
             description: "How direct relationships with raw material suppliers can cut weeks off your production schedule."

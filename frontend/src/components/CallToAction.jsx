@@ -78,7 +78,7 @@ const CallToAction = () => {
                         transition={{ delay: 0.4 }}
                         style={{ fontSize: '1.25rem', color: '#555', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem auto' }}
                     >
-                        From sourcing strategy to on-ground factory execution, we partner with fashion brands to deliver measurable results.
+                        From sourcing strategy to supply chain optimization, we partner with fashion brands to deliver measurable results and exceptional consumer experiences.
                     </motion.p>
 
                     {/* Button */}

@@ -219,7 +219,7 @@ const InquirySection = () => {
                                 fontFamily: 'Inter, sans-serif'
                             }}
                         >
-                            Whether you need to optimize sourcing, strengthen factory compliance, or improve production efficiency, our team supports fashion brands with hands-on execution.
+                            Whether you need to optimize sourcing, strengthen supply chain resilience, or enhance consumer satisfaction, our team supports fashion brands with strategic execution.
                         </motion.p>
                     </div>
 

@@ -10,8 +10,8 @@ const Services = () => {
         {
             title: "Sourcing Strategy",
             description: isMobile
-                ? "Architecting global supply ecosystems."
-                : "We don't just find factories; we architect supply ecosystems. Identifying specialized manufacturers in niche markets.",
+                ? "Architecting global supply ecosystems with strategic supplier partnerships across key manufacturing regions."
+                : "We architect comprehensive supply ecosystems by identifying specialized manufacturers in niche markets, building strategic partnerships, and creating resilient multi-region sourcing networks that balance cost, quality, and risk.",
             stat: "Global",
             statLabel: "Strategic Partners",
             image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=1200",
@@ -19,7 +19,7 @@ const Services = () => {
         },
         {
             title: "Quality Assurance",
-            description: "Quality is not an accident. Our on-ground teams conduct rigorous multi-stage inspections, ensuring every stitch meets your technical specifications and brand standards.",
+            description: "Quality is not an accident—it's engineered. Our on-ground teams conduct rigorous multi-stage inspections at every production phase, from raw materials to finished goods. We ensure every stitch, seam, and detail meets your technical specifications and brand standards, protecting your reputation and consumer trust.",
             stat: "100%",
             statLabel: "Quality Checked",
             image: "https://images.unsplash.com/photo-1537832816519-689ad163238b?auto=format&fit=crop&q=80&w=1200",
@@ -27,7 +27,7 @@ const Services = () => {
         },
         {
             title: "Supply Chain",
-            description: "Speed to market is the new currency. We streamline your logistics by reducing lead times and optimizing inventory turnover.",
+            description: "Speed to market is the new currency. We streamline your end-to-end logistics by optimizing workflows, reducing lead times, and improving inventory turnover. Our data-driven approach identifies bottlenecks and implements solutions that accelerate delivery while maintaining quality and cost efficiency.",
             stat: "40%",
             statLabel: "Faster Delivery",
             image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&q=80&w=1200",
@@ -35,7 +35,7 @@ const Services = () => {
         },
         {
             title: "Compliance",
-            description: "Sustainability is no longer optional. We protect your brand reputation by enforcing strict labor standards.",
+            description: "Sustainability and ethics are non-negotiable. We protect your brand reputation by enforcing strict labor standards, environmental compliance, and regulatory requirements across your entire supply chain.",
             stat: "Ethical",
             statLabel: "Standards Met",
             image: "https://images.unsplash.com/photo-1467043237213-65f2da53396f?auto=format&fit=crop&q=80&w=1200",
@@ -124,7 +124,7 @@ const Services = () => {
                 <div style={{
                     display: 'grid',
                     gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
-                    gridTemplateRows: isMobile ? '340px 220px 340px' : '300px 300px',
+                    gridTemplateRows: isMobile ? '450px 280px 450px' : '300px 300px',
                     gap: isMobile ? '0.5rem' : '1.5rem',
                     width: '100%',
                     maxWidth: '1200px',

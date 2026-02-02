@@ -363,7 +363,7 @@ const Card = ({ card, index, isMobile }) => {
                             width: '100%',
                             height: '100%',
                             objectFit: 'cover',
-                            objectPosition: 'center 20%',
+                            objectPosition: card.id === '05' ? 'center 60%' : 'center 20%',
                             borderRadius: '40px 40px 0 0', // The Arched Top - Critical for the reference look
                             filter: 'brightness(0.9) contrast(1.1)'
                         }}

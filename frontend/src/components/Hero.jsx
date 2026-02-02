@@ -128,7 +128,7 @@ const Hero = () => {
                         marginBottom: isMobile ? '2.5rem' : '2rem'
                     }}
                 >
-                    We bridge the gap between boardroom strategy and factory-floor reality, solving complex sourcing challenges with on-ground execution.
+                    Connecting boardroom vision to operational excellence: we tackle complex supply chain challenges with seamless on-ground execution.
                 </motion.p>
 
                 {/* CTA Buttons */}

@@ -82,7 +82,7 @@ const SOLUTIONS = [
         bgImage: 'https://images.pexels.com/photos/3738088/pexels-photo-3738088.jpeg?auto=compress&cs=tinysrgb&w=1600',
         whatWeDo: [
             { title: 'Operational Excellence', desc: 'Improve efficiency and cost-effectiveness across functions with SOPs, controls, and performance routines.' },
-            { title: 'Factory Layout & Workflow Optimization', desc: 'Reorganize layouts, motion, line balance, and handoffs to reduce rework, waiting time, and bottlenecks.' }
+            { title: 'Workflow & Process Optimization', desc: 'Streamline operations, optimize handoffs, and reduce bottlenecks to improve speed and quality across your supply chain.' }
         ],
         problemsWeSolve: [
             'Productivity is inconsistent across lines/sites/teams',
@@ -216,16 +216,16 @@ const SolutionsHero = () => {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
                     style={{
-                        fontSize: 'clamp(3.5rem, 12vw, 10rem)',
+                        fontSize: 'clamp(2.5rem, 8vw, 7rem)',
                         fontWeight: 600,
                         color: COLORS.opticalWhite,
                         letterSpacing: '-0.03em',
-                        lineHeight: 1,
+                        lineHeight: 1.15,
                         marginBottom: '2rem',
                         fontFamily: 'Outfit, sans-serif'
                     }}
                 >
-                    Strategic<br />Precision
+                    Strategy with Intent.<br />Execution with Precision.<br />Partnerships Built to Last.
                 </motion.h1>
 
                 <motion.div

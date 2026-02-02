@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import useMediaQuery from '../hooks/useMediaQuery';
+import IndustryExpertise from '../components/IndustryExpertise';
 
 // --- Color Palette ---
 const COLORS = {
@@ -95,7 +96,7 @@ const EthosHero = () => {
                         fontFamily: 'Inter, sans-serif',
                         fontWeight: 300
                     }}>
-                        Ensuring design intent translates to factory execution through rigorous quality, compliance, and efficiency frameworks.
+                        Ensuring design intent translates to exceptional consumer experiences through rigorous quality, strategic execution, and supply chain excellence.
                     </p>
                 </motion.div>
             </div>
@@ -180,8 +181,8 @@ const HowWeCreateImpact = () => {
                             We support clients across strategic sourcing, operational excellence,
                             connected operations, and decision & governance advisory. Our work spans
                             designing resilient sourcing strategies, onboarding the right suppliers
-                            globally, streamlining factory and end-to-end workflows, and enabling
-                            seamless information flow across suppliers, production, and internal
+                            globally, streamlining supply chain and end-to-end workflows, and enabling
+                            seamless information flow across suppliers, operations, and internal
                             teams. We bring together cost discipline, quality assurance, compliance,
                             and delivery reliability—ensuring decisions are data-driven and executable
                             on the ground. We also work closely with leadership teams to navigate
@@ -600,7 +601,7 @@ const differentiators = [
     },
     {
         title: 'Strategy Grounded in Reality',
-        description: 'A rare balance of strategic rigor and operational pragmatism, translating boardroom intent into decisions that work on the factory floor and in real supply chains.'
+        description: 'A rare balance of strategic rigor and operational pragmatism, translating boardroom intent into decisions that drive consumer satisfaction and supply chain excellence.'
     },
     {
         title: 'Global Perspective, Local Precision',
@@ -1004,7 +1005,7 @@ const ClosingStatement = () => {
                         lineHeight: 1.3,
                         marginBottom: '2rem'
                     }}>
-                        From factory floor to your front door—
+                        From strategic vision to consumer delivery—
                         <span style={{ color: COLORS.bronze }}> we make it happen.</span>
                     </h2>
 
@@ -1051,6 +1052,7 @@ const Ethos = () => {
             <CoreValues />
             <WhatSetsUsApart />
             <FounderPerspective />
+            <IndustryExpertise />
             <ClosingStatement />
         </main>
     );

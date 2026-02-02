@@ -31,10 +31,10 @@ const StrategicSplit = () => {
     const contentSections = [
         {
             badge: "OUR APPROACH",
-            headline: <>Where Strategy<br />Meets <span style={{ color: '#C5A059' }}>Execution</span></>,
+            headline: <>Strategic Alignment<br />& <span style={{ color: '#C5A059' }}>Organizational Excellence</span></>,
             paragraphs: [
-                "We don't just consult—we execute. Our team operates on factory floors, negotiates with suppliers, and ensures every detail meets specifications.",
-                "From material selection to final shipment, we're embedded in your supply chain, ensuring seamless execution at every step."
+                "We align your organizational structure with strategic objectives, ensuring seamless coordination across procurement, operations, and leadership teams.",
+                "Our approach focuses on building robust governance frameworks, optimizing decision-making processes, and creating alignment that drives sustainable growth and consumer satisfaction."
             ],
             cta: { text: "View All Solutions →", href: "/solutions" }
         },
@@ -46,7 +46,7 @@ const StrategicSplit = () => {
                 "26+ partner factories. 98% on-time delivery. Zero compromises on quality."
             ],
             stats: [
-                { value: "15+", label: "Years Experience" },
+                { value: "25+", label: "Years Experience" },
                 { value: "50M+", label: "Units Delivered" }
             ],
             cta: { text: "See Our Impact →", href: "/impact" }
