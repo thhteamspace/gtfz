@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
+import RevealText from '../components/motion/RevealText';
 import useMediaQuery from '../hooks/useMediaQuery';
 import IndustryExpertise from '../components/IndustryExpertise';
 
@@ -1003,10 +1004,13 @@ const ClosingStatement = () => {
                         color: COLORS.opticalWhite,
                         fontFamily: 'Outfit, sans-serif',
                         lineHeight: 1.3,
-                        marginBottom: '2rem'
+                        marginBottom: '2rem',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center'
                     }}>
-                        From strategic vision to consumer delivery—
-                        <span style={{ color: COLORS.bronze }}> we make it happen.</span>
+                        <RevealText>From strategic vision to consumer delivery—</RevealText>
+                        <RevealText delay={0.1}><span style={{ color: COLORS.bronze }}>we make it happen.</span></RevealText>
                     </h2>
 
                     <p style={{

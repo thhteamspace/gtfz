@@ -137,8 +137,20 @@ const Header = () => {
                     position: 'relative',
                     zIndex: 1002
                 }}>
-                    {/* Empty space where logo was - keeps layout balanced */}
-                    <div style={{ width: 'clamp(60px, 8vw, 100px)' }}></div>
+                    {/* Company Name next to Logo */}
+                    <Link to="/" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
+                        <div style={{ width: 'clamp(60px, 8vw, 100px)' }}></div>
+                        <span style={{
+                            fontFamily: 'Playfair Display, serif',
+                            fontSize: '1.2rem',
+                            fontWeight: 600,
+                            whiteSpace: 'nowrap',
+                            letterSpacing: '0.05em',
+                            marginLeft: '-10px'
+                        }}>
+                            Global Thread FZ
+                        </span>
+                    </Link>
 
                     {/* DESKTOP NAVIGATION */}
                     <nav className="desktop-only" style={{ gap: '1rem', alignItems: 'center' }}>

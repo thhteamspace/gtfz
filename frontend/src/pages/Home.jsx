@@ -8,6 +8,7 @@ import HorizontalScroll from '../components/motion/HorizontalScroll';
 import StrategicSplit from '../components/StrategicSplit';
 import InsightHighlights from '../components/InsightHighlights';
 import EditorialImage from '../components/motion/EditorialImage';
+import SupplyChainPreview from '../components/SupplyChainPreview';
 
 const Home = () => {
     const isMobile = useMediaQuery('(max-width: 768px)');
@@ -148,6 +149,7 @@ const Home = () => {
             </section>
 
             <StrategicSplit />
+            <SupplyChainPreview />
             <Services />
 
 

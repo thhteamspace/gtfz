@@ -304,7 +304,7 @@ const Contact = () => {
                 paddingRight: '5vw'
             }}>
                 <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '0.5rem' : '2rem', alignItems: 'center' }}>
-                    <span>© {new Date().getFullYear()} GTFZ — Fashion Supply-Chain Consultancy. All rights reserved.</span>
+                    <span>© {new Date().getFullYear()} Global Thread FZ — Fashion Supply-Chain Consultancy. All rights reserved.</span>
                     <span style={{ fontSize: '0.85rem', color: '#666' }}>Montreal • Dubai</span>
                 </div>
                 <a href="/privacy-policy" style={{ color: '#666', textDecoration: 'none', borderBottom: '1px solid #666' }}>Privacy Policy</a>
