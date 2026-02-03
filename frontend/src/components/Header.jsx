@@ -140,16 +140,27 @@ const Header = () => {
                     {/* Company Name next to Logo */}
                     <Link to="/" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
                         <div style={{ width: 'clamp(60px, 8vw, 100px)' }}></div>
-                        <span style={{
-                            fontFamily: 'Playfair Display, serif',
-                            fontSize: '1.2rem',
-                            fontWeight: 600,
-                            whiteSpace: 'nowrap',
-                            letterSpacing: '0.05em',
-                            marginLeft: '-10px'
-                        }}>
+                        <motion.span
+                            initial={{ width: 'auto', opacity: 1, x: 0 }}
+                            animate={{
+                                width: scrolled ? 0 : 'auto',
+                                opacity: scrolled ? 0 : 1,
+                                x: scrolled ? -10 : 0
+                            }}
+                            transition={{ duration: 0.5, ease: "easeInOut" }}
+                            style={{
+                                fontFamily: 'Playfair Display, serif',
+                                fontSize: '1.2rem',
+                                fontWeight: 600,
+                                whiteSpace: 'nowrap',
+                                letterSpacing: '0.05em',
+                                marginLeft: '-10px',
+                                overflow: 'hidden',
+                                display: 'inline-block',
+                                verticalAlign: 'middle'
+                            }}>
                             Global Thread FZ
-                        </span>
+                        </motion.span>
                     </Link>
 
                     {/* DESKTOP NAVIGATION */}
