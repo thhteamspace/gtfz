@@ -51,7 +51,7 @@ const SOLUTIONS = [
         title: 'Intelligent Supply Enablement',
         subtitle: 'Sourcing & Cost Optimization',
         description: 'Optimize sourcing, reduce costs, and strengthen supplier performance without compromising on quality or compliance.',
-        metrics: { value: 'Up to 30%', label: 'Cost Reduction' },
+        metrics: { value: '30%', label: 'Cost Reduction' },
         icon: 'Procurement',
         bgImage: 'https://images.pexels.com/photos/5710046/pexels-photo-5710046.jpeg?auto=compress&cs=tinysrgb&w=1600',
         whatWeDo: [
@@ -77,18 +77,18 @@ const SOLUTIONS = [
         title: 'Performance & Process Transformation',
         subtitle: 'Operational Excellence',
         description: 'Streamline operations, eliminate waste, and improve throughput with practical process improvements that stick.',
-        metrics: { value: '45%', label: 'Efficiency Gain (Avg)' },
+        metrics: { value: '45%', label: 'Efficiency Gain' },
         icon: 'Process',
         bgImage: 'https://images.pexels.com/photos/3738088/pexels-photo-3738088.jpeg?auto=compress&cs=tinysrgb&w=1600',
         whatWeDo: [
             { title: 'Operational Excellence', desc: 'Improve efficiency and cost-effectiveness across functions with SOPs, controls, and performance routines.' },
-            { title: 'Workflow & Process Optimization', desc: 'Streamline operations, optimize handoffs, and reduce bottlenecks to improve speed and quality across your supply chain.' }
+            { title: 'Factory Layout & Workflow Optimization', desc: 'Reorganize layouts, motion, line balance, and handoffs to reduce rework, waiting time, and bottlenecks.' }
         ],
         problemsWeSolve: [
             'Productivity is inconsistent across lines/sites/teams',
             'High rework/defects, firefighting culture, unclear ownership',
             'Long cycle times, frequent bottlenecks, and "hidden factories"',
-            'Processes exist but are not followed (because they\'re not workable)'
+            'Processes exist but are not followed (because they’re not workable)'
         ],
         keyBenefits: [
             'Measurable improvements in throughput, quality, and labor efficiency',
@@ -101,7 +101,7 @@ const SOLUTIONS = [
         title: 'Enterprise Connectivity & Traceability',
         subtitle: 'Data & Systems Harmony',
         description: 'Connect systems, standardize data, and create operational harmony across procurement, production, and compliance.',
-        metrics: { value: '99.2%', label: 'Compliance (Global)' },
+        metrics: { value: '99%', label: 'Compliance' },
         icon: 'Integration',
         bgImage: 'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=1600',
         whatWeDo: [
@@ -122,10 +122,10 @@ const SOLUTIONS = [
     },
     {
         id: 'advisory',
-        title: 'Risk, Compliance & Growth Advisory',
+        title: 'Risk, Compliance and Growth Advisory',
         subtitle: 'Expert Strategic Guidance',
         description: 'Make confident decisions with expert guidance that is grounded in execution realities and market dynamics.',
-        metrics: { value: '100%', label: 'Audit Success (Cases)' },
+        metrics: { value: '100%', label: 'Audit Success' },
         icon: 'Advisory',
         bgImage: 'https://images.pexels.com/photos/6214476/pexels-photo-6214476.jpeg?auto=compress&cs=tinysrgb&w=1600',
         whatWeDo: [
@@ -134,7 +134,7 @@ const SOLUTIONS = [
         ],
         problemsWeSolve: [
             'Failing audits or unclear compliance requirements',
-            'Policies exist, but controls aren\'t embedded into day-to-day operations',
+            'Policies exist, but controls aren’t embedded into day-to-day operations',
             'Leadership decisions lack reliable data, benchmarks, or scenario clarity',
             'Expansion introduces new regulatory, supplier, and execution risks'
         ],

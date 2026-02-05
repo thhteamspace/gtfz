@@ -190,24 +190,24 @@ const ExpertiseGroup = ({ title, areas, startIndex, isMobile, focusedIndex, setF
 
 const IndustryExpertise = () => {
     const isMobile = useMediaQuery('(max-width: 768px)');
-    const [focusedIndex, setFocusedIndex] = useState(0);
+    const [focusedIndex, setFocusedIndex] = useState(-1);
 
     const strategicAreas = [
         {
             title: "Management Consulting",
-            description: "We specialize in management consulting that transforms organizations into agile, efficient, and innovative leaders in their industries. Our team of seasoned consultants bring a wealth of experience and expertise."
+            description: "We help organizations become agile, efficient, and future-ready leaders in their industries. Our seasoned consultants bring deep cross-industry experience to address complex strategic and operational challenges. We partner closely with leadership teams to navigate today’s competitive landscape and translate strategy into measurable outcomes."
         },
         {
-            title: "Reorganization",
-            description: "Reorganization is essential for businesses aiming to enhance efficiency and adapt to changing market dynamics. Our expert consultants guide organizations through strategic restructuring, ensuring optimal resource allocation."
+            title: "Reorganization & Transformation",
+            description: "In a rapidly changing market, effective reorganization is critical to improving efficiency and sustaining growth. We guide organizations through strategic restructuring initiatives such as optimizing resource allocation, clarifying roles, and strengthening operational alignment. Our pragmatic approach ensures that reorganization drives long-term performance, resilience, and innovation, not just short-term cost efficiencies."
         },
         {
             title: "Business Building",
-            description: "We assist clients in leveraging all available growth strategies, such as enhancing their core operations, exploring adjacent markets, and launching transformative new ventures."
+            description: "We support clients in unlocking growth across multiple horizons such as strengthening core operations, expanding into adjacent markets, and launching new ventures. Our focus is on building the right capabilities, operating models, and partner ecosystems required to scale sustainably and profitably. From concept to execution, we help turn growth ambitions into enduring businesses."
         },
         {
             title: "Revenue Growth Management",
-            description: "We help our clients focus on maximizing revenue and profitability through strategic pricing, promotion optimization, and product assortment using advanced data analytics."
+            description: "We work with leadership teams to maximize revenue and profitability through disciplined pricing strategies, promotion optimization, and effective product or service mix management. Leveraging data analytics and structured decision frameworks, we help organizations identify growth levers and act with confidence. The result: optimized revenue streams, improved margins, and sustainable growth."
         }
     ];
 

@@ -17,9 +17,9 @@ const AnimatedInput = ({ type, placeholder, rows, isMobile }) => {
                         background: 'transparent',
                         border: 'none',
                         borderBottom: '1px solid rgba(0,0,0,0.4)',
-                        padding: '1.5rem 0',
+                        padding: '1rem 0',
                         color: '#333',
-                        fontSize: isMobile ? '1.2rem' : '1.5rem',
+                        fontSize: isMobile ? '1rem' : '1.1rem',
                         fontFamily: 'inherit',
                         resize: 'none',
                         outline: 'none',
@@ -37,9 +37,9 @@ const AnimatedInput = ({ type, placeholder, rows, isMobile }) => {
                         background: 'transparent',
                         border: 'none',
                         borderBottom: '1px solid rgba(0,0,0,0.4)',
-                        padding: '1.5rem 0',
+                        padding: '1rem 0',
                         color: '#333',
-                        fontSize: isMobile ? '1.2rem' : '1.5rem',
+                        fontSize: isMobile ? '1rem' : '1.1rem',
                         fontFamily: 'inherit',
                         outline: 'none',
                         position: 'relative',
@@ -51,20 +51,20 @@ const AnimatedInput = ({ type, placeholder, rows, isMobile }) => {
             {/* Label Animation */}
             <motion.label
                 animate={{
-                    y: focused ? -25 : 0,
-                    scale: focused ? 0.7 : 1,
+                    y: focused ? -20 : 0,
+                    scale: focused ? 0.8 : 1,
                     opacity: focused ? 0.7 : 0.5,
                     originX: 0
                 }}
                 style={{
                     position: 'absolute',
-                    top: '1.5rem',
+                    top: '1rem',
                     left: 0,
                     pointerEvents: 'none',
-                    fontSize: isMobile ? '1.1rem' : '1.5rem',
+                    fontSize: isMobile ? '1rem' : '1.1rem',
                     color: '#333',
-                    width: '100%', // Ensure it can wrap if needed, but width helps
-                    whiteSpace: 'pre-wrap', // Allow wrapping
+                    width: '100%',
+                    whiteSpace: 'pre-wrap',
                     lineHeight: 1.2
                 }}
             >
@@ -104,10 +104,10 @@ const AnimatedSelect = ({ placeholder, options, isMobile }) => {
                     background: 'transparent',
                     border: 'none',
                     borderBottom: '1px solid rgba(0,0,0,0.4)',
-                    padding: '1.5rem 0',
+                    padding: '1rem 0',
                     paddingRight: '2rem',
                     color: selected ? '#333' : 'transparent',
-                    fontSize: isMobile ? '1.2rem' : '1.5rem',
+                    fontSize: isMobile ? '1rem' : '1.1rem',
                     fontFamily: 'inherit',
                     outline: 'none',
                     position: 'relative',
@@ -127,7 +127,7 @@ const AnimatedSelect = ({ placeholder, options, isMobile }) => {
                             backgroundColor: '#fff',
                             color: '#333',
                             padding: '10px',
-                            fontSize: isMobile ? '1rem' : '1.2rem'
+                            fontSize: isMobile ? '0.9rem' : '1rem'
                         }}
                     >
                         {opt}
@@ -142,7 +142,7 @@ const AnimatedSelect = ({ placeholder, options, isMobile }) => {
                 top: '50%',
                 transform: 'translateY(-50%)',
                 pointerEvents: 'none',
-                fontSize: '1rem',
+                fontSize: '0.9rem',
                 color: '#999',
                 zIndex: 2
             }}>▼</div>
@@ -150,17 +150,17 @@ const AnimatedSelect = ({ placeholder, options, isMobile }) => {
             {/* Label Animation */}
             <motion.label
                 animate={{
-                    y: (focused || selected) ? -25 : 0,
-                    scale: (focused || selected) ? 0.7 : 1,
+                    y: (focused || selected) ? -20 : 0,
+                    scale: (focused || selected) ? 0.8 : 1,
                     opacity: (focused || selected) ? 0.7 : 0.5,
                     originX: 0
                 }}
                 style={{
                     position: 'absolute',
-                    top: '1.5rem',
+                    top: '1rem',
                     left: 0,
                     pointerEvents: 'none',
-                    fontSize: isMobile ? '1.1rem' : '1.5rem',
+                    fontSize: isMobile ? '1rem' : '1.1rem',
                     color: '#333',
                     whiteSpace: 'nowrap',
                     zIndex: 0
@@ -189,27 +189,27 @@ const AnimatedSelect = ({ placeholder, options, isMobile }) => {
 const Contact = () => {
     const isMobile = useMediaQuery('(max-width: 768px)');
     return (
-        <footer data-theme-trigger="light" style={{ background: 'transparent', position: 'relative', overflow: 'hidden', paddingTop: '10vh' }}>
+        <footer data-theme-trigger="light" style={{ background: 'transparent', position: 'relative', overflow: 'hidden', paddingTop: '8vh' }}>
 
 
 
             {/* Massive CTA Section */}
-            <div className="container" style={{ marginBottom: '10vh' }}>
+            <div className="container" style={{ marginBottom: '8vh' }}>
                 <h2 style={{
-                    fontSize: 'clamp(3rem, 8vw, 8rem)',
-                    lineHeight: 0.9,
+                    fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
+                    lineHeight: 1,
                     textTransform: 'uppercase',
-                    marginBottom: 'var(--space-xl)',
-                    fontWeight: 800
+                    marginBottom: '3rem',
+                    fontWeight: 500
                 }}>
-                    <RevealText>Let’s strengthen your</RevealText>
-                    <RevealText delay={0.1}><span style={{ color: 'var(--color-heritage-bronze)' }}>supply chain execution</span></RevealText>
+                    <RevealText>Global Thread</RevealText>
+                    <RevealText delay={0.1}><span style={{ color: 'var(--color-heritage-bronze)' }}>Free Zone</span></RevealText>
                 </h2>
 
-                <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(400px, 1fr))', gap: isMobile ? '4rem' : '4rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(400px, 1fr))', gap: isMobile ? '3rem' : '5rem' }}>
 
                     {/* Form Side */}
-                    <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                         <AnimatedInput type="text" placeholder="Full Name *" isMobile={isMobile} />
                         <AnimatedInput type="email" placeholder="Work Email *" isMobile={isMobile} />
                         <AnimatedInput type="text" placeholder="Company / Organization" isMobile={isMobile} />
@@ -226,8 +226,8 @@ const Contact = () => {
                         />
                         <AnimatedInput type="textarea" placeholder="Message *" rows={1} isMobile={isMobile} />
 
-                        <div style={{ marginTop: isMobile ? '2rem' : '3rem' }}>
-                            <button className="btn btn-primary" style={{ fontSize: isMobile ? '1rem' : '1.2rem', padding: isMobile ? '1rem 2rem' : '1.5rem 3rem', width: isMobile ? '100%' : 'auto' }}>
+                        <div style={{ marginTop: isMobile ? '2rem' : '2.5rem' }}>
+                            <button className="btn btn-primary" style={{ fontSize: isMobile ? '0.9rem' : '1rem', padding: isMobile ? '0.8rem 1.5rem' : '1rem 2.5rem', width: isMobile ? '100%' : 'auto' }}>
                                 Submit
                             </button>
                         </div>
@@ -236,17 +236,17 @@ const Contact = () => {
                     {/* Info Side */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', justifyContent: 'space-between', height: '100%', textAlign: isMobile ? 'center' : 'left' }}>
                         <div>
-                            <h4 style={{ color: '#666', marginBottom: '1.5rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Connect</h4>
-                            <p style={{ fontSize: isMobile ? '0.95rem' : '1.1rem', color: '#666', marginBottom: '2rem', lineHeight: 1.6 }}>Whether you're considering a partnership, need expert perspective, or have a question, we'll be in touch soon.</p>
+                            <h4 style={{ color: '#666', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontSize: '0.9rem' }}>Connect</h4>
+                            <p style={{ fontSize: isMobile ? '0.9rem' : '1rem', color: '#666', marginBottom: '2rem', lineHeight: 1.6 }}>Whether you're considering a partnership, need expert perspective, or have a question, we'll be in touch soon.</p>
 
                             <div style={{ marginBottom: '1.5rem' }}>
-                                <span style={{ display: 'block', fontSize: '0.8rem', color: '#888', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email</span>
-                                <a href="mailto:partnerships@gtfz.com" style={{ fontSize: isMobile ? '1.25rem' : '1.75rem', display: 'block', color: '#333', textDecoration: 'none' }}>partnerships@gtfz.com</a>
+                                <span style={{ display: 'block', fontSize: '0.75rem', color: '#888', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email</span>
+                                <a href="mailto:partnerships@gtfz.com" style={{ fontSize: isMobile ? '1.1rem' : '1.35rem', display: 'block', color: '#333', textDecoration: 'none' }}>partnerships@gtfz.com</a>
                             </div>
 
                             <div>
-                                <span style={{ display: 'block', fontSize: '0.8rem', color: '#888', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Phone</span>
-                                <a href="tel:+15550000000" style={{ fontSize: isMobile ? '1.25rem' : '1.75rem', display: 'block', color: '#333', textDecoration: 'none' }}>+1 (555) 000-0000</a>
+                                <span style={{ display: 'block', fontSize: '0.75rem', color: '#888', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Phone</span>
+                                <a href="tel:+15550000000" style={{ fontSize: isMobile ? '1.1rem' : '1.35rem', display: 'block', color: '#333', textDecoration: 'none' }}>+1 (555) 000-0000</a>
                             </div>
                         </div>
 
@@ -304,7 +304,7 @@ const Contact = () => {
                 paddingRight: '5vw'
             }}>
                 <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '0.5rem' : '2rem', alignItems: 'center' }}>
-                    <span>© {new Date().getFullYear()} Global Thread FZ — Fashion Supply-Chain Consultancy. All rights reserved.</span>
+                    <span>© {new Date().getFullYear()} Global Thread FZ. All rights reserved.</span>
                     <span style={{ fontSize: '0.85rem', color: '#666' }}>Montreal • Dubai</span>
                 </div>
                 <a href="/privacy-policy" style={{ color: '#666', textDecoration: 'none', borderBottom: '1px solid #666' }}>Privacy Policy</a>

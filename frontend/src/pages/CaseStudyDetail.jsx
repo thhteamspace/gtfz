@@ -28,97 +28,94 @@ export const CASE_STUDIES_FULL = [
         label: "Audit Success",
         client: "Asian Fashion Manufacturer",
         duration: "6 Months",
-        excerpt: "A fashion manufacturer encountered compliance issues related to manufacturing processes and SOPs. Global Thread FZ implemented corrective measures, revising workflows and training staff.",
-        challenge: "Manufacturer faced compliance violations in SOPs and manufacturing processes, risking major retailer relationship.",
-        solution: "Conducted thorough assessment, revised workflows, implemented training programs, and established monitoring systems.",
+        excerpt: "Resolved critical compliance gaps for a mid-sized fashion manufacturer, preventing relationship loss with a key retailer through workflow redesign and training.",
+        challenge: "A mid-sized fashion manufacturer supplying to international retailers was facing critical compliance gaps related to manufacturing processes, documentation, and standard operating procedures (SOPs). With an upcoming third-party audit by a key retail partner, the risk of non-compliance threatened order continuity and long-term commercial relationships.",
+        solution: "Global Thread FZ conducted a rapid yet thorough compliance diagnostic across shop-floor processes, SOP adherence, and workforce practices. Key actions included:\n\n• Mapping existing workflows against retailer and regulatory compliance requirements\n• Identifying gaps in documentation, process discipline, and training\n• Redesigning workflows to align with audit expectations\n• Delivering targeted, role-based training to supervisors and factory staff",
         fullContent: {
-            overview: "A fashion manufacturer encountered compliance issues primarily related to their manufacturing processes and standard operating procedures. The issues were identified during a pre-audit assessment and threatened their relationship with a key retailer.",
-            challenge: "The manufacturer faced significant compliance violations in their standard operating procedures (SOPs) and manufacturing processes. These issues were putting their business relationship with a major retailer at risk, as an upcoming audit could have resulted in their removal from the approved vendor list. The problems ranged from documentation gaps to inconsistent quality control measures on the production floor.",
-            solution: "Global Thread FZ Team quickly assessed the situation and implemented corrective measures, including:\n\n• Conducted a comprehensive gap analysis of existing SOPs\n• Revised workflows to align with international standards\n• Developed and delivered training programs for staff on updated protocols\n• Implemented real-time monitoring systems for ongoing compliance\n• Created documentation templates and audit-ready files\n• Established regular internal audit schedules",
-            results: "As a result, the manufacturer achieved compliance ahead of their key retailer's audit, strengthening their business relationship and ensuring continued success. The manufacturer not only passed the audit but received commendation for the improvements made in such a short timeframe.",
+            overview: "A mid-sized fashion manufacturer supplying to international retailers was facing critical compliance gaps related to manufacturing processes, documentation, and standard operating procedures (SOPs). With an upcoming third-party audit by a key retail partner, the risk of non-compliance threatened order continuity and long-term commercial relationships.",
+            challenge: "A mid-sized fashion manufacturer supplying to international retailers was facing critical compliance gaps related to manufacturing processes, documentation, and standard operating procedures (SOPs). With an upcoming third-party audit by a key retail partner, the risk of non-compliance threatened order continuity and long-term commercial relationships.",
+            solution: "Global Thread FZ conducted a rapid yet thorough compliance diagnostic across shop-floor processes, SOP adherence, and workforce practices. Key actions included:\n\n• Mapping existing workflows against retailer and regulatory compliance requirements\n• Identifying gaps in documentation, process discipline, and training\n• Redesigning workflows to align with audit expectations\n• Delivering targeted, role-based training to supervisors and factory staff",
+            results: "Value Delivered:\nCompliance was transformed from a reactive risk into a sustainable operational capability—protecting revenue and reputation.",
             keyOutcomes: [
-                "100% compliance achieved before audit deadline",
-                "Strengthened retailer relationship",
-                "Improved staff knowledge and adherence to protocols",
-                "Sustainable compliance framework established"
+                "Achieved full compliance ahead of the retailer’s audit timeline",
+                "Passed the audit without major observations or corrective action plans",
+                "Strengthened trust with the retailer, leading to continued and expanded business",
+                "Embedded long-term compliance discipline within factory operations"
             ]
         }
     },
     {
         id: 'quality-control',
-        title: "Implementing Quality Control Standards for a Fashion Manufacturer",
+        title: "Implementing Quality Control Standards for a Multi-Location Fashion Manufacturer",
         category: "Quality Assurance",
         image: imgQuality,
         metric: "85%",
         label: "Defect Reduction",
         client: "International Fashion Brand",
         duration: "6 Months",
-        excerpt: "Fashion company with manufacturing sites across Asia faced inconsistent quality due to lack of standardized QC measures. Global Thread FZ researched solutions and implemented a comprehensive QC framework.",
-        challenge: "Inconsistent quality across multiple Asian manufacturing sites due to lack of standardization and limited factory performance visibility.",
-        solution: "Researched software solutions, implemented standardized QC procedures, deployed real-time reporting tools for enhanced oversight.",
+        excerpt: "Implemented an end-to-end quality governance framework for a multi-location manufacturer, significantly reducing defect rates and improving visibility.",
+        challenge: "A fashion brand operating manufacturing units across multiple Asian countries struggled with inconsistent product quality, high defect rates, and limited visibility into factory-level performance. The absence of standardized quality control processes resulted in customer complaints and rising rework costs.",
+        solution: "Global Thread FZ partnered closely with the client to design and implement an end-to-end quality governance framework:\n\n• Conducted root-cause analysis across factories to identify quality failure points\n• Defined standardized quality control procedures applicable across locations\n• Selected and implemented a digital quality management solution\n• Introduced real-time dashboards and reporting for defect tracking and trend analysis\n• Enabled stronger collaboration between HQ quality teams and factory teams",
         fullContent: {
-            overview: "A fashion company with manufacturing sites across Asia faced challenges with inconsistent quality due to a lack of standardized quality control measures and limited visibility into factory performance.",
-            challenge: "The brand was experiencing inconsistent product quality across their multiple manufacturing sites in Asia. Each factory operated with different quality standards, making it difficult to maintain brand consistency. Limited visibility into real-time factory performance meant issues were often discovered too late, leading to increased returns, customer complaints, and damaged brand reputation.",
-            solution: "Global Thread FZ addressed the issue by thoroughly understanding the root causes, researching suitable software solutions, and implementing a comprehensive quality control framework. This included:\n\n• Standardized quality control procedures across all manufacturing sites\n• Implementation of real-time reporting tools for enhanced oversight\n• Development of a centralized dashboard for quality metrics\n• Training programs for QC inspectors at each facility\n• Establishment of clear communication channels between QC teams and factory management\n• Regular quality audits and performance reviews",
-            results: "The comprehensive QC framework enhanced oversight and communication between quality control teams and factories, leading to significant reductions in defects and increased customer satisfaction. The brand saw an 85% reduction in quality-related returns within the first year.",
+            overview: "A fashion brand operating manufacturing units across multiple Asian countries struggled with inconsistent product quality, high defect rates, and limited visibility into factory-level performance. The absence of standardized quality control processes resulted in customer complaints and rising rework costs.",
+            challenge: "A fashion brand operating manufacturing units across multiple Asian countries struggled with inconsistent product quality, high defect rates, and limited visibility into factory-level performance. The absence of standardized quality control processes resulted in customer complaints and rising rework costs.",
+            solution: "Global Thread FZ partnered closely with the client to design and implement an end-to-end quality governance framework:\n\n• Conducted root-cause analysis across factories to identify quality failure points\n• Defined standardized quality control procedures applicable across locations\n• Selected and implemented a digital quality management solution\n• Introduced real-time dashboards and reporting for defect tracking and trend analysis\n• Enabled stronger collaboration between HQ quality teams and factory teams",
+            results: "Value Delivered:\nQuality became measurable, consistent, and scalable—supporting the brand’s growth across geographies without compromising standards.",
             keyOutcomes: [
-                "85% reduction in product defects",
-                "Real-time visibility into factory performance",
-                "Standardized quality across all manufacturing sites",
-                "Improved customer satisfaction scores",
-                "Reduced return rates and associated costs"
+                "Significant reduction in defect rates across production lines",
+                "Improved transparency and accountability across factories",
+                "Faster issue identification and resolution through real-time reporting",
+                "Noticeable increase in customer satisfaction and repeat orders"
             ]
         }
     },
     {
         id: 'supply-chain-diversification',
-        title: "Diversifying Supply Chains Amid Tariff Challenges",
+        title: "Diversifying Supply Chains Amid Tariff and Geopolitical Challenges",
         category: "Strategic Sourcing",
         image: imgSourcing,
         metric: "40%",
-        label: "Cost Mitigation",
+        label: "Risk Mitigation",
         client: "Multiple Fashion Brands",
         duration: "4 Months",
-        excerpt: "Fashion brands faced significant challenges in early 2025 due to rising tariffs. Global Thread FZ conducted comprehensive analysis and identified factories aligned with quality and ethical standards.",
-        challenge: "Rising tariffs in early 2025 threatened profitability and required urgent supply chain diversification strategy.",
-        solution: "Comprehensive location analysis, factory vetting for quality/ethics alignment, diversified manufacturing network implementation.",
+        excerpt: "Led a structured supply chain diversification initiative for brands impacted by rising tariffs, ensuring resilience and cost stability.",
+        challenge: "In early 2025, several fashion brands were impacted by rising tariffs and shifting trade dynamics, making existing sourcing geographies commercially unviable. The brands needed alternative manufacturing options without compromising quality, ethics, or speed to market.",
+        solution: "Global Thread FZ led a structured supply chain diversification initiative:\n\n• Assessed current sourcing exposure and tariff impact scenarios\n• Evaluated alternative manufacturing geographies based on cost, capacity, compliance, and ESG standards\n• Identified and vetted new factories aligned with brand quality and ethical benchmarks\n• Supported onboarding and transition planning to minimize disruption",
         fullContent: {
-            overview: "In early 2025, several fashion brands faced significant challenges due to rising tariffs, prompting the need to find new manufacturing homes to maintain profitability and competitiveness.",
-            challenge: "Rising tariffs in early 2025 created unprecedented pressure on fashion brands' profit margins. Brands that had concentrated their manufacturing in specific regions found themselves facing cost increases that threatened their business models. Many needed to quickly identify alternative manufacturing locations without compromising on quality, ethical standards, or production timelines.",
-            solution: "Global Thread FZ assisted these brands by conducting a comprehensive analysis of potential manufacturing locations and identifying factories that aligned with their quality and ethical standards. Our approach included:\n\n• Detailed cost-benefit analysis of various manufacturing regions\n• Factory vetting process focusing on quality capabilities and ethical compliance\n• Risk assessment of potential new manufacturing partners\n• Transition planning to minimize disruption to existing production\n• Negotiation support for favorable terms with new partners\n• Implementation of dual-sourcing strategies for risk mitigation",
-            results: "By diversifying their supply chains, the brands not only mitigated the impact of tariffs but also enhanced their operational resilience and adaptability in an evolving market landscape. Average cost savings of 40% were achieved compared to single-source manufacturing strategies.",
+            overview: "In early 2025, several fashion brands were impacted by rising tariffs and shifting trade dynamics, making existing sourcing geographies commercially unviable. The brands needed alternative manufacturing options without compromising quality, ethics, or speed to market.",
+            challenge: "In early 2025, several fashion brands were impacted by rising tariffs and shifting trade dynamics, making existing sourcing geographies commercially unviable. The brands needed alternative manufacturing options without compromising quality, ethics, or speed to market.",
+            solution: "Global Thread FZ led a structured supply chain diversification initiative:\n\n• Assessed current sourcing exposure and tariff impact scenarios\n• Evaluated alternative manufacturing geographies based on cost, capacity, compliance, and ESG standards\n• Identified and vetted new factories aligned with brand quality and ethical benchmarks\n• Supported onboarding and transition planning to minimize disruption",
+            results: "Value Delivered:\nThe brands moved from dependency-driven sourcing to a resilient, future-ready supply chain model.",
             keyOutcomes: [
-                "40% cost mitigation achieved through strategic sourcing",
-                "Diversified manufacturing base across multiple regions",
-                "Enhanced operational resilience",
-                "Maintained quality and ethical standards",
-                "Reduced dependency on single-region manufacturing"
+                "Successfully diversified manufacturing footprint across multiple regions",
+                "Reduced tariff exposure and stabilized landed costs",
+                "Improved supply chain resilience and risk distribution",
+                "Enabled brands to respond more flexibly to future market and policy changes"
             ]
         }
     },
     {
         id: 'team-efficiency',
-        title: "Enhancing Supply Chain Team Efficiency",
+        title: "Enhancing Supply Chain Team Efficiency Through Process and Communication Redesign",
         category: "Process Optimization",
         image: imgTeam,
         metric: "25%",
         label: "Lead Time Reduction",
-        client: "North American Fashion Company",
+        client: "Growing Fashion Company",
         duration: "9 Months",
-        excerpt: "A fashion company sought to improve the efficiency of its supply chain team, which was struggling with communication breakdowns and delayed shipments.",
-        challenge: "Communication breakdowns and delayed shipments plagued supply chain operations, affecting customer satisfaction.",
-        solution: "Process assessment, bottleneck identification, centralized platform implementation, workflow optimization for better collaboration.",
+        excerpt: "Streamlined supply chain operations by identifying bottlenecks and implementing a centralized communication platform, reducing lead times by 25%.",
+        challenge: "A growing fashion company faced recurring shipment delays and internal friction caused by fragmented communication and inefficient decision-making across its supply chain team.",
+        solution: "Global Thread FZ conducted an operational deep-dive to identify structural and behavioral bottlenecks:\n\n• Mapped end-to-end information flows across planning, sourcing, and logistics\n• Identified delays caused by manual handoffs and unclear ownership\n• Implemented a centralized communication and tracking platform\n• Streamlined workflows and clarified roles, escalation paths, and KPIs",
         fullContent: {
-            overview: "A fashion company sought to improve the efficiency of its supply chain team, which was struggling with communication breakdowns and delayed shipments that were affecting customer satisfaction and operational costs.",
-            challenge: "The supply chain team was facing significant challenges with communication breakdowns and delayed shipments. Information silos between departments led to duplicated efforts, missed deadlines, and confusion about order status. The lack of a centralized system meant team members spent excessive time tracking down information rather than solving problems, leading to frustrated employees and unhappy customers.",
-            solution: "Global Thread FZ initiated a thorough assessment of the existing processes and identified key bottlenecks in information flow and decision-making. By implementing a centralized communication platform and streamlining workflows, we facilitated better collaboration among team members and improved transparency in operations:\n\n• Process mapping to identify inefficiencies and bottlenecks\n• Implementation of centralized communication and project management platform\n• Development of standardized workflows and SOPs\n• Training programs for team adoption of new systems\n• Establishment of clear escalation procedures\n• Regular performance reviews and continuous improvement cycles",
-            results: "As a result, the supply chain team reduced lead times by 25% and significantly enhanced overall productivity, leading to improved service levels and customer satisfaction. Team morale also improved as frustration with inefficient processes was eliminated.",
+            overview: "A growing fashion company faced recurring shipment delays and internal friction caused by fragmented communication and inefficient decision-making across its supply chain team.",
+            challenge: "A growing fashion company faced recurring shipment delays and internal friction caused by fragmented communication and inefficient decision-making across its supply chain team.",
+            solution: "Global Thread FZ conducted an operational deep-dive to identify structural and behavioral bottlenecks:\n\n• Mapped end-to-end information flows across planning, sourcing, and logistics\n• Identified delays caused by manual handoffs and unclear ownership\n• Implemented a centralized communication and tracking platform\n• Streamlined workflows and clarified roles, escalation paths, and KPIs",
+            results: "Value Delivered:\nOperational efficiency improved without adding headcount unlocking productivity through better systems and clarity.",
             keyOutcomes: [
-                "25% reduction in lead times",
-                "Improved team collaboration and communication",
-                "Enhanced transparency in operations",
-                "Higher customer satisfaction scores",
-                "Increased team productivity and morale"
+                "25% reduction in overall lead times",
+                "Faster decision-making and fewer last-minute escalations",
+                "Improved team collaboration and accountability",
+                "Higher service levels delivered to customers and retail partners"
             ]
         }
     },
@@ -131,20 +128,19 @@ export const CASE_STUDIES_FULL = [
         label: "Faster Delivery",
         client: "Fashion Company (NA Operations)",
         duration: "4 Months",
-        excerpt: "Faced with persistent supply chain delays and long lead times affecting operations in North America, a fashion company needed a strategic solution.",
-        challenge: "Persistent delays and long lead times between North American operations and Asian manufacturing hindered business performance.",
-        solution: "Established dedicated China-based support team enabling real-time communication, quick issue resolution, enhanced supplier collaboration.",
+        excerpt: "Established a localized operating model in China to bridge the gap between North American operations and manufacturers, reducing lead times by 30%.",
+        challenge: "A North America–based fashion company faced persistent supply chain delays due to time-zone gaps, limited factory visibility, and slow issue resolution with Asian manufacturers.",
+        solution: "Global Thread FZ enabled a localized operating model:\n\n• Established a dedicated in-office support team in China\n• Acted as the real-time interface between North American teams and manufacturers\n• Enabled faster communication, issue escalation, and production monitoring\n• Strengthened supplier collaboration through on-ground presence",
         fullContent: {
-            overview: "Faced with persistent supply chain delays and long lead times affecting operations in North America, a fashion company needed a strategic solution to bridge the gap between their headquarters and Asian manufacturing facilities.",
-            challenge: "The company was experiencing persistent delays and long lead times between their North American operations and Asian manufacturing facilities. Time zone differences, language barriers, and lack of real-time oversight meant that issues often went unresolved for days, compounding delays and affecting delivery schedules. Customer satisfaction was declining, and the company was losing competitive advantage.",
-            solution: "Global Thread FZ facilitated the establishment of an in-office support team in China to bridge the gap between the North American operations and the manufacturing processes. This new setup allowed for real-time communication, quicker issue resolution, and enhanced collaboration with local suppliers:\n\n• Recruitment and training of dedicated China-based support team\n• Implementation of real-time communication protocols\n• Development of escalation procedures for quick issue resolution\n• Establishment of regular check-ins with local suppliers\n• Creation of performance dashboards for monitoring key metrics\n• Integration of local team with North American operations workflow",
-            results: "As a result, the company experienced a 30% reduction in lead times and improved delivery schedules, significantly boosting customer satisfaction and operational efficiency. The local team became an invaluable extension of the North American operations, providing eyes and ears on the ground.",
+            overview: "A North America–based fashion company faced persistent supply chain delays due to time-zone gaps, limited factory visibility, and slow issue resolution with Asian manufacturers.",
+            challenge: "A North America–based fashion company faced persistent supply chain delays due to time-zone gaps, limited factory visibility, and slow issue resolution with Asian manufacturers.",
+            solution: "Global Thread FZ enabled a localized operating model:\n\n• Established a dedicated in-office support team in China\n• Acted as the real-time interface between North American teams and manufacturers\n• Enabled faster communication, issue escalation, and production monitoring\n• Strengthened supplier collaboration through on-ground presence",
+            results: "Value Delivered:\nBy placing expertise closer to production, the client achieved speed, control, and predictability across its supply chain.",
             keyOutcomes: [
-                "30% reduction in lead times",
-                "Improved delivery schedule adherence",
-                "Real-time issue resolution capability",
-                "Enhanced supplier collaboration",
-                "Significantly boosted customer satisfaction"
+                "30% reduction in production and delivery lead times",
+                "Faster resolution of quality and production issues",
+                "Improved delivery reliability and customer satisfaction",
+                "Stronger, more transparent supplier relationships"
             ]
         }
     }

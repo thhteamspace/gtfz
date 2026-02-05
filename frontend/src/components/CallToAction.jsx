@@ -20,7 +20,7 @@ const CallToAction = () => {
 
 
 
-            <div className="container" style={{ position: 'relative', zIndex: 2, textAlign: 'center', maxWidth: '800px' }}>
+            <div className="container" style={{ position: 'relative', zIndex: 2, textAlign: 'center', maxWidth: '700px' }}>
                 {/* CRAZY THIN FRAME WRAPPER */}
                 <motion.div
                     initial={{ scale: 0.95, opacity: 0 }}
@@ -28,8 +28,8 @@ const CallToAction = () => {
                     transition={{ duration: 0.8 }}
                     style={{
                         position: 'relative',
-                        padding: '4rem 2rem',
-                        borderRadius: '30px',
+                        padding: '3rem 2rem',
+                        borderRadius: '24px',
                         border: '1px solid rgba(0,0,0,0.08)',
                         background: 'rgba(255,255,255,0.3)',
                         backdropFilter: 'blur(20px)',
@@ -39,10 +39,10 @@ const CallToAction = () => {
                 >
                     {/* Decorative Corner Accents */}
                     <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
-                        <div style={{ position: 'absolute', top: '20px', left: '20px', width: '40px', height: '40px', borderTop: '2px solid rgba(0,0,0,0.2)', borderLeft: '2px solid rgba(0,0,0,0.2)', borderTopLeftRadius: '10px' }} />
-                        <div style={{ position: 'absolute', top: '20px', right: '20px', width: '40px', height: '40px', borderTop: '2px solid rgba(0,0,0,0.2)', borderRight: '2px solid rgba(0,0,0,0.2)', borderTopRightRadius: '10px' }} />
-                        <div style={{ position: 'absolute', bottom: '20px', left: '20px', width: '40px', height: '40px', borderBottom: '2px solid rgba(0,0,0,0.2)', borderLeft: '2px solid rgba(0,0,0,0.2)', borderBottomLeftRadius: '10px' }} />
-                        <div style={{ position: 'absolute', bottom: '20px', right: '20px', width: '40px', height: '40px', borderBottom: '2px solid rgba(0,0,0,0.2)', borderRight: '2px solid rgba(0,0,0,0.2)', borderBottomRightRadius: '10px' }} />
+                        <div style={{ position: 'absolute', top: '15px', left: '15px', width: '30px', height: '30px', borderTop: '2px solid rgba(0,0,0,0.2)', borderLeft: '2px solid rgba(0,0,0,0.2)', borderTopLeftRadius: '10px' }} />
+                        <div style={{ position: 'absolute', top: '15px', right: '15px', width: '30px', height: '30px', borderTop: '2px solid rgba(0,0,0,0.2)', borderRight: '2px solid rgba(0,0,0,0.2)', borderTopRightRadius: '10px' }} />
+                        <div style={{ position: 'absolute', bottom: '15px', left: '15px', width: '30px', height: '30px', borderBottom: '2px solid rgba(0,0,0,0.2)', borderLeft: '2px solid rgba(0,0,0,0.2)', borderBottomLeftRadius: '10px' }} />
+                        <div style={{ position: 'absolute', bottom: '15px', right: '15px', width: '30px', height: '30px', borderBottom: '2px solid rgba(0,0,0,0.2)', borderRight: '2px solid rgba(0,0,0,0.2)', borderBottomRightRadius: '10px' }} />
                     </div>
 
                     {/* Pill Badge */}
@@ -52,12 +52,12 @@ const CallToAction = () => {
                         viewport={{ once: false }}
                         style={{
                             display: 'inline-block',
-                            padding: '0.5rem 1.5rem',
+                            padding: '0.4rem 1.2rem',
                             borderRadius: '50px',
                             background: 'rgba(255,255,255,0.5)',
                             border: '1px solid rgba(0,0,0,0.1)',
-                            marginBottom: '2rem',
-                            fontSize: '0.875rem',
+                            marginBottom: '1.5rem',
+                            fontSize: '0.8rem',
                             letterSpacing: '0.1em',
                             textTransform: 'uppercase',
                             color: '#333'
@@ -67,7 +67,7 @@ const CallToAction = () => {
                     </motion.div>
 
                     {/* Headline */}
-                    <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 5rem)', lineHeight: 1.1, marginBottom: '1.5rem', fontWeight: 700, color: '#1a1a1a' }}>
+                    <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', lineHeight: 1.1, marginBottom: '1.25rem', fontWeight: 700, color: '#1a1a1a' }}>
                         <RevealText>Seeking to strengthen execution </RevealText>
                         <RevealText delay={0.2}>across your operations?</RevealText>
                     </h2>
@@ -76,7 +76,7 @@ const CallToAction = () => {
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         transition={{ delay: 0.4 }}
-                        style={{ fontSize: '1.25rem', color: '#555', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem auto' }}
+                        style={{ fontSize: '1.1rem', color: '#555', marginBottom: '2.5rem', maxWidth: '550px', margin: '0 auto 2.5rem auto', lineHeight: 1.6 }}
                     >
                         From sourcing strategy to supply chain optimization, we partner with fashion brands to deliver measurable results and exceptional consumer experiences.
                     </motion.p>
@@ -89,9 +89,9 @@ const CallToAction = () => {
                         style={{
                             background: '#1a1a1a',
                             color: 'white',
-                            padding: '1rem 3rem',
+                            padding: '0.9rem 2.5rem',
                             borderRadius: '50px',
-                            fontSize: '1rem',
+                            fontSize: '0.95rem',
                             fontWeight: 700,
                             border: 'none',
                             cursor: 'pointer'

@@ -62,7 +62,7 @@ const Header = () => {
 
     const navLinks = [
         { name: 'Home', path: '/' },
-        { name: 'Ethos', path: '/ethos' },
+        { name: 'Methodology', path: '/ethos' },
         { name: 'Solutions', path: '/solutions' },
         { name: 'Impact', path: '/impact' }
     ];
@@ -137,32 +137,8 @@ const Header = () => {
                     position: 'relative',
                     zIndex: 1002
                 }}>
-                    {/* Company Name next to Logo */}
-                    <Link to="/" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
-                        <div style={{ width: 'clamp(60px, 8vw, 100px)' }}></div>
-                        <motion.span
-                            initial={{ width: 'auto', opacity: 1, x: 0 }}
-                            animate={{
-                                width: scrolled ? 0 : 'auto',
-                                opacity: scrolled ? 0 : 1,
-                                x: scrolled ? -10 : 0
-                            }}
-                            transition={{ duration: 0.5, ease: "easeInOut" }}
-                            style={{
-                                fontFamily: 'Playfair Display, serif',
-                                fontSize: '1.2rem',
-                                fontWeight: 600,
-                                whiteSpace: 'nowrap',
-                                letterSpacing: '0.05em',
-                                marginLeft: '-10px',
-                                overflow: 'hidden',
-                                display: 'inline-block',
-                                verticalAlign: 'middle'
-                            }}>
-                            Global Thread FZ
-                        </motion.span>
-                    </Link>
-
+                    {/* Spacer to maintain layout without text */}
+                    <div style={{ flex: 1 }} />
                     {/* DESKTOP NAVIGATION */}
                     <nav className="desktop-only" style={{ gap: '1rem', alignItems: 'center' }}>
                         {navLinks.map((link) => (

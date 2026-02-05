@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from 'react';
-import { motion, useInView } from 'framer-motion';
+import React, { useRef, useEffect, useState } from 'react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import RevealText from '../components/motion/RevealText';
 import useMediaQuery from '../hooks/useMediaQuery';
 import IndustryExpertise from '../components/IndustryExpertise';
@@ -97,7 +97,7 @@ const EthosHero = () => {
                         fontFamily: 'Inter, sans-serif',
                         fontWeight: 300
                     }}>
-                        Ensuring design intent translates to exceptional consumer experiences through rigorous quality, strategic execution, and supply chain excellence.
+                        Balancing creative vision with commercial reality—ensuring your designs reach the consumer as intended, on time, and at the right cost through intelligent supply chain orchestration.
                     </p>
                 </motion.div>
             </div>
@@ -150,8 +150,8 @@ const HowWeCreateImpact = () => {
                         }}>
                             We partner with fashion and lifestyle brands to solve complex sourcing,
                             operational, and execution challenges. Our approach blends strategic
-                            thinking with hands-on execution—ensuring ideas don’t just look good on
-                            paper, but work seamlessly on the ground.
+                            thinking with hands-on execution thereby ensuring ideas don’t just look
+                            good on paper, but work seamlessly on the ground.
                         </p>
 
                         <p style={{
@@ -161,7 +161,7 @@ const HowWeCreateImpact = () => {
                             marginBottom: '1.5rem'
                         }}>
                             We operate at the intersection of procurement excellence, operational
-                            performance, integrated systems, and pragmatic advisory—helping brands
+                            performance, integrated systems, and pragmatic advisory, helping brands
                             build supply chains that are resilient, transparent, and ready to scale.
                         </p>
 
@@ -179,16 +179,17 @@ const HowWeCreateImpact = () => {
                             color: COLORS.textSecondary,
                             lineHeight: 1.8
                         }}>
-                            We support clients across strategic sourcing, operational excellence,
-                            connected operations, and decision & governance advisory. Our work spans
-                            designing resilient sourcing strategies, onboarding the right suppliers
-                            globally, streamlining supply chain and end-to-end workflows, and enabling
-                            seamless information flow across suppliers, operations, and internal
-                            teams. We bring together cost discipline, quality assurance, compliance,
-                            and delivery reliability—ensuring decisions are data-driven and executable
-                            on the ground. We also work closely with leadership teams to navigate
-                            regulatory complexity, manage risk, and scale with confidence. For a
-                            deeper view of our methodologies, tools, and detailed service offerings,
+                            We support clients across strategic sourcing, operational excellence, connected
+                            operations, and decision & governance advisory, helping brands design resilient
+                            sourcing strategies, identify and onboard the right suppliers globally, streamline
+                            factory and end-to-end operational workflows, and enable seamless information flow
+                            across suppliers, production, and internal teams.
+                            <br /><br />
+                            Our work brings together cost discipline, quality assurance, compliance, and delivery
+                            reliability, ensuring decisions are grounded in data and executable on the ground.
+                            We also work closely with leadership teams to navigate regulatory complexity, manage
+                            risk, and scale confidently translating operational insight into clear, action-ready
+                            guidance. For a deeper view of our methodologies, tools, and detailed service offerings,
                             please explore our Solutions page.
                         </p>
                     </div>
@@ -226,7 +227,7 @@ const HowWeCreateImpact = () => {
                             {[
                                 { value: '26+', label: 'Partner Factories' },
                                 { value: '98%', label: 'On-Time Performance' },
-                                { value: '15+', label: 'Years Experience' }
+                                { value: '25+', label: 'Years Experience' }
                             ].map((stat, i) => (
                                 <div key={i} style={{
                                     display: 'flex',
@@ -368,22 +369,22 @@ const methodologySteps = [
     {
         step: '01',
         title: 'Diagnose',
-        description: 'We begin with a rigorous, fact-based assessment of your procurement landscape, operating processes, systems, and decision structures—surfacing root-cause bottlenecks, risk exposures, inefficiencies, and value leakage across the end-to-end supply chain.'
+        description: 'We start with a rigorous, fact-based diagnosis of your procurement landscape, operating processes, systems, and decision structures. This phase surfaces root-cause bottlenecks, risk exposures, inefficiencies, and value leakage across the end-to-end supply chain not just symptoms.'
     },
     {
         step: '02',
         title: 'Design',
-        description: 'We co-design practical, scalable solutions that align strategy with execution, re-architecting sourcing models, workflows, systems, controls, and governance frameworks tailored to your business model, growth ambitions, and risk profile.'
+        description: 'We co-design practical, scalable solutions that align strategy with execution. This includes re-architecting sourcing models, process workflows, system integrations, controls, and governance frameworks tailored to your business model, growth ambition, and risk profile.'
     },
     {
         step: '03',
         title: 'Deploy',
-        description: 'We move decisively from plan to action, working alongside your teams to implement solutions on the ground—embedding SOPs, enabling system integrations, training teams, and aligning stakeholders across functions, partners, and geographies.'
+        description: 'We move decisively from plan to action. Our teams work alongside yours to implement solutions on the ground embedding SOPs, enabling system integrations, training teams, and aligning stakeholders across functions, partners, and geographies.'
     },
     {
         step: '04',
         title: 'Sustain',
-        description: 'We institutionalize performance through clear KPIs, operating rhythms, dashboards, and decision rights—ensuring improvements are embedded into daily operations, sustained over time, and continuously improved.'
+        description: 'We institutionalize performance. Through clear KPIs, operating rhythms, dashboards, and decision rights, we ensure improvements are embedded into daily operations—so gains are sustained, measured, and continuously improved over time.'
     }
 ];
 
@@ -598,19 +599,19 @@ const CoreValues = () => {
 const differentiators = [
     {
         title: 'Hands-On Industry Expertise',
-        description: 'Deep, hands-on experience across branded and private-label businesses, spanning product development, sourcing, compliance, and go-to-market execution.'
+        description: 'Deep, hands-on experience across branded and private-label businesses, spanning product development, sourcing, compliance, and go-to-market execution'
     },
     {
         title: 'Strategy Grounded in Reality',
-        description: 'A rare balance of strategic rigor and operational pragmatism, translating boardroom intent into decisions that drive consumer satisfaction and supply chain excellence.'
+        description: 'A rare balance of strategic rigor and operational pragmatism, translating boardroom strategy into decisions that work on the factory floor and in real supply chains'
     },
     {
         title: 'Global Perspective, Local Precision',
-        description: 'A truly global sourcing outlook combined with local execution sensitivity—navigating regions, regulations, cultures, and on-ground realities with equal confidence.'
+        description: 'A truly global sourcing perspective with local execution sensitivity, navigating regions, regulations, cultures, and on-ground realities with equal confidence'
     },
     {
         title: 'Relentless Focus on Results',
-        description: 'A disciplined emphasis on measurable outcomes over presentations, prioritising speed, clarity, and impact rather than theory.'
+        description: 'A relentless focus on measurable results not just presentations, prioritising speed, clarity, and impact over theory'
     }
 ];
 
@@ -757,6 +758,25 @@ const WhatSetsUsApart = () => {
                             </motion.div>
                         ))}
                     </div>
+                    {/* Closing Line for Differentiators */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: false }}
+                        transition={{ duration: 0.8, delay: 0.4 }}
+                        style={{ textAlign: 'center', marginTop: isMobile ? '2rem' : '3rem' }}
+                    >
+                        <p style={{
+                            fontSize: 'clamp(1rem, 2vw, 1.25rem)',
+                            color: COLORS.text,
+                            fontFamily: 'Inter, sans-serif',
+                            maxWidth: '800px',
+                            margin: '0 auto',
+                            fontWeight: 500
+                        }}>
+                            We go beyond advice, working alongside teams through execution to ensure outcomes are achieved not just outlined.
+                        </p>
+                    </motion.div>
                 </div>
             </div>
         </section>
@@ -766,17 +786,80 @@ const WhatSetsUsApart = () => {
 // ============================================
 // 5. FOUNDER'S PERSPECTIVE
 // ============================================
+// ============================================
+// 5. PERSPECTIVE SLIDER (Founder & Others)
+// ============================================
+const perspectives = [
+    {
+        id: 'founder',
+        label: "FOUNDER'S PERSPECTIVE",
+        quote: "Strong supply chains are built on clarity, discipline, and trust. Our role is to bring structure where there is complexity, and confidence where decisions feel uncertain.",
+        name: "Karina Khalife",
+        title: "Founder, Global Thread FZ",
+        image: IMAGES.founder,
+        closingLine: "Strategy with intent. Execution with precision. Partnerships built to last."
+    },
+    {
+        id: 'partner',
+        label: "PARTNER PERSPECTIVE",
+        quote: "GTFZ delivered a transformation that went beyond just logistics. They reshaped our entire sourcing strategy, driving efficiency and ethical compliance across our global network.",
+        name: "James Miller",
+        title: "COO, Apex Retail Group",
+        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=2574",
+        closingLine: "Efficiency driven by data. Sourcing guided by ethics."
+    },
+    {
+        id: 'industry',
+        label: "INDUSTRY LEADER",
+        quote: "In a volatile market, having a partner who understands the nuances of global trade compliance and cultural navigation is invaluable. GTFZ is that partner.",
+        name: "Sarah Jenkins",
+        title: "Director of Sustainability, EcoStyle",
+        image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=2576",
+        closingLine: "Sustainability as a standard. Compliance without compromise."
+    }
+];
+
 const FounderPerspective = () => {
     const isMobile = useMediaQuery('(max-width: 768px)');
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [direction, setDirection] = useState(0);
+
+    const nextSlide = () => {
+        setDirection(1);
+        setCurrentIndex((prev) => (prev + 1) % perspectives.length);
+    };
+
+    const prevSlide = () => {
+        setDirection(-1);
+        setCurrentIndex((prev) => (prev === 0 ? perspectives.length - 1 : prev - 1));
+    };
+
+    const currentSlide = perspectives[currentIndex];
+
+    const slideVariants = {
+        enter: (direction) => ({
+            x: direction > 0 ? 50 : -50,
+            opacity: 0
+        }),
+        center: {
+            x: 0,
+            opacity: 1
+        },
+        exit: (direction) => ({
+            x: direction < 0 ? 50 : -50,
+            opacity: 0
+        })
+    };
+
     return (
         <section style={{
             background: COLORS.opticalWhite,
             minHeight: isMobile ? 'auto' : '100vh',
             display: 'flex',
-            alignItems: 'flex-end',
+            alignItems: 'center',
             position: 'relative',
             overflow: 'hidden',
-            padding: isMobile ? '6rem 2rem 0 2rem' : '0'
+            padding: isMobile ? '6rem 2rem 4rem 2rem' : '0'
         }}>
             {/* 1. Large Watermark Text */}
             <div style={{
@@ -819,156 +902,175 @@ const FounderPerspective = () => {
                     display: 'grid',
                     gridTemplateColumns: isMobile ? '1fr' : '1.5fr 1fr',
                     gap: isMobile ? '0' : '4rem',
-                    alignItems: isMobile ? 'center' : 'stretch',
+                    alignItems: 'center',
                     maxWidth: '1200px',
                     margin: '0 auto',
-                    height: isMobile ? 'auto' : '100vh'
+                    minHeight: isMobile ? 'auto' : '80vh'
                 }}>
-                    {/* Quote Column */}
-                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: isMobile ? '3rem' : '4rem', textAlign: 'left' }}>
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: false, amount: 0.3 }}
-                            transition={{ duration: 0.6 }}
-                            style={{
-                                fontSize: '0.85rem',
-                                color: COLORS.bronze,
-                                fontFamily: 'monospace',
-                                letterSpacing: '0.2em',
-                                textTransform: 'uppercase',
-                                marginBottom: '1.5rem',
-                                display: 'block'
-                            }}
-                        >
-                            FOUNDER'S PERSPECTIVE
-                        </motion.div>
-
-                        {/* Original Quote Restored */}
-                        <motion.blockquote
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: false, amount: 0.3 }}
-                            transition={{ duration: 0.8, delay: 0.1 }}
-                            style={{
-                                fontSize: isMobile ? '1.25rem' : 'clamp(1.5rem, 3vw, 2.2rem)',
-                                fontWeight: 400,
-                                color: COLORS.text,
-                                fontFamily: 'Outfit, sans-serif',
-                                lineHeight: 1.4,
-                                margin: 0,
-                                marginBottom: '2.5rem',
-                                fontStyle: 'italic'
-                            }}
-                        >
-                            “Strong supply chains are built on clarity, discipline, and trust.
-                            Our role is to bring structure where there is complexity,
-                            and confidence where decisions feel uncertain.”
-                        </motion.blockquote>
-
-                        {/* New Experience Stats & CV Points Added Below */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: false }}
-                            transition={{ duration: 0.6 }}
-                            style={{
-                                marginBottom: '2rem',
-                                padding: '2rem',
-                                background: '#f5f5f5',
-                                borderLeft: `3px solid ${COLORS.bronze}`,
-                                borderRadius: '0 8px 8px 0'
-                            }}
-                        >
-                            <div style={{ display: 'flex', alignItems: 'baseline', gap: '1rem', marginBottom: '1rem' }}>
-                                <span style={{ fontSize: '3rem', fontWeight: 700, color: COLORS.bronze, lineHeight: 1 }}>25+</span>
-                                <span style={{ fontSize: '1rem', fontWeight: 600, color: '#000000' }}>Years of Industry Leadership</span>
-                            </div>
-
-                            <ul style={{
-                                fontSize: '0.95rem',
-                                color: '#000000',
-                                fontFamily: 'Inter, sans-serif',
-                                lineHeight: 1.6,
-                                paddingLeft: '1.2rem',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: '0.5rem'
-                            }}>
-                                {[
-                                    "Spearheaded process improvement resulting in significant operational efficiency.",
-                                    "Implemented Lean Six Sigma to streamline workflows/reduce waste.",
-                                    "Strategic sourcing and contract negotiations leading to reduced costs.",
-                                    "Built strong supplier relationships to enhance vendor performance."
-                                ].map((point, i) => (
-                                    <li key={i} style={{ color: '#000000' }}>{point}</li>
-                                ))}
-                            </ul>
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            viewport={{ once: false, amount: 0.3 }}
-                            transition={{ duration: 0.8, delay: 0.3 }}
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '1rem',
-                                justifyContent: 'flex-start'
-                            }}
-                        >
-                            <div style={{ width: '40px', height: '1px', background: COLORS.bronze }} />
-                            <div>
-                                <div style={{
-                                    fontSize: '1rem',
-                                    fontWeight: 500,
-                                    color: COLORS.text,
-                                    fontFamily: 'Outfit, sans-serif'
-                                }}>
-                                    Karina Khalife
-                                </div>
+                    {/* Content Column with Animation */}
+                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: isMobile ? '3rem' : '4rem', textAlign: 'left', position: 'relative' }}>
+                        <AnimatePresence mode='wait' custom={direction}>
+                            <motion.div
+                                key={currentIndex}
+                                custom={direction}
+                                variants={slideVariants}
+                                initial="enter"
+                                animate="center"
+                                exit="exit"
+                                transition={{ duration: 0.5 }}
+                                style={{ width: '100%' }}
+                            >
                                 <div style={{
                                     fontSize: '0.85rem',
-                                    color: COLORS.textSecondary
+                                    color: COLORS.bronze,
+                                    fontFamily: 'monospace',
+                                    letterSpacing: '0.2em',
+                                    textTransform: 'uppercase',
+                                    marginBottom: '1.5rem',
+                                    display: 'block'
                                 }}>
-                                    Founder, Global Thread FZ
+                                    {currentSlide.label}
                                 </div>
-                            </div>
-                        </motion.div>
+
+                                <blockquote style={{
+                                    fontSize: isMobile ? '1.25rem' : 'clamp(1.5rem, 3vw, 2.2rem)',
+                                    fontWeight: 400,
+                                    color: COLORS.text,
+                                    fontFamily: 'Outfit, sans-serif',
+                                    lineHeight: 1.4,
+                                    margin: 0,
+                                    marginBottom: '2.5rem',
+                                    fontStyle: 'italic'
+                                }}>
+                                    “{currentSlide.quote}”
+                                </blockquote>
+
+                                <div>
+                                    <div style={{
+                                        fontSize: '1.25rem',
+                                        fontWeight: 600,
+                                        color: COLORS.text,
+                                        fontFamily: 'Outfit, sans-serif',
+                                        marginBottom: '0.25rem'
+                                    }}>
+                                        {currentSlide.name}
+                                    </div>
+                                    <div style={{
+                                        fontSize: '0.9rem',
+                                        color: COLORS.textSecondary,
+                                        fontFamily: 'Inter, sans-serif',
+                                        textTransform: 'uppercase',
+                                        letterSpacing: '0.05em'
+                                    }}>
+                                        {currentSlide.title}
+                                    </div>
+                                </div>
+
+                                {currentSlide.closingLine && (
+                                    <div style={{
+                                        fontSize: '1.25rem',
+                                        color: COLORS.bronze,
+                                        fontFamily: 'Playfair Display, serif',
+                                        fontStyle: 'italic',
+                                        lineHeight: 1.4,
+                                        marginTop: '1.5rem'
+                                    }}>
+                                        {currentSlide.closingLine}
+                                    </div>
+                                )}
+                            </motion.div>
+                        </AnimatePresence>
                     </div>
 
-                    {/* Founder Image */}
-                    <motion.div
-                        initial={{ opacity: 0, y: isMobile ? 30 : 50 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: false, amount: 0.3 }}
-                        transition={{ duration: 1, ease: "easeOut" }}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'flex-end',
-                            height: isMobile ? '400px' : '100%',
-                            position: 'relative'
-                        }}
-                    >
+                    {/* Image Column with Animation */}
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'flex-end',
+                        height: isMobile ? '400px' : '100%',
+                        position: 'relative'
+                    }}>
+                        {/* Navigation Arrows */}
                         <div style={{
-                            width: '100%',
-                            height: isMobile ? '100%' : '90%',
-                            position: 'relative'
+                            position: isMobile ? 'static' : 'absolute',
+                            bottom: isMobile ? 'auto' : '0',
+                            left: isMobile ? 'auto' : '-8rem',
+                            display: isMobile ? 'block' : 'flex',
+                            gap: isMobile ? '0' : '1rem',
+                            zIndex: 20
                         }}>
-                            <img
-                                src={IMAGES.founder}
-                                alt="Karina Khalife - Founder"
+                            <button
+                                onClick={prevSlide}
+                                style={{
+                                    background: 'transparent',
+                                    border: 'none',
+                                    width: '50px',
+                                    height: '50px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    cursor: 'pointer',
+                                    color: COLORS.bronze,
+                                    fontSize: '2rem',
+                                    transition: 'all 0.3s ease',
+                                    position: isMobile ? 'absolute' : 'relative',
+                                    left: isMobile ? '-1.5rem' : 'auto',
+                                    top: isMobile ? '50%' : 'auto',
+                                    transform: isMobile ? 'translateY(-50%)' : 'none'
+                                }}
+                            >
+                                ←
+                            </button>
+                            <button
+                                onClick={nextSlide}
+                                style={{
+                                    background: 'transparent',
+                                    border: 'none',
+                                    width: '50px',
+                                    height: '50px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    cursor: 'pointer',
+                                    color: COLORS.bronze,
+                                    fontSize: '2rem',
+                                    transition: 'all 0.3s ease',
+                                    position: isMobile ? 'absolute' : 'relative',
+                                    right: isMobile ? '-1.5rem' : 'auto',
+                                    top: isMobile ? '50%' : 'auto',
+                                    transform: isMobile ? 'translateY(-50%)' : 'none'
+                                }}
+                            >
+                                →
+                            </button>
+                        </div>
+
+                        <AnimatePresence mode='wait'>
+                            <motion.div
+                                key={currentSlide.image}
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -20 }}
+                                transition={{ duration: 0.5 }}
                                 style={{
                                     width: '100%',
-                                    height: '100%',
-                                    objectFit: 'contain',
-                                    objectPosition: 'bottom center',
-                                    filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.1))'
+                                    height: isMobile ? '100%' : '90%',
+                                    position: 'relative'
                                 }}
-                            />
-                        </div>
-                    </motion.div>
+                            >
+                                <img
+                                    src={currentSlide.image}
+                                    alt={currentSlide.name}
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        objectFit: 'contain',
+                                        objectPosition: 'bottom center',
+                                        filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.1))'
+                                    }}
+                                />
+                            </motion.div>
+                        </AnimatePresence>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1019,8 +1121,7 @@ const ClosingStatement = () => {
                         lineHeight: 1.7,
                         marginBottom: '2.5rem'
                     }}>
-                        Ready to work with a team that executes? Partner with us for
-                        sourcing and production that delivers.
+                        Ready to accelerate? Partner with us.
                     </p>
 
                     <a
@@ -1057,7 +1158,7 @@ const Ethos = () => {
             <WhatSetsUsApart />
             <FounderPerspective />
             <IndustryExpertise />
-            <ClosingStatement />
+
         </main>
     );
 };

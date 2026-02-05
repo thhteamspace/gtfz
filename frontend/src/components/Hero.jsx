@@ -100,17 +100,17 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: isMobile ? 0.6 : 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
                     style={{
-                        fontSize: 'clamp(3.5rem, 10vw, 9rem)',
+                        fontSize: 'clamp(3rem, 7vw, 6rem)',
                         lineHeight: 1.05,
                         fontWeight: 500,
-                        letterSpacing: '-0.03em',
+                        letterSpacing: '0',
                         color: '#FEFFFF',
                         marginBottom: '1.5rem',
                         fontFamily: 'Outfit, sans-serif',
                         maxWidth: '900px'
                     }}
                 >
-                    Strategic <span style={{ color: '#C5A059' }}>Precision</span>
+                    Global Fashion <span style={{ color: '#C5A059' }}>Advisory</span>
                 </motion.h1>
 
                 {/* Subheadline */}
