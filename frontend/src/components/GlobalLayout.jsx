@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet, ScrollRestoration } from 'react-router-dom';
+import { Outlet, ScrollRestoration, useLocation } from 'react-router-dom';
 import Header from './Header';
 import CustomCursor from './CustomCursor';
 import Contact from './Contact';
@@ -17,6 +17,9 @@ const ThemeObserver = () => {
 };
 
 const GlobalLayout = () => {
+    const location = useLocation();
+    const isContactPage = location.pathname === '/contact';
+
     return (
         <ThemeTransitionProvider>
             <SmoothScroll>
@@ -28,9 +31,9 @@ const GlobalLayout = () => {
                 <main style={{ minHeight: '100vh', paddingTop: 'var(--header-height)' }}>
                     <Outlet />
                 </main>
-                <CallToAction />
+                {!isContactPage && <CallToAction />}
                 {/* Footer / Contact Section acts as global footer for now */}
-                <Contact />
+                <Contact showForm={!isContactPage} />
                 <ScrollRestoration />
             </SmoothScroll>
         </ThemeTransitionProvider>

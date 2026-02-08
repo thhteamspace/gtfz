@@ -87,7 +87,7 @@ const EthosHero = () => {
                         paddingBottom: '0.2rem',
                         fontFamily: 'Outfit, sans-serif'
                     }}>
-                        Protecting the Product. Optimizing the <span style={{ color: COLORS.bronze }}>Process.</span>
+                        Protecting the Product Optimizing the <span style={{ color: COLORS.bronze }}>Process</span>
                     </h1>
                     <p style={{
                         fontSize: isMobile ? '1.05rem' : 'clamp(1.1rem, 2vw, 1.35rem)',
@@ -413,7 +413,7 @@ const OurMethodology = () => {
                         fontFamily: 'Outfit, sans-serif',
                         marginBottom: '0.75rem'
                     }}>
-                        Our Methodology
+                        About Us
                     </h2>
                     <p style={{
                         fontSize: '1rem',
@@ -975,7 +975,13 @@ const FounderPerspective = () => {
                                         lineHeight: 1.4,
                                         marginTop: '1.5rem'
                                     }}>
-                                        {currentSlide.closingLine}
+                                        {currentSlide.id === 'founder' ? (
+                                            <>
+                                                <span style={{ color: COLORS.bronze, fontWeight: 600 }}>Strategy</span> with intent.{" "}
+                                                <span style={{ color: COLORS.bronze, fontWeight: 600 }}>Execution</span> with precision.{" "}
+                                                <span style={{ color: COLORS.bronze, fontWeight: 600 }}>Partnerships</span> built to last.
+                                            </>
+                                        ) : currentSlide.closingLine}
                                     </div>
                                 )}
                             </motion.div>
@@ -1112,7 +1118,7 @@ const ClosingStatement = () => {
                         alignItems: 'center'
                     }}>
                         <RevealText>From strategic vision to consumer delivery—</RevealText>
-                        <RevealText delay={0.1}><span style={{ color: COLORS.bronze }}>we make it happen.</span></RevealText>
+                        <RevealText delay={0.1}><span style={{ color: COLORS.bronze }}>we make it happen</span></RevealText>
                     </h2>
 
                     <p style={{

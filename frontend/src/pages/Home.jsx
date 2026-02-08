@@ -15,7 +15,6 @@ const Home = () => {
     return (
         <>
             <Hero />
-            <TrustIndicator />
 
             {/* Our Philosophy Section - Full Layout */}
             <section style={{

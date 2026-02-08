@@ -46,7 +46,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<PageLoader />}><Home /></Suspense>,
       },
       {
-        path: "ethos",
+        path: "about",
         element: <Suspense fallback={<PageLoader />}><Ethos /></Suspense>,
       },
       {

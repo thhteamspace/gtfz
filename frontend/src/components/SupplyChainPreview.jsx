@@ -146,7 +146,7 @@ const SupplyChainPreview = () => {
                         viewport={{ once: false }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                         whileHover={{ x: 5 }}
-                        onClick={() => navigate('/ethos')}
+                        onClick={() => navigate('/about')}
                         style={{
                             background: 'transparent',
                             border: 'none',
@@ -160,7 +160,7 @@ const SupplyChainPreview = () => {
                             padding: 0
                         }}
                     >
-                        Explore Our Methodology
+                        Learn More About Us
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <line x1="5" y1="12" x2="19" y2="12"></line>
                             <polyline points="12 5 19 12 12 19"></polyline>

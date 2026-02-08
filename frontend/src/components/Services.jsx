@@ -38,7 +38,7 @@ const Services = () => {
             description: "Sustainability and ethics are non-negotiable. We protect your brand reputation by enforcing strict labor standards, environmental compliance, and regulatory requirements across your entire supply chain.",
             stat: "Ethical",
             statLabel: "Standards Met",
-            image: "https://images.unsplash.com/photo-1467043237213-65f2da53396f?auto=format&fit=crop&q=80&w=1200",
+            image: "/assets/images/pexels-tima-miroshnichenko-7879988.jpg",
             variant: "compact-image" // Short Card
         }
     ];

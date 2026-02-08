@@ -100,7 +100,7 @@ const ContactHero = () => {
     );
 };
 
-const InputField = ({ label, type = "text", placeholder }) => (
+const InputField = ({ label, type = "text", placeholder, options = [] }) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <label style={{
             fontSize: '0.75rem',
@@ -111,24 +111,82 @@ const InputField = ({ label, type = "text", placeholder }) => (
         }}>
             {label}
         </label>
-        <input
-            type={type}
-            placeholder={placeholder}
-            style={{
-                background: 'transparent',
-                border: 'none',
-                borderBottom: `1px solid ${COLORS.borderLight}`,
-                padding: '1rem 0',
-                color: COLORS.text,
-                fontSize: '1rem',
-                outline: 'none',
-                borderRadius: 0,
-                transition: 'border-color var(--duration-normal) var(--ease-fabric)',
-                fontFamily: 'Inter, sans-serif'
-            }}
-            onFocus={(e) => e.target.style.borderBottom = `1px solid ${COLORS.bronze}`}
-            onBlur={(e) => e.target.style.borderBottom = `1px solid rgba(17,17,17,0.1)`}
-        />
+        {type === 'textarea' ? (
+            <textarea
+                placeholder={placeholder}
+                rows={4}
+                style={{
+                    background: 'transparent',
+                    border: 'none',
+                    borderBottom: `1px solid ${COLORS.borderLight}`,
+                    padding: '1rem 0',
+                    color: COLORS.text,
+                    fontSize: '1rem',
+                    outline: 'none',
+                    borderRadius: 0,
+                    transition: 'border-color var(--duration-normal) var(--ease-fabric)',
+                    fontFamily: 'Inter, sans-serif',
+                    resize: 'none'
+                }}
+                onFocus={(e) => e.target.style.borderBottom = `1px solid ${COLORS.bronze}`}
+                onBlur={(e) => e.target.style.borderBottom = `1px solid rgba(17,17,17,0.1)`}
+            />
+        ) : type === 'select' ? (
+            <div style={{ position: 'relative' }}>
+                <select
+                    style={{
+                        width: '100%',
+                        background: 'transparent',
+                        border: 'none',
+                        borderBottom: `1px solid ${COLORS.borderLight}`,
+                        padding: '1rem 0',
+                        color: COLORS.text,
+                        fontSize: '1rem',
+                        outline: 'none',
+                        borderRadius: 0,
+                        transition: 'border-color var(--duration-normal) var(--ease-fabric)',
+                        fontFamily: 'Inter, sans-serif',
+                        appearance: 'none',
+                        cursor: 'pointer'
+                    }}
+                    onFocus={(e) => e.target.style.borderBottom = `1px solid ${COLORS.bronze}`}
+                    onBlur={(e) => e.target.style.borderBottom = `1px solid rgba(17,17,17,0.1)`}
+                >
+                    <option value="" disabled selected hidden>{placeholder}</option>
+                    {options.map((opt, i) => (
+                        <option key={i} value={opt}>{opt}</option>
+                    ))}
+                </select>
+                <div style={{
+                    position: 'absolute',
+                    right: 0,
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    pointerEvents: 'none',
+                    fontSize: '0.8rem',
+                    color: COLORS.textSecondary
+                }}>▼</div>
+            </div>
+        ) : (
+            <input
+                type={type}
+                placeholder={placeholder}
+                style={{
+                    background: 'transparent',
+                    border: 'none',
+                    borderBottom: `1px solid ${COLORS.borderLight}`,
+                    padding: '1rem 0',
+                    color: COLORS.text,
+                    fontSize: '1rem',
+                    outline: 'none',
+                    borderRadius: 0,
+                    transition: 'border-color var(--duration-normal) var(--ease-fabric)',
+                    fontFamily: 'Inter, sans-serif'
+                }}
+                onFocus={(e) => e.target.style.borderBottom = `1px solid ${COLORS.bronze}`}
+                onBlur={(e) => e.target.style.borderBottom = `1px solid rgba(17,17,17,0.1)`}
+            />
+        )}
     </div>
 );
 
@@ -287,43 +345,18 @@ const InquirySection = () => {
                     }}
                 >
                     <form style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '1.5rem' : '2rem' }}>
-                        <div style={{
-                            display: 'grid',
-                            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-                            gap: isMobile ? '1.5rem' : '2rem'
-                        }}>
-                            <InputField label="Name" placeholder="Jane Doe" />
-                            <InputField label="Title" placeholder="Director of Sourcing" />
+                        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '1.5rem' : '2rem' }}>
+                            <InputField label="Name" type="text" placeholder="Your Full Name" />
+                            <InputField label="Company" type="text" placeholder="Company Name" />
                         </div>
-
-                        <InputField label="Company" placeholder="Global Brands Inc." />
                         <InputField label="Email" type="email" placeholder="jane@company.com" />
-
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                            <label style={{
-                                fontSize: '0.75rem',
-                                color: COLORS.bronze,
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.15em',
-                                fontFamily: 'monospace'
-                            }}>MESSAGE</label>
-                            <textarea
-                                rows="4"
-                                placeholder="Tell us about your sourcing, production, or compliance challenge..."
-                                style={{
-                                    background: 'transparent',
-                                    border: 'none',
-                                    borderBottom: `1px solid rgba(17,17,17,0.1)`,
-                                    padding: '1rem 0',
-                                    color: COLORS.text,
-                                    fontSize: '1rem',
-                                    outline: 'none',
-                                    borderRadius: 0,
-                                    resize: 'vertical',
-                                    fontFamily: 'Inter, sans-serif'
-                                }}
-                            />
-                        </div>
+                        <InputField
+                            label="Subject"
+                            type="select"
+                            placeholder="Select a Subject"
+                            options={['General Enquiry', 'Consulting / Services', 'Partnership', 'Careers', 'Media / Other']}
+                        />
+                        <InputField label="Message" type="textarea" placeholder="Tell us about your project or inquiry..." />
 
                         <button
                             type="button"

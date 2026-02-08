@@ -9,7 +9,7 @@ const HorizontalScroll = () => {
             title: "Strategic Advisory",
             id: "01",
             description: "Market entry strategies, cost engineering, and scalable supply chain architecture.",
-            img: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=800"
+            img: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=800"
         },
         {
             title: "Material Sourcing",
@@ -21,7 +21,7 @@ const HorizontalScroll = () => {
             title: "Quality Assurance",
             id: "03",
             description: "Rigorous testing and quality control protocols for every product.",
-            img: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=800"
+            img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800"
         },
         {
             title: "Supply Chain",
@@ -33,7 +33,7 @@ const HorizontalScroll = () => {
             title: "Compliance",
             id: "05",
             description: "Ensuring adherence to global ethical and safety standards.",
-            img: "https://images.unsplash.com/photo-1467043237213-65f2da53396f?auto=format&fit=crop&q=80&w=800"
+            img: "/assets/images/pexels-cottonbro-5083405.jpg"
         },
         {
             title: "Global Network",

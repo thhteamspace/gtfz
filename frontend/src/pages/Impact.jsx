@@ -322,6 +322,8 @@ const EditorialCaseStudies = () => {
     const [hoverState, setHoverState] = useState({ index: null, section: null });
     const navigate = useNavigate();
 
+    const [visibleCount, setVisibleCount] = useState(3);
+
     const getGridTemplate = (idx) => {
         if (isMobile) return '1fr';
         if (hoverState.index !== idx) return '1fr 1fr';
@@ -371,7 +373,7 @@ const EditorialCaseStudies = () => {
             </div>
 
             {/* Case Study Cards */}
-            {CASE_STUDIES_FULL.map((study, index) => (
+            {CASE_STUDIES_FULL.slice(0, visibleCount).map((study, index) => (
                 <motion.div
                     key={index}
                     initial={{ opacity: 0 }}
@@ -591,6 +593,31 @@ const EditorialCaseStudies = () => {
                     </motion.div>
                 </motion.div>
             ))}
+
+            {/* See More Button */}
+            {visibleCount < CASE_STUDIES_FULL.length && (
+                <div style={{ textAlign: 'center', marginTop: '4rem' }}>
+                    <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => setVisibleCount(CASE_STUDIES_FULL.length)}
+                        style={{
+                            padding: '1rem 3rem',
+                            fontSize: '1rem',
+                            fontWeight: 500,
+                            letterSpacing: '0.05em',
+                            color: COLORS.opticalWhite,
+                            background: 'transparent',
+                            border: `1px solid ${COLORS.bronze}`,
+                            borderRadius: '2rem',
+                            cursor: 'pointer',
+                            fontFamily: 'Outfit, sans-serif'
+                        }}
+                    >
+                        See More Case Studies
+                    </motion.button>
+                </div>
+            )}
         </section>
     );
 };

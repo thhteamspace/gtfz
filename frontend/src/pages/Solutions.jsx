@@ -53,7 +53,7 @@ const SOLUTIONS = [
         description: 'Optimize sourcing, reduce costs, and strengthen supplier performance without compromising on quality or compliance.',
         metrics: { value: '30%', label: 'Cost Reduction' },
         icon: 'Procurement',
-        bgImage: 'https://images.pexels.com/photos/5710046/pexels-photo-5710046.jpeg?auto=compress&cs=tinysrgb&w=1600',
+        bgImage: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=1600&fresh=2',
         whatWeDo: [
             { title: 'Supply Chain Design & Optimization', desc: 'Redesign sourcing and supply flows to improve lead times, resilience, and total landed cost.' },
             { title: 'Global Supplier Identification & Integration', desc: 'Find, qualify, and onboard international suppliers; while ensuring they can meet your specs, timelines, and compliance needs.' },
@@ -79,7 +79,7 @@ const SOLUTIONS = [
         description: 'Streamline operations, eliminate waste, and improve throughput with practical process improvements that stick.',
         metrics: { value: '45%', label: 'Efficiency Gain' },
         icon: 'Process',
-        bgImage: 'https://images.pexels.com/photos/3738088/pexels-photo-3738088.jpeg?auto=compress&cs=tinysrgb&w=1600',
+        bgImage: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1600',
         whatWeDo: [
             { title: 'Operational Excellence', desc: 'Improve efficiency and cost-effectiveness across functions with SOPs, controls, and performance routines.' },
             { title: 'Factory Layout & Workflow Optimization', desc: 'Reorganize layouts, motion, line balance, and handoffs to reduce rework, waiting time, and bottlenecks.' }
@@ -103,7 +103,7 @@ const SOLUTIONS = [
         description: 'Connect systems, standardize data, and create operational harmony across procurement, production, and compliance.',
         metrics: { value: '99%', label: 'Compliance' },
         icon: 'Integration',
-        bgImage: 'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=1600',
+        bgImage: 'https://images.unsplash.com/photo-1451187530220-af724295c97f?auto=format&fit=crop&q=80&w=1600&fresh=2',
         whatWeDo: [
             { title: 'Product Traceability Solutions', desc: 'Implement traceability across the supply chain to track materials/products end-to-end for transparency and faster issue resolution.' },
             { title: 'Supplier Onboarding & Data Integration', desc: 'Create consistent supplier master data, documentation workflows, and connectivity so purchasing and operations run cleanly.' }
@@ -127,7 +127,7 @@ const SOLUTIONS = [
         description: 'Make confident decisions with expert guidance that is grounded in execution realities and market dynamics.',
         metrics: { value: '100%', label: 'Audit Success' },
         icon: 'Advisory',
-        bgImage: 'https://images.pexels.com/photos/6214476/pexels-photo-6214476.jpeg?auto=compress&cs=tinysrgb&w=1600',
+        bgImage: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1600',
         whatWeDo: [
             { title: 'Regulatory Compliance Advisory', desc: 'Translate standards into practical controls and workflows so teams comply without slowing the business.' },
             { title: 'Sourcing, Operations & Risk Advisory', desc: 'Strategy support for market shifts, supplier risk, cost pressures, expansion, and operational scaling.' }
@@ -225,7 +225,9 @@ const SolutionsHero = () => {
                         fontFamily: 'Outfit, sans-serif'
                     }}
                 >
-                    Strategy with Intent.<br />Execution with Precision.<br />Partnerships Built to Last.
+                    <span style={{ color: COLORS.bronze }}>Strategy</span> with Intent<br />
+                    <span style={{ color: COLORS.bronze }}>Execution</span> with Precision<br />
+                    <span style={{ color: COLORS.bronze }}>Partnerships</span> Built to Last
                 </motion.h1>
 
                 <motion.div
@@ -260,18 +262,12 @@ const SolutionsHero = () => {
 const Categories = () => {
     const isMobile = useMediaQuery('(max-width: 768px)');
     const categories = [
-        // Kidswear: Stylish child model
-        { name: "Kidswear", img: "https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&q=80&w=600" },
-        // Activewear: Yoga/Gym aesthetic
-        { name: "Activewear", img: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&q=80&w=600" },
-        // Intimates: Soft, silk/texture vibe - NEW IMAGE
-        { name: "Intimates", img: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&q=80&w=600" },
-        // Swimwear: Pool/Beach editorial - NEW IMAGE
-        { name: "Swimwear", img: "https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?auto=format&fit=crop&q=80&w=600" },
-        // Sportswear: Outdoor/Performance
-        { name: "Sportswear", img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=600" },
-        // Outerwear: Coat/Winter fashion
-        { name: "Outerwear", img: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?auto=format&fit=crop&q=80&w=600" }
+        { name: "Kidswear", img: "/assets/images/pexels-ismaelabdalnabystudio-14577916.jpg" },
+        { name: "Activewear", img: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&q=80&w=800&fresh=2" },
+        { name: "Intimates", img: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&q=80&w=800&fresh=2" },
+        { name: "Swimwear", img: "https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?auto=format&fit=crop&q=80&w=800&fresh=2" },
+        { name: "Sportswear", img: "/assets/images/pexels-maksgelatin-4775233.jpg" },
+        { name: "Outerwear", img: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?auto=format&fit=crop&q=80&w=800&fresh=2" }
     ];
 
     return (
@@ -323,10 +319,12 @@ const Categories = () => {
                                 overflow: 'hidden',
                                 borderRadius: '4px',
                                 cursor: 'default',
-                                boxShadow: '0 10px 30px rgba(0,0,0,0.3)'
+                                boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+                                backgroundColor: '#1a1a1a' // Fallback to visibility
                             }}
                         >
                             <motion.img
+                                key={cat.img}
                                 src={cat.img}
                                 alt={cat.name}
                                 style={{
@@ -1414,22 +1412,23 @@ const TimelineGallery = ({ scrollYProgress, isMobile }) => {
     const imageOpacities = [op0, op1, op2, op3];
 
     const STEP_IMAGES = [
-        'https://images.pexels.com/photos/4614119/pexels-photo-4614119.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-        'https://images.pexels.com/photos/461035/pexels-photo-461035.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-        'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-        'https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+        'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200&fresh=2',
+        'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=1200&fresh=2',
+        'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200',
+        'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1200'
     ];
 
     return (
         <>
             {STEP_IMAGES.map((imgSrc, idx) => (
                 <motion.div
-                    key={idx}
+                    key={`${idx}-${imgSrc}`}
                     style={{
                         position: 'absolute',
                         inset: 0,
                         backgroundImage: `url(${imgSrc})`,
                         backgroundSize: 'cover',
+                        backgroundColor: '#1a1a1a', // Fallback color
                         backgroundPosition: isMobile ? 'center 20%' : 'center',
                         opacity: imageOpacities[idx],
                         filter: isMobile ? 'grayscale(0%) contrast(1.05) brightness(0.9)' : 'grayscale(30%) contrast(1.1)'

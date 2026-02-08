@@ -94,6 +94,23 @@ const Hero = () => {
                 }}
             >
 
+                {/* Eyebrow - Small & Prime */}
+                <motion.div
+                    initial={{ opacity: 0, y: isMobile ? 15 : 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+                    style={{
+                        fontSize: '1.25rem',
+                        color: '#C5A059',
+                        fontFamily: 'monospace',
+                        letterSpacing: '0.1em',
+                        marginBottom: '1rem',
+                        fontWeight: 600
+                    }}
+                >
+                    Global Thread FZ
+                </motion.div>
+
                 {/* Main Headline */}
                 <motion.h1
                     initial={{ opacity: 0, y: isMobile ? 20 : 40 }}
@@ -110,7 +127,7 @@ const Hero = () => {
                         maxWidth: '900px'
                     }}
                 >
-                    Global Fashion <span style={{ color: '#C5A059' }}>Advisory</span>
+                    FASHION
                 </motion.h1>
 
                 {/* Subheadline */}

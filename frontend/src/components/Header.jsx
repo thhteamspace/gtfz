@@ -62,7 +62,7 @@ const Header = () => {
 
     const navLinks = [
         { name: 'Home', path: '/' },
-        { name: 'Methodology', path: '/ethos' },
+        { name: 'About Us', path: '/about' },
         { name: 'Solutions', path: '/solutions' },
         { name: 'Impact', path: '/impact' }
     ];
@@ -103,7 +103,7 @@ const Header = () => {
                         src="/assets/images/gtfz-logo-transparent.png"
                         alt="GTFZ Logo"
                         style={{
-                            height: 'clamp(42px, 6vw, 65px)',
+                            height: 'clamp(55px, 8vw, 85px)',
                             width: 'auto'
                         }}
                     />
