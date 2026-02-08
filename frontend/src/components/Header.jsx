@@ -103,7 +103,7 @@ const Header = () => {
                         src="/assets/images/gtfz-logo-transparent.png"
                         alt="GTFZ Logo"
                         style={{
-                            height: 'clamp(55px, 8vw, 85px)',
+                            height: 'clamp(75px, 12vw, 100px)',
                             width: 'auto'
                         }}
                     />
